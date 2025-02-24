@@ -1,16 +1,17 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await params;
-    const { categoryId, winner } = await request.json();
+    const { id } = params;
+    const { categoryId, winner } = await req.json();
 
     // Get all participants with their bets for this category
     const game = await prisma.game.findUnique({

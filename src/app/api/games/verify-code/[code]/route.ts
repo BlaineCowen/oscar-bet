@@ -7,10 +7,10 @@ export const revalidate = 0;
 // GET - Verify a join code and return basic game information
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ code: string }> }
+  { params }: { params: { code: string } }
 ) {
   try {
-    const { code } = await context.params;
+    const { code } = params;
 
     if (!code || code.length !== 6) {
       return NextResponse.json(

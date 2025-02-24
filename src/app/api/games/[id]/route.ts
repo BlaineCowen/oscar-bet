@@ -7,10 +7,10 @@ export const revalidate = 0;
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    const { id } = await context.params;
+    const { id } = params;
 
     const game = await prisma.game.findUnique({
       where: { id },

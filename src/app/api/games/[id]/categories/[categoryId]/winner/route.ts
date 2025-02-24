@@ -5,12 +5,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function POST(
-  request: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string; categoryId: string } }
 ) {
   try {
     const { id: gameId, categoryId } = params;
-    const { nomineeId } = await request.json();
+    const { nomineeId } = await req.json();
 
     if (!nomineeId) {
       return NextResponse.json(

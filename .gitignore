@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+/.mpc/
+
 # next.js
 /.next/
 /out/

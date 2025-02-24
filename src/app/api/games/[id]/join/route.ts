@@ -19,10 +19,10 @@ const joinSchema = z.object({
 // POST - Generate a new join code
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = params;
     const userId = req.headers.get("x-user-id");
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -62,10 +62,10 @@ export async function POST(
 // PUT - Join a game with a code
 export async function PUT(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = params;
     const userId = req.headers.get("x-user-id");
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

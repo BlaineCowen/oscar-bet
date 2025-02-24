@@ -4,10 +4,10 @@ import { Nominee } from "@prisma/client";
 
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = params;
     const { name, nominees } = await req.json();
 
     if (!name || !nominees?.length) {
@@ -45,10 +45,11 @@ export async function POST(
 
 export async function PUT(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    await context.params; // We don't need the game ID for this endpoint
+    const { id } = params;
+    // We don't need the game ID for this endpoint
     const { categoryId, winner } = await req.json();
 
     const category = await prisma.category.update({
