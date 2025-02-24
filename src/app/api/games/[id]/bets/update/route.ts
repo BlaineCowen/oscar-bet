@@ -18,9 +18,10 @@ const betsSchema = z.object({
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const userId = req.headers.get("x-user-id");
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

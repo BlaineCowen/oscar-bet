@@ -7,19 +7,12 @@ Always use Promise-based params in route handlers and pages:
 
 ```typescript
 // ✅ Correct
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  // Use id...
-}
-
-// ✅ Correct
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
+export default async function AdminPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
 ) {
-  const { id } = await params;
-  // Use id...
-}
+  const params = await props.params;
 
 // ❌ Incorrect
 export default async function Page({ params }: { params: { id: string } }) {

@@ -7,7 +7,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-16">
           <div className="text-center mb-16">
             <h1 className="text-6xl font-bold mb-4">
-              <span className="text-gold">Oscar</span> Betting Pool
+              <span className="text-gold">Oscar</span> Action
             </h1>
             <p className="text-xl mb-8">
               Predict the Academy Awards winners and compete with friends!

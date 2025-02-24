@@ -1,5 +1,8 @@
 import { createAuthClient } from "better-auth/react";
 
+// This is a client-side file, so runtime config isn't needed here
+// But any server components or API routes that import this will need 'nodejs' runtime
+
 const client = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   authPath: "/api/auth",

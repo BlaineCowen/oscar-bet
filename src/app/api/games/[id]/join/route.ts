@@ -19,8 +19,9 @@ const joinSchema = z.object({
 // POST - Generate a new join code
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const { id } = params;
     const userId = req.headers.get("x-user-id");
@@ -62,8 +63,9 @@ export async function POST(
 // PUT - Join a game with a code
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const { id } = params;
     const userId = req.headers.get("x-user-id");

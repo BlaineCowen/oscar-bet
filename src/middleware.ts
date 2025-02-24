@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth";
 
+// Force Node.js runtime for middleware
+export const runtime = "nodejs";
+
 export async function middleware(request: NextRequest) {
   const cookies = getSessionCookie(request);
   if (!cookies) {

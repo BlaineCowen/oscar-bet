@@ -5,10 +5,8 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 // GET - Verify a join code and return basic game information
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { code: string } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ code: string }> }) {
+  const params = await props.params;
   try {
     const { code } = params;
 

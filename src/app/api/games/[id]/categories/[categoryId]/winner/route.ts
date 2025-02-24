@@ -6,8 +6,9 @@ export const revalidate = 0;
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string; categoryId: string } }
+  props: { params: Promise<{ id: string; categoryId: string }> }
 ) {
+  const params = await props.params;
   try {
     const { id: gameId, categoryId } = params;
     const { nomineeId } = await req.json();

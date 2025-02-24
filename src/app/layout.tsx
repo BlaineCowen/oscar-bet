@@ -9,7 +9,7 @@ import JoinCheck from "@/components/auth/join-check";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Oscar Bet",
+  title: "Oscar Action",
   description: "Bet on Oscar winners with your friends",
 };
 

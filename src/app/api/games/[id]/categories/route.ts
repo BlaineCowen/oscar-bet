@@ -4,8 +4,9 @@ import { Nominee } from "@prisma/client";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const { id } = params;
     const { name, nominees } = await req.json();
@@ -45,8 +46,9 @@ export async function POST(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const { id } = params;
     // We don't need the game ID for this endpoint

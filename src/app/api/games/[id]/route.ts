@@ -7,8 +7,9 @@ export const revalidate = 0;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
+  const params = await props.params;
   try {
     const { id } = params;
 
@@ -67,8 +68,9 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const { id } = params;
     const userId = request.headers.get("x-user-id");

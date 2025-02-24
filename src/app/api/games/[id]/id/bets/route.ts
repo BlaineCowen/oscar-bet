@@ -14,8 +14,9 @@ const betsSchema = z.object({
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const userId = req.headers.get("x-user-id");
     if (!userId) {
@@ -105,8 +106,9 @@ export async function POST(
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   // ... existing code ...
 
   const { id: gameId } = params;

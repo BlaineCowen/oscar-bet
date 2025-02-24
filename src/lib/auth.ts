@@ -3,6 +3,9 @@ import { nextCookies } from "better-auth/next-js";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
 
+// Note: This file is used in Node.js environments only
+// It doesn't need runtime config as it's not a route handler or middleware
+
 const prisma = new PrismaClient();
 
 export const auth = betterAuth({
