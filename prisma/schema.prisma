@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  emailVerified  Boolean   @default(false)
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  accounts       Account[]
+  sessions       Session[]
+  adminGames     Game[]    @relation("GameAdmin")
+  participantIn  GameParticipant[]
+  bets          Bet[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken          String?
+  refreshToken         String?
+  accessTokenExpiresAt DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                String?
+  idToken              String?
+  password             String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, value])
+  @@map("verifications")
+}
+
+model Game {
+  id               String           @id @default(cuid())
+  name             String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  startDate        DateTime
+  endDate          DateTime
+  locked           Boolean        @default(false)
+  initialBalance   Int
+  adminId          String
+  admin            User            @relation("GameAdmin", fields: [adminId], references: [id])
+  participants     GameParticipant[]
+  bets            Bet[]
+  categories       Category[]
+  joinCode         String?
+  joinCodeExpiresAt DateTime?
+
+  @@index([adminId])
+  @@map("games")
+}
+
+model GameParticipant {
+  id        String   @id @default(cuid())
+  balance   Float
+  game      Game     @relation(fields: [gameId], references: [id])
+  gameId    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  bets      Bet[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([gameId, userId])
+  @@map("game_participants")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  gameId      String
+  game        Game      @relation(fields: [gameId], references: [id])
+  nominees    Nominee[]
+  winnerId    String?   // ID of the winning nominee
+  winner      Nominee?  @relation("CategoryWinner", fields: [winnerId], references: [id])
+  isLocked    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("categories")
+}
+
+model Nominee {
+  id         String     @id @default(cuid())
+  name       String
+  odds       Float
+  category   Category   @relation(fields: [categoryId], references: [id])
+  categoryId String
+  bets       Bet[]
+  wonCategories Category[] @relation("CategoryWinner")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("nominees")
+}
+
+model Bet {
+  id                String          @id @default(cuid())
+  amount            Float
+  user              User            @relation(fields: [userId], references: [id])
+  userId            String
+  nominee           Nominee         @relation(fields: [nomineeId], references: [id])
+  nomineeId         String
+  game              Game            @relation(fields: [gameId], references: [id])
+  gameId            String
+  gameParticipant   GameParticipant @relation(fields: [gameParticipantId], references: [id])
+  gameParticipantId String
+  paidOut           Boolean         @default(false)
+  payoutAmount      Float?          // Amount won/lost when bet is settled
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@map("bets")
+}

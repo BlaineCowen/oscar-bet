@@ -1,0 +1,717 @@
+[
+    {
+        "category": "Best Picture  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Anora",
+                "odds": "9/2"
+            },
+            {
+                "position": "2",
+                "name": "The Brutalist",
+                "odds": "13/2"
+            },
+            {
+                "position": "3",
+                "name": "Conclave",
+                "odds": "7/1"
+            },
+            {
+                "position": "4",
+                "name": "A Complete Unknown",
+                "odds": "17/2"
+            },
+            {
+                "position": "5",
+                "name": "Wicked",
+                "odds": "9/1"
+            },
+            {
+                "position": "6",
+                "name": "Emilia Perez",
+                "odds": "21/2"
+            },
+            {
+                "position": "7",
+                "name": "The Substance",
+                "odds": "23/2"
+            },
+            {
+                "position": "8",
+                "name": "I'm Still Here",
+                "odds": "13/1"
+            },
+            {
+                "position": "9",
+                "name": "Dune: Part Two",
+                "odds": "15/1"
+            },
+            {
+                "position": "10",
+                "name": "Nickel Boys",
+                "odds": "18/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Director  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Sean Baker \n Anora",
+                "odds": "9/5"
+            },
+            {
+                "position": "2",
+                "name": "Brady Corbet \n The Brutalist",
+                "odds": "31/10"
+            },
+            {
+                "position": "3",
+                "name": "Coralie Fargeat \n The Substance",
+                "odds": "6/1"
+            },
+            {
+                "position": "4",
+                "name": "James Mangold \n A Complete Unknown",
+                "odds": "7/1"
+            },
+            {
+                "position": "5",
+                "name": "Jacques Audiard \n Emilia Perez",
+                "odds": "7/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Actress  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Demi Moore \n The Substance",
+                "odds": "11/5"
+            },
+            {
+                "position": "2",
+                "name": "Mikey Madison \n Anora",
+                "odds": "14/5"
+            },
+            {
+                "position": "3",
+                "name": "Fernanda Torres \n I'm Still Here",
+                "odds": "19/5"
+            },
+            {
+                "position": "4",
+                "name": "Cynthia Erivo \n Wicked",
+                "odds": "7/1"
+            },
+            {
+                "position": "5",
+                "name": "Karla Sofia Gascon \n Emilia Perez",
+                "odds": "19/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Actor  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Adrien Brody \n The Brutalist",
+                "odds": "17/10"
+            },
+            {
+                "position": "2",
+                "name": "Timothee Chalamet \n A Complete Unknown",
+                "odds": "82/25"
+            },
+            {
+                "position": "3",
+                "name": "Ralph Fiennes \n Conclave",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "Colman Domingo \n Sing Sing",
+                "odds": "15/2"
+            },
+            {
+                "position": "5",
+                "name": "Sebastian Stan \n The Apprentice",
+                "odds": "17/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Supporting Actress  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Zoe Saldana \n Emilia Perez",
+                "odds": "31/20"
+            },
+            {
+                "position": "2",
+                "name": "Ariana Grande \n Wicked",
+                "odds": "19/5"
+            },
+            {
+                "position": "3",
+                "name": "Isabella Rossellini \n Conclave",
+                "odds": "11/2"
+            },
+            {
+                "position": "4",
+                "name": "Felicity Jones \n The Brutalist",
+                "odds": "13/2"
+            },
+            {
+                "position": "5",
+                "name": "Monica Barbaro \n A Complete Unknown",
+                "odds": "15/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Supporting Actor  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Kieran Culkin \n A Real Pain",
+                "odds": "3/2"
+            },
+            {
+                "position": "2",
+                "name": "Guy Pearce \n The Brutalist",
+                "odds": "9/2"
+            },
+            {
+                "position": "3",
+                "name": "Edward Norton \n A Complete Unknown",
+                "odds": "5/1"
+            },
+            {
+                "position": "4",
+                "name": "Yura Borisov \n Anora",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Jeremy Strong \n The Apprentice",
+                "odds": "7/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Adapted Screenplay  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Conclave",
+                "odds": "3/2"
+            },
+            {
+                "position": "2",
+                "name": "A Complete Unknown",
+                "odds": "9/2"
+            },
+            {
+                "position": "3",
+                "name": "Nickel Boys",
+                "odds": "11/2"
+            },
+            {
+                "position": "4",
+                "name": "Sing Sing",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Emilia Perez",
+                "odds": "7/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Original Screenplay  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Anora",
+                "odds": "15/8"
+            },
+            {
+                "position": "2",
+                "name": "The Substance",
+                "odds": "19/5"
+            },
+            {
+                "position": "3",
+                "name": "A Real Pain",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "The Brutalist",
+                "odds": "11/2"
+            },
+            {
+                "position": "5",
+                "name": "September 5",
+                "odds": "9/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Cinematography  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "The Brutalist",
+                "odds": "13/8"
+            },
+            {
+                "position": "2",
+                "name": "Nosferatu",
+                "odds": "19/5"
+            },
+            {
+                "position": "3",
+                "name": "Dune: Part Two",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "Emilia Perez",
+                "odds": "15/2"
+            },
+            {
+                "position": "5",
+                "name": "Maria",
+                "odds": "8/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Costume Design  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Wicked",
+                "odds": "29/20"
+            },
+            {
+                "position": "2",
+                "name": "Nosferatu",
+                "odds": "4/1"
+            },
+            {
+                "position": "3",
+                "name": "Conclave",
+                "odds": "11/2"
+            },
+            {
+                "position": "4",
+                "name": "Gladiator II",
+                "odds": "13/2"
+            },
+            {
+                "position": "5",
+                "name": "A Complete Unknown",
+                "odds": "15/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Film Editing  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Conclave",
+                "odds": "21/10"
+            },
+            {
+                "position": "2",
+                "name": "Anora",
+                "odds": "31/10"
+            },
+            {
+                "position": "3",
+                "name": "The Brutalist",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "Emilia Perez",
+                "odds": "13/2"
+            },
+            {
+                "position": "5",
+                "name": "Wicked",
+                "odds": "15/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Makeup and Hairstyling  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "The Substance",
+                "odds": "31/20"
+            },
+            {
+                "position": "2",
+                "name": "Wicked",
+                "odds": "9/2"
+            },
+            {
+                "position": "3",
+                "name": "A Different Man",
+                "odds": "5/1"
+            },
+            {
+                "position": "4",
+                "name": "Nosferatu",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Emilia Perez",
+                "odds": "8/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Production Design  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Wicked",
+                "odds": "8/5"
+            },
+            {
+                "position": "2",
+                "name": "The Brutalist",
+                "odds": "39/10"
+            },
+            {
+                "position": "3",
+                "name": "Dune: Part Two",
+                "odds": "11/2"
+            },
+            {
+                "position": "4",
+                "name": "Conclave",
+                "odds": "13/2"
+            },
+            {
+                "position": "5",
+                "name": "Nosferatu",
+                "odds": "15/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Score  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "The Brutalist",
+                "odds": "7/4"
+            },
+            {
+                "position": "2",
+                "name": "Conclave",
+                "odds": "7/2"
+            },
+            {
+                "position": "3",
+                "name": "The Wild Robot",
+                "odds": "5/1"
+            },
+            {
+                "position": "4",
+                "name": "Emilia Perez",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Wicked",
+                "odds": "8/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Song  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Emilia Perez \n El Mal",
+                "odds": "9/5"
+            },
+            {
+                "position": "2",
+                "name": "The Six Triple Eight \n The Journey",
+                "odds": "18/5"
+            },
+            {
+                "position": "3",
+                "name": "Elton John: Never Too Late \n Never Too Late",
+                "odds": "11/2"
+            },
+            {
+                "position": "4",
+                "name": "Emilia Perez \n Mi Camino",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Sing Sing \n Like a Bird",
+                "odds": "13/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Sound  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Wicked",
+                "odds": "9/4"
+            },
+            {
+                "position": "2",
+                "name": "Dune: Part Two",
+                "odds": "51/20"
+            },
+            {
+                "position": "3",
+                "name": "A Complete Unknown",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "Emilia Perez",
+                "odds": "15/2"
+            },
+            {
+                "position": "5",
+                "name": "The Wild Robot",
+                "odds": "17/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Visual Effects  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Dune: Part Two",
+                "odds": "31/20"
+            },
+            {
+                "position": "2",
+                "name": "Kingdom of the Planet of the Apes",
+                "odds": "9/2"
+            },
+            {
+                "position": "3",
+                "name": "Wicked",
+                "odds": "5/1"
+            },
+            {
+                "position": "4",
+                "name": "Better Man",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Alien: Romulus",
+                "odds": "17/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Animated Feature  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "The Wild Robot",
+                "odds": "17/10"
+            },
+            {
+                "position": "2",
+                "name": "Flow",
+                "odds": "16/5"
+            },
+            {
+                "position": "3",
+                "name": "Inside Out 2",
+                "odds": "11/2"
+            },
+            {
+                "position": "4",
+                "name": "Wallace and Gromit: Vengeance Most Fowl",
+                "odds": "7/1"
+            },
+            {
+                "position": "5",
+                "name": "Memoir of a Snail",
+                "odds": "15/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Documentary Feature  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "No Other Land",
+                "odds": "9/5"
+            },
+            {
+                "position": "2",
+                "name": "Sugarcane",
+                "odds": "4/1"
+            },
+            {
+                "position": "3",
+                "name": "Porcelain War",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "Black Box Diaries",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Soundtrack to a Coup d’Etat",
+                "odds": "7/1"
+            }
+        ]
+    },
+    {
+        "category": "Best International Film  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "I'm Still Here",
+                "odds": "41/20"
+            },
+            {
+                "position": "2",
+                "name": "Emilia Perez",
+                "odds": "57/20"
+            },
+            {
+                "position": "3",
+                "name": "The Seed of the Sacred Fig",
+                "odds": "5/1"
+            },
+            {
+                "position": "4",
+                "name": "Flow",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "The Girl with the Needle",
+                "odds": "9/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Animated Short  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "Beautiful Men",
+                "odds": "53/20"
+            },
+            {
+                "position": "2",
+                "name": "Wander to Wonder",
+                "odds": "3/1"
+            },
+            {
+                "position": "3",
+                "name": "Yuck!",
+                "odds": "4/1"
+            },
+            {
+                "position": "4",
+                "name": "In the Shadow of the Cypress",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Magic Candies",
+                "odds": "13/2"
+            }
+        ]
+    },
+    {
+        "category": "Best Documentary Short  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "I Am Ready, Warden",
+                "odds": "43/20"
+            },
+            {
+                "position": "2",
+                "name": "Incident",
+                "odds": "18/5"
+            },
+            {
+                "position": "3",
+                "name": "The Only Girl in the Orchestra",
+                "odds": "19/5"
+            },
+            {
+                "position": "4",
+                "name": "Death by Numbers",
+                "odds": "6/1"
+            },
+            {
+                "position": "5",
+                "name": "Instruments of a Beating Heart",
+                "odds": "8/1"
+            }
+        ]
+    },
+    {
+        "category": "Best Live Action Short  (more info)",
+        "predictions": [
+            {
+                "position": "1",
+                "name": "The Man Who Could Not Remain Silent",
+                "odds": "9/4"
+            },
+            {
+                "position": "2",
+                "name": "Anuja",
+                "odds": "17/5"
+            },
+            {
+                "position": "3",
+                "name": "A Lien",
+                "odds": "9/2"
+            },
+            {
+                "position": "4",
+                "name": "I’m Not a Robot",
+                "odds": "11/2"
+            },
+            {
+                "position": "5",
+                "name": "The Last Ranger",
+                "odds": "7/1"
+            }
+        ]
+    }
+]
