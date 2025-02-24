@@ -2,6 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import predictions from "@/lib/oscars_predictions.json";
 
+
+
+// Force Node.js runtime for Prisma and better-auth
+export const runtime = "nodejs";
 function convertOddsToDecimal(odds: string): number {
   const [numerator, denominator] = odds.split("/").map(Number);
   return 1 + numerator / denominator;

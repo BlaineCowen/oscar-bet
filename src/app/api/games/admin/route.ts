@@ -1,6 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+
+
+// Force Node.js runtime for Prisma and better-auth
+export const runtime = "nodejs";
 export async function GET(req: NextRequest) {
   try {
     const userId = req.headers.get("x-user-id");

@@ -3,6 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import crypto from "crypto";
 
+
+
+// Force Node.js runtime for Prisma and better-auth
+export const runtime = "nodejs";
 // Route configuration
 export const dynamic = "force-dynamic";
 export const revalidate = 0;

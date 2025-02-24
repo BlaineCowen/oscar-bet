@@ -3,6 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 
+
+
+// Force Node.js runtime for Prisma and better-auth
+export const runtime = "nodejs";
 const registerSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),

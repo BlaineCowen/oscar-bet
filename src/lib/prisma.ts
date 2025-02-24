@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 // This is needed for Next.js Edge Runtime compatibility
+// If using in API routes, you'll need to add export const runtime = "nodejs" to those files
 const prismaClientSingleton = () => {
   return new PrismaClient({
     // Enable connection pooling

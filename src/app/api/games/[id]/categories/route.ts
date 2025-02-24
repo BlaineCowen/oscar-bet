@@ -2,6 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Nominee } from "@prisma/client";
 
+
+
+// Force Node.js runtime for Prisma and better-auth
+export const runtime = "nodejs";
 export async function POST(
   req: NextRequest,
   props: { params: Promise<{ id: string }> }

@@ -3,6 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import type { Category, Nominee } from "@prisma/client";
 
+// Force Node.js runtime
+export const runtime = "nodejs";
+
 const categorySchema = z.object({
   name: z.string(),
   nominees: z.array(

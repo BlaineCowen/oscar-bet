@@ -2,6 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
+
+
+// Force Node.js runtime for Prisma and better-auth
+export const runtime = "nodejs";
 const betSchema = z.object({
   nomineeId: z.string(),
   amount: z.number().positive(),
