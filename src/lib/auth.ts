@@ -29,4 +29,9 @@ export const auth = betterAuth({
     },
   },
   plugins: [nextCookies()],
+  secret:
+    process.env.BETTER_AUTH_SECRET ||
+    (process.env.NODE_ENV === "production"
+      ? undefined // This will throw an error in production if secret is missing
+      : "dev-only-secret-do-not-use-in-production"),
 });
