@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { NomineeCard } from "@/components/nominees/nominee-card";
 
 type CategoryWithNominees = Category & {
   nominees: Nominee[];
@@ -99,6 +100,7 @@ export default function BettingForm({
   };
 
   const handleNomineeSelect = (categoryId: string, nomineeId: string) => {
+    console.log(`Selecting nominee: ${nomineeId} for category: ${categoryId}`);
     const newNominees = {
       ...selectedNominees,
       [categoryId]: nomineeId,
@@ -405,7 +407,7 @@ export default function BettingForm({
             <div className="flex items-center gap-4">
               <h2 className="text-2xl font-bold">Place Your Bets</h2>
               {hasExistingBets && !disabled && (
-                <span className="text-muted-foreground">
+                <span className="text-muted-foreground text-sm max-w-sm m-2 p-6 text-center">
                   (You can update your bets until the game is locked)
                 </span>
               )}
@@ -479,7 +481,11 @@ export default function BettingForm({
             const categoryWinner = category.winnerId
               ? category.nominees.find((n) => n.id === category.winnerId)?.name
               : null;
-            const isLocked = disabled || category.winnerId !== null;
+            // Only lock if the entire game is disabled
+            const isLocked = disabled;
+            // Visual indicator only - doesn't affect functionality
+            const isCategoryLocked =
+              category.isLocked || category.winnerId !== null;
 
             return (
               <Card
@@ -489,7 +495,7 @@ export default function BettingForm({
                 <CardHeader>
                   <div className="flex justify-between items-center">
                     <CardTitle>{category.name}</CardTitle>
-                    {isLocked && (
+                    {(isLocked || isCategoryLocked) && (
                       <span className="text-sm text-muted-foreground">
                         Locked
                       </span>
@@ -504,37 +510,51 @@ export default function BettingForm({
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <RadioGroup
-                    onValueChange={(value) =>
-                      handleNomineeSelect(category.id, value)
-                    }
+                    onValueChange={(value) => {
+                      console.log(
+                        `RadioGroup change: ${value} for ${category.name}`
+                      );
+                      handleNomineeSelect(category.id, value);
+                    }}
                     value={selectedNominees[category.id]}
                     disabled={isLocked}
+                    name={`nominee-${category.id}`}
                   >
                     {category.nominees.map((nominee) => (
-                      <div
-                        key={nominee.id}
-                        className="flex items-center space-x-2"
-                      >
+                      <div key={nominee.id} className="mb-3">
                         <RadioGroupItem
+                          id={nominee.id}
                           value={nominee.id}
-                          id={`${category.id}-${nominee.id}`}
+                          className="peer sr-only"
                           disabled={isLocked}
                         />
-                        <Label
-                          htmlFor={`${category.id}-${nominee.id}`}
-                          className="flex-1"
-                        >
+                        <Label htmlFor={nominee.id} className="sr-only">
                           {nominee.name}
-                          {nominee.id === existingBet?.nomineeId &&
-                            !isLocked && (
-                              <span className="ml-2 text-sm text-muted-foreground">
-                                (current pick)
-                              </span>
-                            )}
                         </Label>
-                        <span className="text-muted-foreground">
-                          {Math.round(nominee.odds * 100) / 100}x
-                        </span>
+                        <NomineeCard
+                          nominee={nominee}
+                          isSelected={
+                            selectedNominees[category.id] === nominee.id
+                          }
+                          disabled={isLocked}
+                          showOdds={true}
+                          categoryName={category.name}
+                          onClick={() => {
+                            // Only proceed if not disabled
+                            if (isLocked) return;
+
+                            // Directly call the select function instead of manipulating the DOM
+                            handleNomineeSelect(category.id, nominee.id);
+
+                            // Also update the DOM element to keep UI in sync
+                            const selectedInput = document.getElementById(
+                              nominee.id
+                            ) as HTMLInputElement;
+                            if (selectedInput) {
+                              selectedInput.checked = true;
+                            }
+                          }}
+                        />
                       </div>
                     ))}
                   </RadioGroup>
@@ -559,14 +579,21 @@ export default function BettingForm({
                       <div className="flex justify-between text-sm">
                         <span>Min: $1</span>
                         <span>
-                          Max: $
-                          {getMaxAmountForCategory(category.id).toFixed(2)}
+                          {betAmounts[category.id]
+                            ? `To win: $${(
+                                (betAmounts[category.id] || 0) *
+                                ((category.nominees.find(
+                                  (n) => n.id === selectedNominees[category.id]
+                                )?.odds ?? 0) -
+                                  1)
+                              ).toFixed(2)}`
+                            : `Enter an amount`}
                         </span>
                       </div>
                     </div>
                   )}
 
-                  {(categoryWinner || (disabled && categoryWinner)) && (
+                  {categoryWinner && (
                     <div className="mt-4 p-3 bg-green-500/10 border border-green-500 rounded-md">
                       <p className="text-green-500 font-medium">
                         Winner: {categoryWinner}

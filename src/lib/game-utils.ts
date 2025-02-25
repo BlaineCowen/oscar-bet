@@ -6,6 +6,24 @@ function convertOddsToDecimal(odds: string): number {
   return 1 + numerator / denominator;
 }
 
+/**
+ * Gets the nominee name from either name property or actor property
+ */
+export function getNomineeName(nominee: any): string {
+  // If nominee has a name property, use that
+  if ("name" in nominee && nominee.name) {
+    return nominee.name.trim();
+  }
+
+  // If nominee has an actor property (for movie categories), use that
+  if ("actor" in nominee && nominee.actor) {
+    return nominee.actor.trim();
+  }
+
+  // Fallback in case neither property exists
+  return "Unknown Nominee";
+}
+
 export async function createNewGame({
   name,
   startDate,
@@ -32,7 +50,7 @@ export async function createNewGame({
             name: category.category.replace("  (more info)", ""),
             nominees: {
               create: category.predictions.map((nominee) => ({
-                name: nominee.name.trim(),
+                name: getNomineeName(nominee),
                 odds: convertOddsToDecimal(nominee.odds),
               })),
             },

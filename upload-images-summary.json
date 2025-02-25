@@ -1,0 +1,726 @@
+{
+  "processed": [
+    {
+      "category": "Best Picture",
+      "nominee": "Anora",
+      "filename": "best-picture-anora.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-anora-RHNFerpuJfYaHbG7BbSHFcWB8bkVvw.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "Conclave",
+      "filename": "best-picture-conclave.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-conclave-zR529GECU1vc9cS7ZPyKMGJf0yAYdy.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "The Brutalist",
+      "filename": "best-picture-the-brutalist.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-the-brutalist-E9n0TuVs1PIzNqFO25UH6vx5xeFVT2.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "A Complete Unknown",
+      "filename": "best-picture-a-complete-unknown.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-a-complete-unknown-AZmUKvUOtEZfRdDLbXKv93Lv5iOSOe.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "Wicked",
+      "filename": "best-picture-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-wicked-0uyeg5JyNhc6he3cQ1aEf0DrbAmq98.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "Emilia Perez",
+      "filename": "best-picture-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-emilia-perez-weNpYTzQD52iUJp13AKB9wWQU0qHci.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "The Substance",
+      "filename": "best-picture-the-substance.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-the-substance-0T0bYt0yqcSLQu8Pc212Ae2jGuL2fo.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "I'm Still Here",
+      "filename": "best-picture-im-still-here.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-im-still-here-VD8g8HRFGNEfFNyVQlxDf0WqbOs9pW.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "Dune: Part Two",
+      "filename": "best-picture-dune-part-two.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-dune-part-two-eiMlLy4LO1E5JKePUzgEyENW7KPZEU.jpg"
+    },
+    {
+      "category": "Best Picture",
+      "nominee": "Nickel Boys",
+      "filename": "best-picture-nickel-boys.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-picture-nickel-boys-RznYuEViQzSlLqSwsjzJCx22jEV6uu.jpg"
+    },
+    {
+      "category": "Best Director",
+      "nominee": "Sean Baker",
+      "filename": "best-director-sean-baker.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-director-sean-baker-n057Jnr5b2L3BXKix6XNbayjsYrCiE.jpg"
+    },
+    {
+      "category": "Best Director",
+      "nominee": "Brady Corbet",
+      "filename": "best-director-brady-corbet.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-director-brady-corbet-nrfmTNTk4wdMcXpcx9Bx478JhLKAOB.jpg"
+    },
+    {
+      "category": "Best Director",
+      "nominee": "Coralie Fargeat",
+      "filename": "best-director-coralie-fargeat.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-director-coralie-fargeat-6lvTywPrKHFqFXk3F39CIJovuZuhSS.jpg"
+    },
+    {
+      "category": "Best Director",
+      "nominee": "James Mangold",
+      "filename": "best-director-james-mangold.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-director-james-mangold-ASiL5nGkCIstC8AeilsfgGxBgJnWVj.jpg"
+    },
+    {
+      "category": "Best Director",
+      "nominee": "Jacques Audiard",
+      "filename": "best-director-jacques-audiard.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-director-jacques-audiard-7F2cyNGrq4Iwjm7EqwanfSxVA1UadG.jpg"
+    },
+    {
+      "category": "Best Actress",
+      "nominee": "Demi Moore",
+      "filename": "best-actress-demi-moore.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actress-demi-moore-IBezLMc3UvqxdSQSprIpVBvzI9c1Xo.jpg"
+    },
+    {
+      "category": "Best Actress",
+      "nominee": "Mikey Madison",
+      "filename": "best-actress-mikey-madison.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actress-mikey-madison-VClsz4Z0ieCw7Mfi6jkLr0WfT6iAkp.jpg"
+    },
+    {
+      "category": "Best Actress",
+      "nominee": "Fernanda Torres",
+      "filename": "best-actress-fernanda-torres.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actress-fernanda-torres-P35pVmSqHAhGVa3pA0xOMCNB1FcOzG.jpg"
+    },
+    {
+      "category": "Best Actress",
+      "nominee": "Cynthia Erivo",
+      "filename": "best-actress-cynthia-erivo.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actress-cynthia-erivo-sO0yn5rrTEIb6IaJm1crLHYaSaPCVM.jpg"
+    },
+    {
+      "category": "Best Actress",
+      "nominee": "Karla Sofia Gascon",
+      "filename": "best-actress-karla-sofia-gascon.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actress-karla-sofia-gascon-dRrtjcQ38B9emxUXidSr95WIctkzS5.jpg"
+    },
+    {
+      "category": "Best Actor",
+      "nominee": "Adrien Brody",
+      "filename": "best-actor-adrien-brody.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actor-adrien-brody-9XTXia4JnuBpls145jCVieXdFK2h6l.jpg"
+    },
+    {
+      "category": "Best Actor",
+      "nominee": "Timothee Chalamet",
+      "filename": "best-actor-timothee-chalamet.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actor-timothee-chalamet-jn2wgOh24j95pDxcrzQvBLVZPubONK.jpg"
+    },
+    {
+      "category": "Best Actor",
+      "nominee": "Ralph Fiennes",
+      "filename": "best-actor-ralph-fiennes.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actor-ralph-fiennes-PkMVgJTBpJUj5PQ24fcGrrTzPsJdv2.jpg"
+    },
+    {
+      "category": "Best Actor",
+      "nominee": "Colman Domingo",
+      "filename": "best-actor-colman-domingo.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actor-colman-domingo-RPdPAlFO4s7le7aIO620H9rFhWSRQW.jpg"
+    },
+    {
+      "category": "Best Actor",
+      "nominee": "Sebastian Stan",
+      "filename": "best-actor-sebastian-stan.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-actor-sebastian-stan-u0Gy4rbEKp8V3aSKZE7Xjxpb5KI0dY.jpg"
+    },
+    {
+      "category": "Best Supporting Actress",
+      "nominee": "Zoe Saldana",
+      "filename": "best-supporting-actress-zoe-saldana.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actress-zoe-saldana-MApvWaTepf1w5FVUQfGQq7KL0ZokLI.jpg"
+    },
+    {
+      "category": "Best Supporting Actress",
+      "nominee": "Ariana Grande",
+      "filename": "best-supporting-actress-ariana-grande.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actress-ariana-grande-ODM3EHqbaFcud473O1onOYrMzMklAO.jpg"
+    },
+    {
+      "category": "Best Supporting Actress",
+      "nominee": "Isabella Rossellini",
+      "filename": "best-supporting-actress-isabella-rossellini.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actress-isabella-rossellini-pP8pF7U6Gp5VxXwWk4WNm2lY9wsl5f.jpg"
+    },
+    {
+      "category": "Best Supporting Actress",
+      "nominee": "Felicity Jones",
+      "filename": "best-supporting-actress-felicity-jones.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actress-felicity-jones-vZa6RnzUyMSFUWCBYdyAFoPa5eStiO.jpg"
+    },
+    {
+      "category": "Best Supporting Actress",
+      "nominee": "Monica Barbaro",
+      "filename": "best-supporting-actress-monica-barbaro.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actress-monica-barbaro-hJLWMGYbPNZSrwcG3vqbJ0D5gAQ5qo.jpg"
+    },
+    {
+      "category": "Best Supporting Actor",
+      "nominee": "Kieran Culkin",
+      "filename": "best-supporting-actor-kieran-culkin.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actor-kieran-culkin-Hc0zBLCvMcwnruOrFJ0WOfzH5ufzKJ.jpg"
+    },
+    {
+      "category": "Best Supporting Actor",
+      "nominee": "Guy Pearce",
+      "filename": "best-supporting-actor-guy-pearce.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actor-guy-pearce-GYm26ibaVZo94skPxUTgBUBc89YlFa.jpg"
+    },
+    {
+      "category": "Best Supporting Actor",
+      "nominee": "Edward Norton",
+      "filename": "best-supporting-actor-edward-norton.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actor-edward-norton-OyA128a5NyFYp29UIWTzvZovEpM1ij.jpg"
+    },
+    {
+      "category": "Best Supporting Actor",
+      "nominee": "Yura Borisov",
+      "filename": "best-supporting-actor-yura-borisov.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actor-yura-borisov-dnSMsSrWeKM6inRWC2rmKQQSImpZaU.jpg"
+    },
+    {
+      "category": "Best Supporting Actor",
+      "nominee": "Jeremy Strong",
+      "filename": "best-supporting-actor-jeremy-strong.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-supporting-actor-jeremy-strong-Fbrzt5L3jEZNmLfvj5EuMoVRXv8VgB.jpg"
+    },
+    {
+      "category": "Best Adapted Screenplay",
+      "nominee": "Conclave",
+      "filename": "best-adapted-screenplay-conclave.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-adapted-screenplay-conclave-of3sgqIvoZmCWapID7GFmtGsfG4Pv2.jpg"
+    },
+    {
+      "category": "Best Adapted Screenplay",
+      "nominee": "A Complete Unknown",
+      "filename": "best-adapted-screenplay-a-complete-unknown.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-adapted-screenplay-a-complete-unknown-EwVD1iFTjMXKpPd8Vz1A7qznPJbkMZ.jpg"
+    },
+    {
+      "category": "Best Adapted Screenplay",
+      "nominee": "Nickel Boys",
+      "filename": "best-adapted-screenplay-nickel-boys.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-adapted-screenplay-nickel-boys-WTCHOXt1IXwAqUbXfZJ6AfFwBp7pyX.jpg"
+    },
+    {
+      "category": "Best Adapted Screenplay",
+      "nominee": "Sing Sing",
+      "filename": "best-adapted-screenplay-sing-sing.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-adapted-screenplay-sing-sing-JhfHVaecW2eDU1gpKW7MZqi2Whm34d.jpg"
+    },
+    {
+      "category": "Best Adapted Screenplay",
+      "nominee": "Emilia Perez",
+      "filename": "best-adapted-screenplay-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-adapted-screenplay-emilia-perez-KpKqplrhlwZyKpd1HkEFgVyigddke5.jpg"
+    },
+    {
+      "category": "Best Original Screenplay",
+      "nominee": "Anora",
+      "filename": "best-original-screenplay-anora.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-original-screenplay-anora-Z1wbHXSJIx8VjUANLKRLr5yTHxYj9R.jpg"
+    },
+    {
+      "category": "Best Original Screenplay",
+      "nominee": "A Real Pain",
+      "filename": "best-original-screenplay-a-real-pain.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-original-screenplay-a-real-pain-oH6MwM2DqbUDArj5QkMYEPFwzfT6m6.jpg"
+    },
+    {
+      "category": "Best Original Screenplay",
+      "nominee": "The Substance",
+      "filename": "best-original-screenplay-the-substance.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-original-screenplay-the-substance-MMeFFSD6LIvHs21B7Y5qKxZDznt4k8.jpg"
+    },
+    {
+      "category": "Best Original Screenplay",
+      "nominee": "The Brutalist",
+      "filename": "best-original-screenplay-the-brutalist.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-original-screenplay-the-brutalist-W7JeYygPYxD9kC7DnAfAF3t657XhJz.jpg"
+    },
+    {
+      "category": "Best Original Screenplay",
+      "nominee": "September 5",
+      "filename": "best-original-screenplay-september-5.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-original-screenplay-september-5-z6C5hXeFciqkSgFZYc7UaFgqpAegiG.jpg"
+    },
+    {
+      "category": "Best Cinematography",
+      "nominee": "The Brutalist",
+      "filename": "best-cinematography-the-brutalist.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-cinematography-the-brutalist-3nrmgJ0Azqd7aXuqooGnqOGOr4ruGK.jpg"
+    },
+    {
+      "category": "Best Cinematography",
+      "nominee": "Nosferatu",
+      "filename": "best-cinematography-nosferatu.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-cinematography-nosferatu-cQcS6GEMDDmRpOdUIPFr2wgZ6ViXlL.jpg"
+    },
+    {
+      "category": "Best Cinematography",
+      "nominee": "Dune: Part Two",
+      "filename": "best-cinematography-dune-part-two.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-cinematography-dune-part-two-sJpCz6wWHd5Uvh4CcZ2R6tvVqCuw6u.jpg"
+    },
+    {
+      "category": "Best Cinematography",
+      "nominee": "Maria",
+      "filename": "best-cinematography-maria.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-cinematography-maria-ObjAx8tllykdJY1PxxpHCqCJcCFjht.jpg"
+    },
+    {
+      "category": "Best Cinematography",
+      "nominee": "Emilia Perez",
+      "filename": "best-cinematography-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-cinematography-emilia-perez-un1vwZ1bUAVe5WF3ENCRLMDSce7m3J.jpg"
+    },
+    {
+      "category": "Best Costume Design",
+      "nominee": "Wicked",
+      "filename": "best-costume-design-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-costume-design-wicked-H9vEtp7mMZyPv1QI9jQjomUDUbKsiF.jpg"
+    },
+    {
+      "category": "Best Costume Design",
+      "nominee": "Nosferatu",
+      "filename": "best-costume-design-nosferatu.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-costume-design-nosferatu-zk5YDV5XFT0TgHu0J2qVZNZIjTG6aG.jpg"
+    },
+    {
+      "category": "Best Costume Design",
+      "nominee": "Conclave",
+      "filename": "best-costume-design-conclave.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-costume-design-conclave-pmmXnI8HHIyDZio7CdboyavWgTPGEC.jpg"
+    },
+    {
+      "category": "Best Costume Design",
+      "nominee": "Gladiator II",
+      "filename": "best-costume-design-gladiator-ii.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-costume-design-gladiator-ii-xrIwlrs4ExYs1UG2PtLfosRKEk5Rbw.jpg"
+    },
+    {
+      "category": "Best Costume Design",
+      "nominee": "A Complete Unknown",
+      "filename": "best-costume-design-a-complete-unknown.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-costume-design-a-complete-unknown-RUvaUoKs32BO4JbfcsqfhrsY4tfVYC.jpg"
+    },
+    {
+      "category": "Best Film Editing",
+      "nominee": "Conclave",
+      "filename": "best-film-editing-conclave.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-film-editing-conclave-kUBtYGX1Oc6EsgeBTTc7WCt1WnSWCV.jpg"
+    },
+    {
+      "category": "Best Film Editing",
+      "nominee": "Anora",
+      "filename": "best-film-editing-anora.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-film-editing-anora-NcQKAmNdKm31utBWy5lzsn0Uwh8p78.jpg"
+    },
+    {
+      "category": "Best Film Editing",
+      "nominee": "The Brutalist",
+      "filename": "best-film-editing-the-brutalist.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-film-editing-the-brutalist-ZzPRNc9Y9rEjYCAChVBX4rjBmptJs1.jpg"
+    },
+    {
+      "category": "Best Film Editing",
+      "nominee": "Emilia Perez",
+      "filename": "best-film-editing-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-film-editing-emilia-perez-ofbeKOQ8qGfrUOoVHMyehSYgnNXcmB.jpg"
+    },
+    {
+      "category": "Best Film Editing",
+      "nominee": "Wicked",
+      "filename": "best-film-editing-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-film-editing-wicked-ywxNIOU3X59yAqmb5EDLeEZcTQXAJ2.jpg"
+    },
+    {
+      "category": "Best Makeup and Hairstyling",
+      "nominee": "The Substance",
+      "filename": "best-makeup-and-hairstyling-the-substance.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-makeup-and-hairstyling-the-substance-HafEwOBRH3BxFrST8to61ZNwA8mpzb.jpg"
+    },
+    {
+      "category": "Best Makeup and Hairstyling",
+      "nominee": "Wicked",
+      "filename": "best-makeup-and-hairstyling-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-makeup-and-hairstyling-wicked-zEIwlRI4kh28E7YforoqOXfpQBoiKJ.jpg"
+    },
+    {
+      "category": "Best Makeup and Hairstyling",
+      "nominee": "A Different Man",
+      "filename": "best-makeup-and-hairstyling-a-different-man.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-makeup-and-hairstyling-a-different-man-4ubCGVBbja5zCOxY8IVdblQfQRvYNO.jpg"
+    },
+    {
+      "category": "Best Makeup and Hairstyling",
+      "nominee": "Nosferatu",
+      "filename": "best-makeup-and-hairstyling-nosferatu.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-makeup-and-hairstyling-nosferatu-9m5X0aQyexrZ6uM4tQhA9PFIGDo9d6.jpg"
+    },
+    {
+      "category": "Best Makeup and Hairstyling",
+      "nominee": "Emilia Perez",
+      "filename": "best-makeup-and-hairstyling-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-makeup-and-hairstyling-emilia-perez-XqiJRdXhsK5QRB4l4opmhwZaZhzDz2.jpg"
+    },
+    {
+      "category": "Best Production Design",
+      "nominee": "Wicked",
+      "filename": "best-production-design-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-production-design-wicked-midAKnJg4FrstXjV2bRjt79j2S1R8e.jpg"
+    },
+    {
+      "category": "Best Production Design",
+      "nominee": "The Brutalist",
+      "filename": "best-production-design-the-brutalist.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-production-design-the-brutalist-5a1b5bmyOz8EFesZ9MctGiIQbMOOE3.jpg"
+    },
+    {
+      "category": "Best Production Design",
+      "nominee": "Dune: Part Two",
+      "filename": "best-production-design-dune-part-two.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-production-design-dune-part-two-FlBGZLFkGUHi0IMq7H43mvBM5J216v.jpg"
+    },
+    {
+      "category": "Best Production Design",
+      "nominee": "Conclave",
+      "filename": "best-production-design-conclave.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-production-design-conclave-bp0Oz8OYwLf6BZQoVBZHgMRnqa1v0V.jpg"
+    },
+    {
+      "category": "Best Production Design",
+      "nominee": "Nosferatu",
+      "filename": "best-production-design-nosferatu.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-production-design-nosferatu-ks510XM9i7rMpUNkfP56fgBeSB6Q5B.jpg"
+    },
+    {
+      "category": "Best Score",
+      "nominee": "The Brutalist",
+      "filename": "best-score-the-brutalist.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-score-the-brutalist-APu9g9v1mpSJsGK4uNwfE4jhZIcKts.jpg"
+    },
+    {
+      "category": "Best Score",
+      "nominee": "Conclave",
+      "filename": "best-score-conclave.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-score-conclave-KgqorrG6RPo5tzS35OUkBSTbj4w5JG.jpg"
+    },
+    {
+      "category": "Best Score",
+      "nominee": "The Wild Robot",
+      "filename": "best-score-the-wild-robot.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-score-the-wild-robot-3eV7RObewk0Qz29Az94DWBrwqvG2h1.jpg"
+    },
+    {
+      "category": "Best Score",
+      "nominee": "Emilia Perez",
+      "filename": "best-score-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-score-emilia-perez-vMUPjIYmBt1b57cj8CzYWwVsprNUlu.jpg"
+    },
+    {
+      "category": "Best Score",
+      "nominee": "Wicked",
+      "filename": "best-score-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-score-wicked-gaO6hr7IEjgNZwbpTUhPLrO3hcmaeR.jpg"
+    },
+    {
+      "category": "Best Song",
+      "nominee": "Emilia Perez",
+      "filename": "best-song-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-song-emilia-perez-qBwDCUbuorrBSpVIAm1s6WlYmZfBpH.jpg"
+    },
+    {
+      "category": "Best Song",
+      "nominee": "The Six Triple Eight",
+      "filename": "best-song-the-six-triple-eight.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-song-the-six-triple-eight-MwC0wlJrcTzwZ3i4zC8QqIHj3KoLRO.jpg"
+    },
+    {
+      "category": "Best Song",
+      "nominee": "Sing Sing",
+      "filename": "best-song-sing-sing.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-song-sing-sing-8abF8SmUtn6st8LSfii0IQxp6ErmWb.jpg"
+    },
+    {
+      "category": "Best Song",
+      "nominee": "Elton John: Never Too Late",
+      "filename": "best-song-elton-john-never-too-late.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-song-elton-john-never-too-late-htIdPgDA0rPvE1jiQp96Xkl8JgYiXr.jpg"
+    },
+    {
+      "category": "Best Song",
+      "nominee": "Emilia Perez",
+      "filename": "best-song-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-song-emilia-perez-wrfAhxDrLMWTBr7GwMjH2DFSc56BoP.jpg"
+    },
+    {
+      "category": "Best Sound",
+      "nominee": "Wicked",
+      "filename": "best-sound-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-sound-wicked-TZL7i5G1ac2nZxB46yfZ3XltjJpX9j.jpg"
+    },
+    {
+      "category": "Best Sound",
+      "nominee": "Dune: Part Two",
+      "filename": "best-sound-dune-part-two.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-sound-dune-part-two-8lcEqS82MbSqPh4PmMym53a7Puhyew.jpg"
+    },
+    {
+      "category": "Best Sound",
+      "nominee": "A Complete Unknown",
+      "filename": "best-sound-a-complete-unknown.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-sound-a-complete-unknown-64QfJR1ho5tuE9DQCe50GGnf9sCc8L.jpg"
+    },
+    {
+      "category": "Best Sound",
+      "nominee": "Emilia Perez",
+      "filename": "best-sound-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-sound-emilia-perez-SDWMMuMHeRmp3EchPacUA4Oaqxjnp5.jpg"
+    },
+    {
+      "category": "Best Sound",
+      "nominee": "The Wild Robot",
+      "filename": "best-sound-the-wild-robot.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-sound-the-wild-robot-QO7Qbxixi6uUaVkY248NMgLRjLiuyx.jpg"
+    },
+    {
+      "category": "Best Visual Effects",
+      "nominee": "Dune: Part Two",
+      "filename": "best-visual-effects-dune-part-two.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-visual-effects-dune-part-two-yWG5EiXzobTkBbuBy8B3KWbRxlR71A.jpg"
+    },
+    {
+      "category": "Best Visual Effects",
+      "nominee": "Kingdom of the Planet of the Apes",
+      "filename": "best-visual-effects-kingdom-of-the-planet-of-the-apes.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-visual-effects-kingdom-of-the-planet-of-the-apes-wXn0fimC9NOz7yIZ9u2jEMYknzJF6m.jpg"
+    },
+    {
+      "category": "Best Visual Effects",
+      "nominee": "Wicked",
+      "filename": "best-visual-effects-wicked.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-visual-effects-wicked-lLftVJsXivYC31aZJHhbVx8vVaftR6.jpg"
+    },
+    {
+      "category": "Best Visual Effects",
+      "nominee": "Better Man",
+      "filename": "best-visual-effects-better-man.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-visual-effects-better-man-D5H1UWKIwDcnwKlocqUMEu6czVHavX.jpg"
+    },
+    {
+      "category": "Best Visual Effects",
+      "nominee": "Alien: Romulus",
+      "filename": "best-visual-effects-alien-romulus.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-visual-effects-alien-romulus-AEcsw7xtXS4O8aE4MQ3dr6HoQEIUWr.jpg"
+    },
+    {
+      "category": "Best Animated Feature",
+      "nominee": "The Wild Robot",
+      "filename": "best-animated-feature-the-wild-robot.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-feature-the-wild-robot-TB6NtT9uvFDkKVukf6JpcgWmF36DOf.jpg"
+    },
+    {
+      "category": "Best Animated Feature",
+      "nominee": "Flow",
+      "filename": "best-animated-feature-flow.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-feature-flow-gb1HARWLgvLm2p5yBsVn69xEtL9FSw.jpg"
+    },
+    {
+      "category": "Best Animated Feature",
+      "nominee": "Inside Out 2",
+      "filename": "best-animated-feature-inside-out-2.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-feature-inside-out-2-8M3Mg7ejvucUo37Yg5d90iDGxRvbDn.jpg"
+    },
+    {
+      "category": "Best Animated Feature",
+      "nominee": "Wallace and Gromit: Vengeance Most Fowl",
+      "filename": "best-animated-feature-wallace-and-gromit-vengeance-most-fowl.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-feature-wallace-and-gromit-vengeance-most-fowl-5W96x6k8tI9OEXI3b0VdcAimrhFqnQ.jpg"
+    },
+    {
+      "category": "Best Animated Feature",
+      "nominee": "Memoir of a Snail",
+      "filename": "best-animated-feature-memoir-of-a-snail.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-feature-memoir-of-a-snail-xO3ZIgJK7ByWS81zIufakSwAaoMx1W.jpg"
+    },
+    {
+      "category": "Best Documentary Feature",
+      "nominee": "No Other Land",
+      "filename": "best-documentary-feature-no-other-land.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-feature-no-other-land-NdERlZuiryFYYx3rGthPbU11AUhmN5.jpg"
+    },
+    {
+      "category": "Best Documentary Feature",
+      "nominee": "Porcelain War",
+      "filename": "best-documentary-feature-porcelain-war.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-feature-porcelain-war-zBG18PFix4XqIuhOpTjX7ynyYJQbSM.jpg"
+    },
+    {
+      "category": "Best Documentary Feature",
+      "nominee": "Sugarcane",
+      "filename": "best-documentary-feature-sugarcane.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-feature-sugarcane-0gzsPWRDAqyXkUTtRpSlN2Tvt15xO6.jpg"
+    },
+    {
+      "category": "Best Documentary Feature",
+      "nominee": "Black Box Diaries",
+      "filename": "best-documentary-feature-black-box-diaries.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-feature-black-box-diaries-SWjQXCEVEnfFssAjypC3Wq6oLx27yQ.jpg"
+    },
+    {
+      "category": "Best Documentary Feature",
+      "nominee": "Soundtrack to a Coup d’Etat",
+      "filename": "best-documentary-feature-soundtrack-to-a-coup-detat.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-feature-soundtrack-to-a-coup-detat-xo78eEaLreuEQITDbIva9F9pdg6dHF.jpg"
+    },
+    {
+      "category": "Best International Film",
+      "nominee": "I'm Still Here",
+      "filename": "best-international-film-im-still-here.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-international-film-im-still-here-oJl2YP0Ev0O3nHnXa2Vj65knAE71Ya.jpg"
+    },
+    {
+      "category": "Best International Film",
+      "nominee": "Emilia Perez",
+      "filename": "best-international-film-emilia-perez.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-international-film-emilia-perez-V9v79C1Gag7H1z5P0WISHYZPw8L0Hv.jpg"
+    },
+    {
+      "category": "Best International Film",
+      "nominee": "The Seed of the Sacred Fig",
+      "filename": "best-international-film-the-seed-of-the-sacred-fig.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-international-film-the-seed-of-the-sacred-fig-v1gM23M3kMcgamqfuRGdu4d50MXZfj.jpg"
+    },
+    {
+      "category": "Best International Film",
+      "nominee": "Flow",
+      "filename": "best-international-film-flow.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-international-film-flow-9TdZyUOHq7JoJENGxuKgY5sq6P1qSL.jpg"
+    },
+    {
+      "category": "Best International Film",
+      "nominee": "The Girl with the Needle",
+      "filename": "best-international-film-the-girl-with-the-needle.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-international-film-the-girl-with-the-needle-EWQ52DLjqw846eNYt37bYTr5A4nCzP.jpg"
+    },
+    {
+      "category": "Best Animated Short",
+      "nominee": "Beautiful Men",
+      "filename": "best-animated-short-beautiful-men.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-short-beautiful-men-RNsEXL9ohq3o1wLJul8KkMJM4Eevnb.jpg"
+    },
+    {
+      "category": "Best Animated Short",
+      "nominee": "Wander to Wonder",
+      "filename": "best-animated-short-wander-to-wonder.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-short-wander-to-wonder-Z2Uy46PQvtxGk6j2lpKoscu371LZrl.jpg"
+    },
+    {
+      "category": "Best Animated Short",
+      "nominee": "Yuck!",
+      "filename": "best-animated-short-yuck.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-short-yuck-9qUmcN17tijtl19Ap10skO9kUFyatH.jpg"
+    },
+    {
+      "category": "Best Animated Short",
+      "nominee": "In the Shadow of the Cypress",
+      "filename": "best-animated-short-in-the-shadow-of-the-cypress.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-short-in-the-shadow-of-the-cypress-Q8jBSqz1jNtWlwHxLC862imMd2wYw5.jpg"
+    },
+    {
+      "category": "Best Animated Short",
+      "nominee": "Magic Candies",
+      "filename": "best-animated-short-magic-candies.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-animated-short-magic-candies-uUta0a93XiSXjP6i1JICua7PhdQI1w.jpg"
+    },
+    {
+      "category": "Best Documentary Short",
+      "nominee": "I Am Ready, Warden",
+      "filename": "best-documentary-short-i-am-ready-warden.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-short-i-am-ready-warden-UoUCpG6SuoE6fw3EkEBmzh5IlR0XLx.jpg"
+    },
+    {
+      "category": "Best Documentary Short",
+      "nominee": "Incident",
+      "filename": "best-documentary-short-incident.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-short-incident-inTBgF0xDv7FWvWQqVdASRTz2TbYRP.jpg"
+    },
+    {
+      "category": "Best Documentary Short",
+      "nominee": "The Only Girl in the Orchestra",
+      "filename": "best-documentary-short-the-only-girl-in-the-orchestra.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-short-the-only-girl-in-the-orchestra-DSTDlaoDAdn2m1hVeoAQXoZz2QdATC.jpg"
+    },
+    {
+      "category": "Best Documentary Short",
+      "nominee": "Death by Numbers",
+      "filename": "best-documentary-short-death-by-numbers.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-short-death-by-numbers-I106p2bTRt07v9ErqGTjBUr2Dma9xc.jpg"
+    },
+    {
+      "category": "Best Documentary Short",
+      "nominee": "Instruments of a Beating Heart",
+      "filename": "best-documentary-short-instruments-of-a-beating-heart.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-documentary-short-instruments-of-a-beating-heart-zYV9VE6lccOOFTEHFPiwyGCmz7g89A.jpg"
+    },
+    {
+      "category": "Best Live Action Short",
+      "nominee": "The Man Who Could Not Remain Silent",
+      "filename": "best-live-action-short-the-man-who-could-not-remain-silent.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-live-action-short-the-man-who-could-not-remain-silent-27V9T5i5mVZaPGWX8uCvSIX4EFEp3n.jpg"
+    },
+    {
+      "category": "Best Live Action Short",
+      "nominee": "A Lien",
+      "filename": "best-live-action-short-a-lien.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-live-action-short-a-lien-1NuineCbm89YsvAk237AbNwD2cZVig.jpg"
+    },
+    {
+      "category": "Best Live Action Short",
+      "nominee": "Anuja",
+      "filename": "best-live-action-short-anuja.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-live-action-short-anuja-eL6pfl84KxgFYNeUKtXnS6881cWSv1.jpg"
+    },
+    {
+      "category": "Best Live Action Short",
+      "nominee": "I’m Not a Robot",
+      "filename": "best-live-action-short-im-not-a-robot.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-live-action-short-im-not-a-robot-uv29EBg0Ex7xqKOgEKC43xF1HboeYz.jpg"
+    },
+    {
+      "category": "Best Live Action Short",
+      "nominee": "The Last Ranger",
+      "filename": "best-live-action-short-the-last-ranger.jpg",
+      "url": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com/nominees/best-live-action-short-the-last-ranger-C29eSOk6IA5CsPABddIUhvP2YNkc6d.jpg"
+    }
+  ],
+  "timestamp": "2025-02-25T00:41:07.960Z",
+  "baseUrl": "https://3isexyxg2bd3whr8.public.blob.vercel-storage.com"
+}

@@ -2,8 +2,6 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { use } from "react";
 
-
-
 // Force Node.js runtime for Prisma and better-auth
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -59,6 +57,8 @@ export async function GET(
     if (!game) {
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
     }
+
+    console.log("Nominee example:", game.categories[0]?.nominees[0]);
 
     return NextResponse.json(game);
   } catch (error) {

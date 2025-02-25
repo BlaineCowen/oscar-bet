@@ -1,5 +1,6 @@
 import { prisma } from "./prisma";
 import oscarPredictions from "./oscars_predictions.json";
+import { getNomineeName } from "./game-utils";
 
 function convertOddsToDecimal(odds: string): number {
   const [numerator, denominator] = odds.split("/").map(Number);
@@ -32,7 +33,7 @@ export async function createNewGame({
             name: category.category.replace("  (more info)", ""),
             nominees: {
               create: category.predictions.map((nominee) => ({
-                name: nominee.name.trim(),
+                name: getNomineeName(nominee),
                 odds: convertOddsToDecimal(nominee.odds),
               })),
             },

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/components/providers";
+import { Providers } from "@/providers";
 import { Navbar } from "@/components/layout/navbar";
 import { Toaster } from "sonner";
 import JoinCheck from "@/components/auth/join-check";

@@ -14,22 +14,55 @@ predictions = []
 
 # Iterate over each category
 for category in soup.find_all("div", class_="predictions-wrapper"):
-    category_title = category.find("div", class_="category-title").text.strip().replace("\t", "").replace("\n", " ") if category.find("div", class_="category-title") else "Unknown"
+    # Get category title and clean it up
+    if category.find("div", class_="category-title"):
+        category_title = category.find("div", class_="category-title").text.strip()
+        category_title = category_title.replace("\t", "").replace("\n", " ")
+        # Remove the "(more info)" text
+        category_title = category_title.replace("(more info)", "").strip()
+    else:
+        category_title = "Unknown"
 
     predictions_list = []
     for item in category.find("ul", class_="predictions-list").find_all("li"):
         position = item.find("div", class_="predictions-position-v2").text.strip() if item.find("div", class_="predictions-position-v2") else None
-        name = item.find("div", class_="predictions-name").text.strip() if item.find("div", class_="predictions-name") else None
+        
+        # Get the name and handle actor/movie splitting if needed
+        name_element = item.find("div", class_="predictions-name")
+        name = name_element.text.strip() if name_element else None
+        actor_name = None
+        movie_title = None
+        
+        # If there's a newline in the name, it's likely an actor category
+        if name and '\n' in name:
+            parts = name.split('\n', 1)  # Split only on first newline
+            actor_name = parts[0].strip()
+            movie_title = parts[1].strip() if len(parts) > 1 else None
+        
+        # Extract image source from predictions-photo div
+        photo_div = item.find("div", class_="predictions-photo")
+        image_url = None
+        if photo_div and photo_div.find("img"):
+            image_url = photo_div.find("img").get("src")
         
         # Extract only the third odds value (fractional odds)
         odds_elements = item.find_all("div", class_="predictions-odds predictions-experts gray")
         fractional_odds = odds_elements[2].text.strip() if len(odds_elements) > 2 else None
 
-        predictions_list.append({
+        nominee_data = {
             "position": position,
-            "name": name,
-            "odds": fractional_odds  # Keep only the fractional odds
-        })
+            "image": image_url,
+            "odds": fractional_odds
+        }
+        
+        # Add the appropriate name fields based on whether it's an actor category
+        if actor_name:
+            nominee_data["actor"] = actor_name
+            nominee_data["movie"] = movie_title
+        else:
+            nominee_data["name"] = name
+            
+        predictions_list.append(nominee_data)
 
     predictions.append({
         "category": category_title,

@@ -131,6 +131,8 @@ model Nominee {
   id         String     @id @default(cuid())
   name       String
   odds       Float
+  // Note: No longer storing image URLs in the database
+  // We now generate them predictably from nominee name + category
   category   Category   @relation(fields: [categoryId], references: [id])
   categoryId String
   bets       Bet[]

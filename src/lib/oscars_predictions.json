@@ -1,716 +1,866 @@
 [
     {
-        "category": "Best Picture  (more info)",
+        "category": "Best Picture",
         "predictions": [
             {
                 "position": "1",
-                "name": "Anora",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Anora.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "name": "Anora"
             },
             {
                 "position": "2",
-                "name": "The Brutalist",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Conclave.jpg?w=75&h=75&crop=1",
+                "odds": "13/2",
+                "name": "Conclave"
             },
             {
                 "position": "3",
-                "name": "Conclave",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/The-Brutalist.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "The Brutalist"
             },
             {
                 "position": "4",
-                "name": "A Complete Unknown",
-                "odds": "17/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/A-Complete-Unknown-1.jpg?w=75&h=75&crop=1",
+                "odds": "9/1",
+                "name": "A Complete Unknown"
             },
             {
                 "position": "5",
-                "name": "Wicked",
-                "odds": "9/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "9/1",
+                "name": "Wicked"
             },
             {
                 "position": "6",
-                "name": "Emilia Perez",
-                "odds": "21/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "21/2",
+                "name": "Emilia Perez"
             },
             {
                 "position": "7",
-                "name": "The Substance",
-                "odds": "23/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Substance.jpg?w=75&h=75&crop=1",
+                "odds": "23/2",
+                "name": "The Substance"
             },
             {
                 "position": "8",
-                "name": "I'm Still Here",
-                "odds": "13/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/Im-Still-Here.jpg?w=75&h=75&crop=1",
+                "odds": "13/1",
+                "name": "I'm Still Here"
             },
             {
                 "position": "9",
-                "name": "Dune: Part Two",
-                "odds": "15/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2023/06/Dune-Part-Two.jpg?w=75&h=75&crop=1",
+                "odds": "15/1",
+                "name": "Dune: Part Two"
             },
             {
                 "position": "10",
-                "name": "Nickel Boys",
-                "odds": "18/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Nickel-Boys.jpg?w=75&h=75&crop=1",
+                "odds": "16/1",
+                "name": "Nickel Boys"
             }
         ]
     },
     {
-        "category": "Best Director  (more info)",
+        "category": "Best Director",
         "predictions": [
             {
                 "position": "1",
-                "name": "Sean Baker \n Anora",
-                "odds": "9/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2015/11/Sean-Baker.jpg?w=75&h=75&crop=1",
+                "odds": "7/4",
+                "actor": "Sean Baker",
+                "movie": "Anora"
             },
             {
                 "position": "2",
-                "name": "Brady Corbet \n The Brutalist",
-                "odds": "31/10"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/Brady-Corbet.jpg?w=75&h=75&crop=1",
+                "odds": "16/5",
+                "actor": "Brady Corbet",
+                "movie": "The Brutalist"
             },
             {
                 "position": "3",
-                "name": "Coralie Fargeat \n The Substance",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Coralie-Fargeat.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "actor": "Coralie Fargeat",
+                "movie": "The Substance"
             },
             {
                 "position": "4",
-                "name": "James Mangold \n A Complete Unknown",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2017/08/James-Mangold-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "13/2",
+                "actor": "James Mangold",
+                "movie": "A Complete Unknown"
             },
             {
                 "position": "5",
-                "name": "Jacques Audiard \n Emilia Perez",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2018/08/Jacques-Audiard.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "actor": "Jacques Audiard",
+                "movie": "Emilia Perez"
             }
         ]
     },
     {
-        "category": "Best Actress  (more info)",
+        "category": "Best Actress",
         "predictions": [
             {
                 "position": "1",
-                "name": "Demi Moore \n The Substance",
-                "odds": "11/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2011/10/Demi-Moore.jpg?w=75&h=75&crop=1",
+                "odds": "21/10",
+                "actor": "Demi Moore",
+                "movie": "The Substance"
             },
             {
                 "position": "2",
-                "name": "Mikey Madison \n Anora",
-                "odds": "14/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Mikey-Madison.jpg?w=75&h=75&crop=1",
+                "odds": "31/10",
+                "actor": "Mikey Madison",
+                "movie": "Anora"
             },
             {
                 "position": "3",
-                "name": "Fernanda Torres \n I'm Still Here",
-                "odds": "19/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/Fernanda-Torres.jpg?w=75&h=75&crop=1",
+                "odds": "37/10",
+                "actor": "Fernanda Torres",
+                "movie": "I'm Still Here"
             },
             {
                 "position": "4",
-                "name": "Cynthia Erivo \n Wicked",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2016/04/Cynthia-Erivo-1.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "actor": "Cynthia Erivo",
+                "movie": "Wicked"
             },
             {
                 "position": "5",
-                "name": "Karla Sofia Gascon \n Emilia Perez",
-                "odds": "19/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Karla-Sofia-Gascon.jpg?w=75&h=75&crop=1",
+                "odds": "19/2",
+                "actor": "Karla Sofia Gascon",
+                "movie": "Emilia Perez"
             }
         ]
     },
     {
-        "category": "Best Actor  (more info)",
+        "category": "Best Actor",
         "predictions": [
             {
                 "position": "1",
-                "name": "Adrien Brody \n The Brutalist",
-                "odds": "17/10"
+                "image": "https://www.goldderby.com/wp-content/uploads/2013/11/Adrien-Brody.jpg?w=75&h=75&crop=1",
+                "odds": "9/5",
+                "actor": "Adrien Brody",
+                "movie": "The Brutalist"
             },
             {
                 "position": "2",
-                "name": "Timothee Chalamet \n A Complete Unknown",
-                "odds": "82/25"
+                "image": "https://www.goldderby.com/wp-content/uploads/2017/07/Timothee-Chalamet-2.jpg?w=75&h=75&crop=1",
+                "odds": "31/10",
+                "actor": "Timothee Chalamet",
+                "movie": "A Complete Unknown"
             },
             {
                 "position": "3",
-                "name": "Ralph Fiennes \n Conclave",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2011/05/Ralph-Fiennes.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "actor": "Ralph Fiennes",
+                "movie": "Conclave"
             },
             {
                 "position": "4",
-                "name": "Colman Domingo \n Sing Sing",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2016/08/Colman-Domingo.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "actor": "Colman Domingo",
+                "movie": "Sing Sing"
             },
             {
                 "position": "5",
-                "name": "Sebastian Stan \n The Apprentice",
-                "odds": "17/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2013/05/Sebastian-Stan.jpg?w=75&h=75&crop=1",
+                "odds": "17/2",
+                "actor": "Sebastian Stan",
+                "movie": "The Apprentice"
             }
         ]
     },
     {
-        "category": "Best Supporting Actress  (more info)",
+        "category": "Best Supporting Actress",
         "predictions": [
             {
                 "position": "1",
-                "name": "Zoe Saldana \n Emilia Perez",
-                "odds": "31/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2016/10/Zoe-Saldana-1.jpg?w=75&h=75&crop=1",
+                "odds": "31/20",
+                "actor": "Zoe Saldana",
+                "movie": "Emilia Perez"
             },
             {
                 "position": "2",
-                "name": "Ariana Grande \n Wicked",
-                "odds": "19/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2013/07/ariana-grande-sq.jpg?w=75&h=75&crop=1",
+                "odds": "19/5",
+                "actor": "Ariana Grande",
+                "movie": "Wicked"
             },
             {
                 "position": "3",
-                "name": "Isabella Rossellini \n Conclave",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2022/06/Isabella-Rossellini.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "actor": "Isabella Rossellini",
+                "movie": "Conclave"
             },
             {
                 "position": "4",
-                "name": "Felicity Jones \n The Brutalist",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2016/08/Felicity-Jones-1.jpg?w=75&h=75&crop=1",
+                "odds": "13/2",
+                "actor": "Felicity Jones",
+                "movie": "The Brutalist"
             },
             {
                 "position": "5",
-                "name": "Monica Barbaro \n A Complete Unknown",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/Monica-Barbaro.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "actor": "Monica Barbaro",
+                "movie": "A Complete Unknown"
             }
         ]
     },
     {
-        "category": "Best Supporting Actor  (more info)",
+        "category": "Best Supporting Actor",
         "predictions": [
             {
                 "position": "1",
-                "name": "Kieran Culkin \n A Real Pain",
-                "odds": "3/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2020/07/kieran-culkin-2.jpg?w=75&h=75&crop=1",
+                "odds": "3/2",
+                "actor": "Kieran Culkin",
+                "movie": "A Real Pain"
             },
             {
                 "position": "2",
-                "name": "Guy Pearce \n The Brutalist",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2011/05/Guy-Pearce-1.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "actor": "Guy Pearce",
+                "movie": "The Brutalist"
             },
             {
                 "position": "3",
-                "name": "Edward Norton \n A Complete Unknown",
-                "odds": "5/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2016/08/Edward-Norton-1.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "actor": "Edward Norton",
+                "movie": "A Complete Unknown"
             },
             {
                 "position": "4",
-                "name": "Yura Borisov \n Anora",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Yura-Borisov.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "actor": "Yura Borisov",
+                "movie": "Anora"
             },
             {
                 "position": "5",
-                "name": "Jeremy Strong \n The Apprentice",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2020/07/jeremy-strong-2.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "actor": "Jeremy Strong",
+                "movie": "The Apprentice"
             }
         ]
     },
     {
-        "category": "Best Adapted Screenplay  (more info)",
+        "category": "Best Adapted Screenplay",
         "predictions": [
             {
                 "position": "1",
-                "name": "Conclave",
-                "odds": "3/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Conclave.jpg?w=75&h=75&crop=1",
+                "odds": "3/2",
+                "name": "Conclave"
             },
             {
                 "position": "2",
-                "name": "A Complete Unknown",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/A-Complete-Unknown-1.jpg?w=75&h=75&crop=1",
+                "odds": "9/2",
+                "name": "A Complete Unknown"
             },
             {
                 "position": "3",
-                "name": "Nickel Boys",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Nickel-Boys.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "Nickel Boys"
             },
             {
                 "position": "4",
-                "name": "Sing Sing",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Sing-Sing.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Sing Sing"
             },
             {
                 "position": "5",
-                "name": "Emilia Perez",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "Emilia Perez"
             }
         ]
     },
     {
-        "category": "Best Original Screenplay  (more info)",
+        "category": "Best Original Screenplay",
         "predictions": [
             {
                 "position": "1",
-                "name": "Anora",
-                "odds": "15/8"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Anora.jpg?w=75&h=75&crop=1",
+                "odds": "41/20",
+                "name": "Anora"
             },
             {
                 "position": "2",
-                "name": "The Substance",
-                "odds": "19/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/A-Real-Pain-1.jpg?w=75&h=75&crop=1",
+                "odds": "18/5",
+                "name": "A Real Pain"
             },
             {
                 "position": "3",
-                "name": "A Real Pain",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Substance.jpg?w=75&h=75&crop=1",
+                "odds": "4/1",
+                "name": "The Substance"
             },
             {
                 "position": "4",
-                "name": "The Brutalist",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/The-Brutalist.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "The Brutalist"
             },
             {
                 "position": "5",
-                "name": "September 5",
-                "odds": "9/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/September-5.jpg?w=75&h=75&crop=1",
+                "odds": "9/1",
+                "name": "September 5"
             }
         ]
     },
     {
-        "category": "Best Cinematography  (more info)",
+        "category": "Best Cinematography",
         "predictions": [
             {
                 "position": "1",
-                "name": "The Brutalist",
-                "odds": "13/8"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/The-Brutalist.jpg?w=75&h=75&crop=1",
+                "odds": "13/8",
+                "name": "The Brutalist"
             },
             {
                 "position": "2",
-                "name": "Nosferatu",
-                "odds": "19/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Nosferatu.jpg?w=75&h=75&crop=1",
+                "odds": "39/10",
+                "name": "Nosferatu"
             },
             {
                 "position": "3",
-                "name": "Dune: Part Two",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2023/06/Dune-Part-Two.jpg?w=75&h=75&crop=1",
+                "odds": "9/2",
+                "name": "Dune: Part Two"
             },
             {
                 "position": "4",
-                "name": "Emilia Perez",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/Maria.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "Maria"
             },
             {
                 "position": "5",
-                "name": "Maria",
-                "odds": "8/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "name": "Emilia Perez"
             }
         ]
     },
     {
-        "category": "Best Costume Design  (more info)",
+        "category": "Best Costume Design",
         "predictions": [
             {
                 "position": "1",
-                "name": "Wicked",
-                "odds": "29/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "29/20",
+                "name": "Wicked"
             },
             {
                 "position": "2",
-                "name": "Nosferatu",
-                "odds": "4/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Nosferatu.jpg?w=75&h=75&crop=1",
+                "odds": "4/1",
+                "name": "Nosferatu"
             },
             {
                 "position": "3",
-                "name": "Conclave",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Conclave.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "Conclave"
             },
             {
                 "position": "4",
-                "name": "Gladiator II",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Gladiator-II.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "Gladiator II"
             },
             {
                 "position": "5",
-                "name": "A Complete Unknown",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/A-Complete-Unknown-1.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "name": "A Complete Unknown"
             }
         ]
     },
     {
-        "category": "Best Film Editing  (more info)",
+        "category": "Best Film Editing",
         "predictions": [
             {
                 "position": "1",
-                "name": "Conclave",
-                "odds": "21/10"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Conclave.jpg?w=75&h=75&crop=1",
+                "odds": "39/20",
+                "name": "Conclave"
             },
             {
                 "position": "2",
-                "name": "Anora",
-                "odds": "31/10"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Anora.jpg?w=75&h=75&crop=1",
+                "odds": "10/3",
+                "name": "Anora"
             },
             {
                 "position": "3",
-                "name": "The Brutalist",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/The-Brutalist.jpg?w=75&h=75&crop=1",
+                "odds": "9/2",
+                "name": "The Brutalist"
             },
             {
                 "position": "4",
-                "name": "Emilia Perez",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "13/2",
+                "name": "Emilia Perez"
             },
             {
                 "position": "5",
-                "name": "Wicked",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "name": "Wicked"
             }
         ]
     },
     {
-        "category": "Best Makeup and Hairstyling  (more info)",
+        "category": "Best Makeup and Hairstyling",
         "predictions": [
             {
                 "position": "1",
-                "name": "The Substance",
-                "odds": "31/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Substance.jpg?w=75&h=75&crop=1",
+                "odds": "31/20",
+                "name": "The Substance"
             },
             {
                 "position": "2",
-                "name": "Wicked",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "9/2",
+                "name": "Wicked"
             },
             {
                 "position": "3",
-                "name": "A Different Man",
-                "odds": "5/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/A-Different-Man.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "name": "A Different Man"
             },
             {
                 "position": "4",
-                "name": "Nosferatu",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Nosferatu.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Nosferatu"
             },
             {
                 "position": "5",
-                "name": "Emilia Perez",
-                "odds": "8/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "8/1",
+                "name": "Emilia Perez"
             }
         ]
     },
     {
-        "category": "Best Production Design  (more info)",
+        "category": "Best Production Design",
         "predictions": [
             {
                 "position": "1",
-                "name": "Wicked",
-                "odds": "8/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "8/5",
+                "name": "Wicked"
             },
             {
                 "position": "2",
-                "name": "The Brutalist",
-                "odds": "39/10"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/The-Brutalist.jpg?w=75&h=75&crop=1",
+                "odds": "39/10",
+                "name": "The Brutalist"
             },
             {
                 "position": "3",
-                "name": "Dune: Part Two",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2023/06/Dune-Part-Two.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "Dune: Part Two"
             },
             {
                 "position": "4",
-                "name": "Conclave",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Conclave.jpg?w=75&h=75&crop=1",
+                "odds": "13/2",
+                "name": "Conclave"
             },
             {
                 "position": "5",
-                "name": "Nosferatu",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Nosferatu.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "name": "Nosferatu"
             }
         ]
     },
     {
-        "category": "Best Score  (more info)",
+        "category": "Best Score",
         "predictions": [
             {
                 "position": "1",
-                "name": "The Brutalist",
-                "odds": "7/4"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/08/The-Brutalist.jpg?w=75&h=75&crop=1",
+                "odds": "7/4",
+                "name": "The Brutalist"
             },
             {
                 "position": "2",
-                "name": "Conclave",
-                "odds": "7/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Conclave.jpg?w=75&h=75&crop=1",
+                "odds": "71/20",
+                "name": "Conclave"
             },
             {
                 "position": "3",
-                "name": "The Wild Robot",
-                "odds": "5/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Wild-Robot.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "name": "The Wild Robot"
             },
             {
                 "position": "4",
-                "name": "Emilia Perez",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Emilia Perez"
             },
             {
                 "position": "5",
-                "name": "Wicked",
-                "odds": "8/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "8/1",
+                "name": "Wicked"
             }
         ]
     },
     {
-        "category": "Best Song  (more info)",
+        "category": "Best Song",
         "predictions": [
             {
                 "position": "1",
-                "name": "Emilia Perez \n El Mal",
-                "odds": "9/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "9/5",
+                "actor": "Emilia Perez",
+                "movie": "El Mal"
             },
             {
                 "position": "2",
-                "name": "The Six Triple Eight \n The Journey",
-                "odds": "18/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Six-Triple-Eight.jpg?w=75&h=75&crop=1",
+                "odds": "19/5",
+                "actor": "The Six Triple Eight",
+                "movie": "The Journey"
             },
             {
                 "position": "3",
-                "name": "Elton John: Never Too Late \n Never Too Late",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Sing-Sing.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "actor": "Sing Sing",
+                "movie": "Like a Bird"
             },
             {
                 "position": "4",
-                "name": "Emilia Perez \n Mi Camino",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/10/Elton-John-Never-Too-Late.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "actor": "Elton John: Never Too Late",
+                "movie": "Never Too Late"
             },
             {
                 "position": "5",
-                "name": "Sing Sing \n Like a Bird",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "13/2",
+                "actor": "Emilia Perez",
+                "movie": "Mi Camino"
             }
         ]
     },
     {
-        "category": "Best Sound  (more info)",
+        "category": "Best Sound",
         "predictions": [
             {
                 "position": "1",
-                "name": "Wicked",
-                "odds": "9/4"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "5/2",
+                "name": "Wicked"
             },
             {
                 "position": "2",
-                "name": "Dune: Part Two",
-                "odds": "51/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2023/06/Dune-Part-Two.jpg?w=75&h=75&crop=1",
+                "odds": "51/20",
+                "name": "Dune: Part Two"
             },
             {
                 "position": "3",
-                "name": "A Complete Unknown",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/A-Complete-Unknown-1.jpg?w=75&h=75&crop=1",
+                "odds": "19/5",
+                "name": "A Complete Unknown"
             },
             {
                 "position": "4",
-                "name": "Emilia Perez",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "name": "Emilia Perez"
             },
             {
                 "position": "5",
-                "name": "The Wild Robot",
-                "odds": "17/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Wild-Robot.jpg?w=75&h=75&crop=1",
+                "odds": "8/1",
+                "name": "The Wild Robot"
             }
         ]
     },
     {
-        "category": "Best Visual Effects  (more info)",
+        "category": "Best Visual Effects",
         "predictions": [
             {
                 "position": "1",
-                "name": "Dune: Part Two",
-                "odds": "31/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2023/06/Dune-Part-Two.jpg?w=75&h=75&crop=1",
+                "odds": "31/20",
+                "name": "Dune: Part Two"
             },
             {
                 "position": "2",
-                "name": "Kingdom of the Planet of the Apes",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/04/Kingdom-of-the-Planet-of-the-Apes-200x200-1.jpg?w=75&h=75&crop=1",
+                "odds": "9/2",
+                "name": "Kingdom of the Planet of the Apes"
             },
             {
                 "position": "3",
-                "name": "Wicked",
-                "odds": "5/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Wicked-1.jpg?w=75&h=75&crop=1",
+                "odds": "5/1",
+                "name": "Wicked"
             },
             {
                 "position": "4",
-                "name": "Better Man",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Better-Man-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Better Man"
             },
             {
                 "position": "5",
-                "name": "Alien: Romulus",
-                "odds": "17/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/Alien-Romulus-200.jpg?w=75&h=75&crop=1",
+                "odds": "17/2",
+                "name": "Alien: Romulus"
             }
         ]
     },
     {
-        "category": "Best Animated Feature  (more info)",
+        "category": "Best Animated Feature",
         "predictions": [
             {
                 "position": "1",
-                "name": "The Wild Robot",
-                "odds": "17/10"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/The-Wild-Robot.jpg?w=75&h=75&crop=1",
+                "odds": "17/10",
+                "name": "The Wild Robot"
             },
             {
                 "position": "2",
-                "name": "Flow",
-                "odds": "16/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/Flow.jpg?w=75&h=75&crop=1",
+                "odds": "82/25",
+                "name": "Flow"
             },
             {
                 "position": "3",
-                "name": "Inside Out 2",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/inside-out-2.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "Inside Out 2"
             },
             {
                 "position": "4",
-                "name": "Wallace and Gromit: Vengeance Most Fowl",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/Wallace-and-Gromit.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "Wallace and Gromit: Vengeance Most Fowl"
             },
             {
                 "position": "5",
-                "name": "Memoir of a Snail",
-                "odds": "15/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/Memoir-of-a-Snail.jpg?w=75&h=75&crop=1",
+                "odds": "15/2",
+                "name": "Memoir of a Snail"
             }
         ]
     },
     {
-        "category": "Best Documentary Feature  (more info)",
+        "category": "Best Documentary Feature",
         "predictions": [
             {
                 "position": "1",
-                "name": "No Other Land",
-                "odds": "9/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/10/Antipode.jpg?w=75&h=75&crop=1",
+                "odds": "15/8",
+                "name": "No Other Land"
             },
             {
                 "position": "2",
-                "name": "Sugarcane",
-                "odds": "4/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/11/Porcelain-War.jpg?w=75&h=75&crop=1",
+                "odds": "4/1",
+                "name": "Porcelain War"
             },
             {
                 "position": "3",
-                "name": "Porcelain War",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/10/Sugarcane.jpg?w=75&h=75&crop=1",
+                "odds": "9/2",
+                "name": "Sugarcane"
             },
             {
                 "position": "4",
-                "name": "Black Box Diaries",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/11/Black-Box-Diaries.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Black Box Diaries"
             },
             {
                 "position": "5",
-                "name": "Soundtrack to a Coup d’Etat",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/10/Soundtrack.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "Soundtrack to a Coup d’Etat"
             }
         ]
     },
     {
-        "category": "Best International Film  (more info)",
+        "category": "Best International Film",
         "predictions": [
             {
                 "position": "1",
-                "name": "I'm Still Here",
-                "odds": "41/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/Im-Still-Here.jpg?w=75&h=75&crop=1",
+                "odds": "39/20",
+                "name": "I'm Still Here"
             },
             {
                 "position": "2",
-                "name": "Emilia Perez",
-                "odds": "57/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/06/Emilia-Perez-SQ.jpg?w=75&h=75&crop=1",
+                "odds": "3/1",
+                "name": "Emilia Perez"
             },
             {
                 "position": "3",
-                "name": "The Seed of the Sacred Fig",
-                "odds": "5/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/07/The-Seed-of-the-Sacred-Fig.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "The Seed of the Sacred Fig"
             },
             {
                 "position": "4",
-                "name": "Flow",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/09/Flow.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "Flow"
             },
             {
                 "position": "5",
-                "name": "The Girl with the Needle",
-                "odds": "9/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/The-Girl-with-the-Needle.jpg?w=75&h=75&crop=1",
+                "odds": "9/1",
+                "name": "The Girl with the Needle"
             }
         ]
     },
     {
-        "category": "Best Animated Short  (more info)",
+        "category": "Best Animated Short",
         "predictions": [
             {
                 "position": "1",
-                "name": "Beautiful Men",
-                "odds": "53/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Beautiful-Men.jpg?w=75&h=75&crop=1",
+                "odds": "3/1",
+                "name": "Beautiful Men"
             },
             {
                 "position": "2",
-                "name": "Wander to Wonder",
-                "odds": "3/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Wander-to-Wonder.jpg?w=75&h=75&crop=1",
+                "odds": "16/5",
+                "name": "Wander to Wonder"
             },
             {
                 "position": "3",
-                "name": "Yuck!",
-                "odds": "4/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Yuck.jpg?w=75&h=75&crop=1",
+                "odds": "71/20",
+                "name": "Yuck!"
             },
             {
                 "position": "4",
-                "name": "In the Shadow of the Cypress",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/In-the-Shadow-of-the-Cypress.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "In the Shadow of the Cypress"
             },
             {
                 "position": "5",
-                "name": "Magic Candies",
-                "odds": "13/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Magic-Candies.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Magic Candies"
             }
         ]
     },
     {
-        "category": "Best Documentary Short  (more info)",
+        "category": "Best Documentary Short",
         "predictions": [
             {
                 "position": "1",
-                "name": "I Am Ready, Warden",
-                "odds": "43/20"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/I-Am-Ready-Warden.jpg?w=75&h=75&crop=1",
+                "odds": "43/20",
+                "name": "I Am Ready, Warden"
             },
             {
                 "position": "2",
-                "name": "Incident",
-                "odds": "18/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Incident.jpg?w=75&h=75&crop=1",
+                "odds": "37/10",
+                "name": "Incident"
             },
             {
                 "position": "3",
-                "name": "The Only Girl in the Orchestra",
-                "odds": "19/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/The-Only-Girl-in-the-Orchestra.jpg?w=75&h=75&crop=1",
+                "odds": "37/10",
+                "name": "The Only Girl in the Orchestra"
             },
             {
                 "position": "4",
-                "name": "Death by Numbers",
-                "odds": "6/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Death-by-Numbers.jpg?w=75&h=75&crop=1",
+                "odds": "6/1",
+                "name": "Death by Numbers"
             },
             {
                 "position": "5",
-                "name": "Instruments of a Beating Heart",
-                "odds": "8/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Instruments-of-a-Beating-Heart.jpg?w=75&h=75&crop=1",
+                "odds": "8/1",
+                "name": "Instruments of a Beating Heart"
             }
         ]
     },
     {
-        "category": "Best Live Action Short  (more info)",
+        "category": "Best Live Action Short",
         "predictions": [
             {
                 "position": "1",
-                "name": "The Man Who Could Not Remain Silent",
-                "odds": "9/4"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/The-Man-Who-Could-Not-Remain-Silent.jpg?w=75&h=75&crop=1",
+                "odds": "23/10",
+                "name": "The Man Who Could Not Remain Silent"
             },
             {
                 "position": "2",
-                "name": "Anuja",
-                "odds": "17/5"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/A-Lien.jpg?w=75&h=75&crop=1",
+                "odds": "18/5",
+                "name": "A Lien"
             },
             {
                 "position": "3",
-                "name": "A Lien",
-                "odds": "9/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Anuja.jpg?w=75&h=75&crop=1",
+                "odds": "4/1",
+                "name": "Anuja"
             },
             {
                 "position": "4",
-                "name": "I’m Not a Robot",
-                "odds": "11/2"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/Im-Not-a-Robot.jpg?w=75&h=75&crop=1",
+                "odds": "11/2",
+                "name": "I’m Not a Robot"
             },
             {
                 "position": "5",
-                "name": "The Last Ranger",
-                "odds": "7/1"
+                "image": "https://www.goldderby.com/wp-content/uploads/2024/12/The-Last-Ranger.jpg?w=75&h=75&crop=1",
+                "odds": "7/1",
+                "name": "The Last Ranger"
             }
         ]
     }
