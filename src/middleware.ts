@@ -16,6 +16,6 @@ export const config = {
   matcher: [
     "/games/:path*",
     "/api/games/:path*",
-    "/((?!api/auth|login|register|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api/auth|login|register|_next/static|_next/image|favicon.ico|/|$).*)",
   ],
 };

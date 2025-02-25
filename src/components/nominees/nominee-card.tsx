@@ -1,5 +1,6 @@
 "use client";
 
+import type { ImageProps } from "next/image";
 import Image from "next/image";
 import { cn, getNomineeImageUrl } from "@/lib/utils";
 import { useEffect, useState, useMemo } from "react";
@@ -59,6 +60,7 @@ export function NomineeCard({
 }: NomineeCardProps) {
   // Get image URL based solely on nominee name and category name
   const imageUrl = getNomineeImageUrl(categoryName, getNomineeName(nominee));
+  const hasValidImage = Boolean(imageUrl);
 
   // Extract movie title for actor categories
   const movieTitle = useMemo(() => {
@@ -118,33 +120,38 @@ export function NomineeCard({
       <div className="flex items-center space-x-3 w-full">
         {/* Image with fallback */}
         <div className="relative h-16 w-16 rounded-lg overflow-hidden bg-muted">
-          <Image
-            src={imageUrl}
-            alt={getNomineeName(nominee)}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100px, 150px"
-            unoptimized
-            onError={(e) => {
-              // If image fails to load, replace with fallback
-              e.currentTarget.style.display = "none";
-              if (e.currentTarget.nextElementSibling) {
-                e.currentTarget.nextElementSibling.classList.remove("hidden");
-              }
-            }}
-          />
-          <div className="hidden flex items-center justify-center h-full w-full text-muted-foreground">
-            🎬
-          </div>
+          {hasValidImage ? (
+            <Image
+              src={imageUrl}
+              alt={getNomineeName(nominee)}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100px, 150px"
+              unoptimized
+              onError={(e) => {
+                // If image fails to load, show fallback
+                e.currentTarget.style.display = "none";
+                const parent = e.currentTarget.parentElement;
+                if (parent) {
+                  parent.innerHTML =
+                    '<div class="flex items-center justify-center h-full w-full text-muted-foreground">🎬</div>';
+                }
+              }}
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full w-full text-muted-foreground">
+              🎬
+            </div>
+          )}
         </div>
 
         <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-foreground truncate">
-            {getNomineeName(nominee)}
+          <h3 className="font-medium text-foreground flex flex-wrap items-center">
+            <span className="truncate">{getNomineeName(nominee)}</span>
             {movieTitle && (
-              <span className="ml-1 italic text-muted-foreground">
+              <span className="italic text-muted-foreground truncate ml-1 flex-shrink">
                 <span className="mx-1">·</span>
-                {movieTitle}
+                <span className="truncate">{movieTitle}</span>
               </span>
             )}
           </h3>

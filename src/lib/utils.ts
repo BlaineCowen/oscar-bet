@@ -30,29 +30,33 @@ export function getNomineeImageFilename(
 ): string {
   // Use the getNomineeName function to get the name properly
   const name = typeof nominee === "string" ? nominee : getNomineeName(nominee);
-  // Simple slug generation, remove special characters and convert to lowercase
-  const cleanCategory = category
-    .toLowerCase()
-    .replace(/[^\w\s]/g, "")
-    .replace(/\s+/g, "-");
-  const cleanName = name
-    .toLowerCase()
-    .replace(/[^\w\s]/g, "")
-    .replace(/\s+/g, "-");
 
-  return `nominees/${cleanCategory}/${cleanName}.jpg`;
+  // Simple slug generation, remove special characters and convert to lowercase
+  const categorySlug = slugify(category);
+  const nomineeSlug = slugify(name);
+
+  // Format consistent with the upload script - no subfolder structure
+  return `${categorySlug}-${nomineeSlug}.jpg`;
 }
 
 /**
  * Get the full URL for a nominee's image based on category and nominee name
  */
 export function getNomineeImageUrl(category: string, nominee: any): string {
-  const blobBaseUrl = process.env.NEXT_PUBLIC_BLOB_BASE_URL;
+  // Generate the key to look up in the mapping
+  const name = typeof nominee === "string" ? nominee : getNomineeName(nominee);
+  const key = getNomineeImageFilename(category, name);
 
-  if (!blobBaseUrl) {
-    console.warn("NEXT_PUBLIC_BLOB_BASE_URL is not set");
-    return "";
+  try {
+    const imageUrls = require("./nominee-image-urls.json");
+    if (imageUrls.images && imageUrls.images[key]) {
+      return imageUrls.images[key];
+    }
+    console.warn(`No URL found for ${key} in mapping`);
+  } catch (e) {
+    console.warn("Failed to load nominee image URLs mapping", e);
   }
 
-  return `${blobBaseUrl}/${getNomineeImageFilename(category, nominee)}`;
+  // Return empty string if image not found (Next.js Image component will handle this gracefully)
+  return "";
 }
