@@ -1,28 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth";
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 
-// Force Node.js runtime for middleware
-export const runtime = "nodejs";
+export const middleware = NextAuth(authConfig).auth;
 
-export async function middleware(request: NextRequest) {
-  const cookies = getSessionCookie(request);
-  console.log("Middleware called for path:", request.nextUrl.pathname);
-  console.log("Session cookie found:", !!cookies);
-
-  if (!cookies) {
-    console.log("No session cookie, redirecting to login");
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-  return NextResponse.next();
-}
-
+// See https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
   matcher: [
-    // Protected routes that require auth
-    "/games",
-    "/games/:path*",
-    "/api/games/:path*",
-    "/profile/:path*",
-    // Add other protected routes as needed
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - login
+     * - register
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico|login|register).*)",
   ],
 };

@@ -1,21 +1,17 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 
-// This is needed for Next.js Edge Runtime compatibility
-// If using in API routes, you'll need to add export const runtime = "nodejs" to those files
-const prismaClientSingleton = () => {
-  return new PrismaClient({
-    // Enable connection pooling
-    // The datasourceUrl will fall back to DATABASE_URL if not specified
-    // If using Prisma Accelerate, it will use the PRISMA_ACCELERATE_URL env var
-    datasourceUrl:
-      process.env.PRISMA_ACCELERATE_URL || process.env.DATABASE_URL,
-  });
-};
+declare global {
+  var cachedPrisma: ReturnType<typeof getPrismaClient>;
+}
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: ReturnType<typeof prismaClientSingleton>;
-};
+function getPrismaClient() {
+  const client = new PrismaClient().$extends(withAccelerate());
+  return client;
+}
 
-export const prisma = globalForPrisma.prisma || prismaClientSingleton();
+export const prisma = globalThis.cachedPrisma || getPrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") {
+  globalThis.cachedPrisma = prisma;
+}

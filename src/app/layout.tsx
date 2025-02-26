@@ -1,16 +1,17 @@
-import { Metadata } from "next";
+import "@/app/globals.css";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import { AuthProvider } from "@/components/auth/auth-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { Metadata } from "next";
 import { Providers } from "@/providers";
 import { Navbar } from "@/components/layout/navbar";
-import { Toaster } from "sonner";
 import JoinCheck from "@/components/auth/join-check";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Oscar Action",
-  description: "Bet on Oscar winners with your friends",
+export const metadata = {
+  title: "Oscar Bet",
+  description: "Bet on the Oscars with your friends",
 };
 
 export default function RootLayout({
@@ -21,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <Navbar />
-          <main className="min-h-screen bg-background">{children}</main>
-          <Toaster position="top-right" />
-          <JoinCheck />
-        </Providers>
+        <AuthProvider>
+          <Providers>
+            <Navbar />
+            <main className="min-h-screen bg-background">{children}</main>
+            <Toaster />
+            <JoinCheck />
+          </Providers>
+        </AuthProvider>
       </body>
     </html>
   );

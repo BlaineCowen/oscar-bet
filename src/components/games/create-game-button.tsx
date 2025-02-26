@@ -7,8 +7,8 @@ import { useAuth } from "@/hooks/useAuth";
 export function CreateGameButton() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useAuth();
-  const userId = session?.user?.id;
+  const { user } = useAuth();
+  const userId = user?.id;
 
   const createGame = async () => {
     if (!userId) return;

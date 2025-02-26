@@ -12,15 +12,21 @@ export type CategoryWithNominees = Category & {
   isLocked: boolean;
 };
 
+export type ParticipantWithUser = GameParticipant & {
+  user: {
+    id: string;
+    name: string | null;
+    email: string;
+  };
+  bets: (Bet & {
+    nominee: Nominee & {
+      category: Category;
+    };
+  })[];
+};
+
 export type GameWithRelations = Game & {
   categories: CategoryWithNominees[];
-  participants: (GameParticipant & {
-    user: User;
-    bets: (Bet & {
-      nominee: Nominee & {
-        category: Category;
-      };
-    })[];
-  })[];
+  participants: ParticipantWithUser[];
   admin: User;
 };

@@ -1,85 +1,66 @@
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import { authClient } from "@/lib/auth-client";
+import type { User as DbUser } from "@prisma/client";
+import type { User } from "next-auth";
+import type { Session } from "next-auth";
 
-interface User {
+// Combine both user types to ensure we have all properties
+export type SessionUser = User & {
   id: string;
   email: string;
-  emailVerified: boolean;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  name?: string | null;
   image?: string | null;
-}
-
-interface Session {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  userId: string;
-  expiresAt: Date;
-  token: string;
-  ipAddress?: string | null;
-  userAgent?: string | null;
-}
-
-interface AuthData {
-  user: User;
-  session: Session;
-}
+};
 
 export function useAuth() {
-  return useQuery<AuthData, Error>({
+  const sessionResult = useSession();
+  const { data: session } = sessionResult;
+
+  const query = useQuery<Session | null>({
     queryKey: ["auth"],
-    queryFn: async () => {
-      try {
-        const result = await authClient.getSession();
-        if (!result?.data) {
-          throw new Error("Not authenticated");
-        }
-        return result.data;
-      } catch (error) {
-        if (error instanceof Error) {
-          throw error;
-        }
-        throw new Error("Failed to get session");
-      }
-    },
-    retry: false,
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
+    queryFn: async () => session,
+    enabled: sessionResult.status !== "loading",
   });
+
+  return {
+    ...query,
+    session,
+    user: session?.user as SessionUser | undefined,
+    status: sessionResult.status,
+    isAuthenticated: !!session?.user,
+    signIn,
+    signOut,
+  };
 }
 
 export function useUserId() {
-  const { data: session, isLoading, error } = useAuth();
+  const { session, status } = useAuth();
 
-  if (isLoading) {
-    return undefined;
-  }
-
-  if (error || !session?.user?.id) {
-    return null;
-  }
-
-  return session.user.id;
+  return useQuery({
+    queryKey: ["user", "id"],
+    queryFn: async () => {
+      if (!session?.user?.id) return null;
+      return session.user.id;
+    },
+    enabled: status !== "loading",
+  });
 }
 
 export function useUser() {
-  const { data: session, isLoading, error } = useAuth();
+  const { session, status } = useAuth();
 
-  if (isLoading) {
-    return undefined;
-  }
-
-  if (error || !session?.user) {
-    return null;
-  }
-
-  return session.user;
+  return useQuery<SessionUser | null>({
+    queryKey: ["user"],
+    queryFn: async () => {
+      if (!session?.user) return null;
+      return session.user as SessionUser;
+    },
+    enabled: status !== "loading",
+  });
 }
 
 export function useIsGameAdmin(gameAdminId: string | undefined) {
-  const userId = useUserId();
+  const { data: userId } = useUserId();
 
   if (!gameAdminId || !userId) {
     return false;

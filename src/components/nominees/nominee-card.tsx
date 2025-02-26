@@ -107,7 +107,7 @@ export function NomineeCard({
   return (
     <div
       className={cn(
-        "relative flex items-center p-3 rounded-lg border transition-all",
+        "relative flex items-center rounded-lg border transition-all",
         isSelected
           ? "bg-primary/10 border-primary"
           : "bg-card border-border hover:border-primary/50",
@@ -145,19 +145,18 @@ export function NomineeCard({
           )}
         </div>
 
-        <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-foreground flex flex-wrap items-center">
-            <span className="truncate">{getNomineeName(nominee)}</span>
-            {movieTitle && (
-              <span className="italic text-muted-foreground truncate ml-1 flex-shrink">
-                <span className="mx-1">·</span>
-                <span className="truncate">{movieTitle}</span>
-              </span>
-            )}
+        <div className="flex-1 min-w-0 space-y-1">
+          <h3 className="font-medium text-foreground text-md">
+            <span className="line-clamp-1">{getNomineeName(nominee)}</span>
           </h3>
+          {movieTitle && (
+            <p className="text-muted-foreground text-[10px] leading-tight line-clamp-2">
+              {movieTitle}
+            </p>
+          )}
           {showOdds && (
             <p className="text-sm text-muted-foreground">
-              Odds: x{nominee.odds}
+              Odds: x{Math.round(nominee.odds * 100) / 100}
             </p>
           )}
         </div>

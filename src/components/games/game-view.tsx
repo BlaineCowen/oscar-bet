@@ -25,16 +25,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Check, Crown, X } from "lucide-react";
+import type { ParticipantWithUser } from "@/types/prisma";
 
 interface GameViewProps {
-  participants: (GameParticipant & {
-    user: User;
-    bets: (Bet & {
-      nominee: Nominee & {
-        category: Category;
-      };
-    })[];
-  })[];
+  participants: ParticipantWithUser[];
   currentUserId: string;
 }
 

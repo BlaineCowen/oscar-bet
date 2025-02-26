@@ -4,17 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import AdminModal from "./admin/admin-modal";
-import { useUserId } from "@/hooks/useAuth";
+import { useUserId, useUser } from "@/hooks/useAuth";
 import InviteCodeCard from "@/components/games/invite-code-card";
 import { use } from "react";
 import TabView from "@/components/games/tab-view";
-import type {
-  GameParticipant,
-  User,
-  Bet,
-  Nominee,
-  Category,
-} from "@prisma/client";
+import type { GameParticipant, Bet, Nominee, Category } from "@prisma/client";
+import type { SessionUser } from "@/hooks/useAuth";
 
 export default function GamePage({
   params,
@@ -26,7 +21,8 @@ export default function GamePage({
   const gameId = unwrappedParams.id;
 
   // Use custom hook to get user ID
-  const userId = useUserId() || "";
+  const { data: user } = useUser();
+  const userId = user?.id;
 
   const {
     data: game,
@@ -47,7 +43,7 @@ export default function GamePage({
     refetchInterval: 5000, // Refetch every 5 seconds
   });
 
-  if (isLoading) {
+  if (isLoading || !userId) {
     return (
       <div className="container py-6">
         <div className="flex justify-between items-center mb-8">
@@ -93,7 +89,7 @@ export default function GamePage({
   const currentParticipant = game.participants?.find(
     (
       p: GameParticipant & {
-        user: User;
+        user: SessionUser;
         bets: (Bet & {
           nominee: Nominee & {
             category: Category;

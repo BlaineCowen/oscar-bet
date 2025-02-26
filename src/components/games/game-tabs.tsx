@@ -5,12 +5,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GameView from "@/components/games/game-view";
 import BettingForm from "@/components/games/betting-form";
 import type { GameParticipant, Bet, Nominee, Category } from "@prisma/client";
-import type { User } from "next-auth";
+import type { SessionUser } from "@/hooks/useAuth";
 import type { ParticipantWithUser } from "@/types/prisma";
 
-interface TabViewProps {
+interface GameTabsProps {
   participants: (GameParticipant & {
-    user: User;
+    user: SessionUser;
     bets: (Bet & {
       nominee: Nominee & {
         category: Category;
@@ -33,14 +33,14 @@ interface TabViewProps {
   };
 }
 
-export default function TabView({
+export default function GameTabs({
   participants,
   categories,
   currentUserId,
   gameId,
   locked,
   currentParticipant,
-}: TabViewProps) {
+}: GameTabsProps) {
   const [activeTab, setActiveTab] = useState(
     currentParticipant ? "betting" : "leaderboard"
   );
@@ -54,16 +54,21 @@ export default function TabView({
   const typedParticipants: ParticipantWithUser[] = participants.map((p) => ({
     ...p,
     user: {
-      id: p.user.id ?? "",
+      id: p.user.id,
       name: p.user.name ?? null,
-      email: p.user.email ?? "",
+      email: p.user.email,
     },
   }));
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="grid w-full grid-cols-2 mb-8">
-        <TabsTrigger value="betting">Place Bets</TabsTrigger>
+        <TabsTrigger
+          value="betting"
+          disabled={!isParticipant || !currentParticipant}
+        >
+          Place Bets
+        </TabsTrigger>
         <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
       </TabsList>
 

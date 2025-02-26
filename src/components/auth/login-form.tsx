@@ -1,84 +1,88 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { useToast } from "@/components/ui/use-toast";
 
 export function LoginForm() {
-  const router = useRouter();
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
     try {
-      const { data, error: authError } = await authClient.signIn.email({
+      const result = await signIn("credentials", {
+        redirect: false,
         email,
         password,
-        callbackURL: "/games",
       });
 
-      if (authError) {
-        throw new Error(authError.message);
+      if (result?.error) {
+        toast({
+          title: "Error",
+          description: "Invalid email or password",
+          variant: "destructive",
+        });
+        return;
       }
 
-      if (data) {
-        router.push("/games");
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Invalid credentials");
+      // Success, redirect to home
+      router.push("/games");
+      router.refresh(); // Refresh the page to update session
+    } catch (error) {
+      console.error("Login error:", error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      {error && (
-        <div className="bg-red-500/10 border border-red-500 text-red-500 p-3 rounded">
-          {error}
-        </div>
-      )}
-
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block mb-2">
+        <label htmlFor="email" className="block text-sm font-medium">
           Email
         </label>
         <input
-          id="email"
-          name="email"
           type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-black shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           required
-          className="w-full p-2 rounded bg-black border border-gray-700 focus:border-gold outline-none"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block mb-2">
+        <label htmlFor="password" className="block text-sm font-medium">
           Password
         </label>
         <input
-          id="password"
-          name="password"
           type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-black shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           required
-          className="w-full p-2 rounded bg-black border border-gray-700 focus:border-gold outline-none"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-gold text-black py-2 rounded font-bold hover:bg-gold-dark disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full rounded-md bg-gold px-4 py-2 text-black hover:bg-gold/80 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 disabled:opacity-50"
       >
-        {loading ? "Signing In..." : "Sign In"}
+        {loading ? "Signing in..." : "Sign in"}
       </button>
     </form>
   );

@@ -402,18 +402,18 @@ export default function BettingForm({
   return (
     <form onSubmit={submitBets} className="relative">
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border mb-6">
-        <div className="container max-w-7xl mx-auto py-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-bold">Place Your Bets</h2>
+        <div className="container px-4 max-w-7xl mx-auto py-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+              <h2 className="text-xl sm:text-2xl font-bold">Place Your Bets</h2>
               {hasExistingBets && !disabled && (
-                <span className="text-muted-foreground text-sm max-w-sm m-2 p-6 text-center">
+                <span className="text-muted-foreground text-sm">
                   (You can update your bets until the game is locked)
                 </span>
               )}
             </div>
-            <div className="text-xl">
-              <div className="flex items-center gap-2">
+            <div className="text-lg sm:text-xl w-full sm:w-auto">
+              <div className="flex items-center justify-between sm:justify-end gap-2">
                 <span>Available: ${currentBalance.toFixed(2)}</span>
                 {currentBalance <= 0 ? (
                   <span className="text-green-500 text-sm font-medium">
@@ -433,7 +433,7 @@ export default function BettingForm({
         </div>
       </div>
 
-      <div className="container max-w-7xl mx-auto mb-4 flex gap-2">
+      <div className="container px-4 max-w-7xl mx-auto mb-4 flex flex-col sm:flex-row gap-2">
         <Button
           type="button"
           variant="outline"
@@ -456,7 +456,7 @@ export default function BettingForm({
         )}
       </div>
 
-      <div className="container max-w-7xl mx-auto space-y-6">
+      <div className="container px-4 max-w-7xl mx-auto space-y-6">
         {error && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -473,7 +473,7 @@ export default function BettingForm({
           </Alert>
         )}
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => {
             const existingBet = participant.bets.find(
               (bet) => bet.nominee?.category.id === category.id
@@ -494,7 +494,7 @@ export default function BettingForm({
               >
                 <CardHeader>
                   <div className="flex justify-between items-center">
-                    <CardTitle>{category.name}</CardTitle>
+                    <CardTitle className="text-lg">{category.name}</CardTitle>
                     {(isLocked || isCategoryLocked) && (
                       <span className="text-sm text-muted-foreground">
                         Locked

@@ -30,7 +30,7 @@ export default function InviteCodeCard({
     currentCode || null
   );
   const queryClient = useQueryClient();
-  const userId = useUserId();
+  const { data: userId } = useUserId();
 
   const generateCode = useMutation({
     mutationFn: async () => {
