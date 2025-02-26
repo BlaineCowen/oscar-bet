@@ -399,6 +399,13 @@ export default function BettingForm({
     });
   };
 
+  const clearAll = () => {
+    setSelectedNominees({});
+    setBetAmounts({});
+    localStorage.removeItem(`bets-${gameId}-nominees`);
+    localStorage.removeItem(`bets-${gameId}-amounts`);
+  };
+
   return (
     <form onSubmit={submitBets} className="relative">
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border mb-6">
@@ -433,16 +440,28 @@ export default function BettingForm({
         </div>
       </div>
 
-      <div className="container px-4 max-w-7xl mx-auto mb-4 flex flex-col sm:flex-row gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          className="text-sm"
-          onClick={makeRandomBets}
-          disabled={disabled}
-        >
-          Bet for me
-        </Button>
+      <div className="container px-4 max-w-7xl mx-auto mb-4 flex gap-4">
+        <div className="flex flex-col gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            className="text-sm"
+            onClick={makeRandomBets}
+            disabled={disabled}
+          >
+            Bet for me
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="text-sm text-destructive hover:text-destructive"
+            onClick={clearAll}
+            disabled={disabled}
+          >
+            Clear All
+          </Button>
+        </div>
 
         {currentBalance > 0 && !disabled && (
           <Button

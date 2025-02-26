@@ -1,4 +1,4 @@
-# Oscar Betting Pool
+# Oscar Action
 
 A sleek, modern web application for running Oscar betting pools with friends and family. Create games, set categories, and place bets on nominees with real-time updates and beautiful visualizations.
 
