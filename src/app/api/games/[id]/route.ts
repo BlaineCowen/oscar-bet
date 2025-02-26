@@ -58,8 +58,6 @@ export async function GET(
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
     }
 
-    console.log("Nominee example:", game.categories[0]?.nominees[0]);
-
     return NextResponse.json(game);
   } catch (error) {
     console.error("Error fetching game:", error);

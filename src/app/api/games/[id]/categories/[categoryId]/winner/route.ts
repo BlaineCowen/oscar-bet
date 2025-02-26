@@ -1,8 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse, NextRequest } from "next/server";
 
-
-
 // Force Node.js runtime for Prisma and better-auth
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -77,20 +75,12 @@ export async function POST(
       },
     });
 
-    console.log(`Processing ${bets.length} bets for category ${categoryId}`);
-
     // 3. Process each bet - update balances and mark bets as paid out
     for (const bet of bets) {
       const isWinningBet = bet.nomineeId === nomineeId;
       const payoutAmount = isWinningBet
         ? bet.amount * bet.nominee.odds - bet.amount // Net winnings (minus the original bet)
         : -bet.amount; // Loss is the negative of the bet amount
-
-      console.log(
-        `Bet ${bet.id}: ${
-          isWinningBet ? "Won" : "Lost"
-        }, payout: ${payoutAmount}`
-      );
 
       // Update the bet to mark it as paid out
       await prisma.bet.update({
@@ -111,11 +101,6 @@ export async function POST(
             },
           },
         });
-        console.log(
-          `Updated balance for participant ${bet.gameParticipantId}, added ${
-            bet.amount * bet.nominee.odds
-          }`
-        );
       }
     }
 
@@ -154,15 +139,8 @@ export async function POST(
     });
 
     // Log information about the updated game for debugging
-    console.log(
-      `Updated game data ready. Categories: ${updatedGame?.categories.length}`
-    );
-    console.log(`Category ${categoryId} winner set to nominee ${nomineeId}`);
 
     // Log participants and balances
-    updatedGame?.participants.forEach((p) => {
-      console.log(`Participant ${p.userId} balance: ${p.balance}`);
-    });
 
     return NextResponse.json(updatedGame);
   } catch (error) {

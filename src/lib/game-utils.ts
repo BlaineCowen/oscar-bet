@@ -1,27 +1,16 @@
 import { prisma } from "./prisma";
 import oscarPredictions from "./oscars_predictions.json";
 
-function convertOddsToDecimal(odds: string): number {
-  const [numerator, denominator] = odds.split("/").map(Number);
-  return 1 + numerator / denominator;
-}
-
 /**
  * Gets the nominee name from either name property or actor property
  */
 export function getNomineeName(nominee: any): string {
-  // If nominee has a name property, use that
-  if ("name" in nominee && nominee.name) {
-    return nominee.name.trim();
-  }
+  return nominee.actor || nominee.movie || nominee.name;
+}
 
-  // If nominee has an actor property (for movie categories), use that
-  if ("actor" in nominee && nominee.actor) {
-    return nominee.actor.trim();
-  }
-
-  // Fallback in case neither property exists
-  return "Unknown Nominee";
+export function convertOddsToDecimal(odds: string): number {
+  const [numerator, denominator] = odds.split("/").map(Number);
+  return 1 + numerator / denominator;
 }
 
 export async function createNewGame({

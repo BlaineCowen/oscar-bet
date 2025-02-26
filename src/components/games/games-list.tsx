@@ -3,7 +3,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
-import type { Game } from "@prisma/client";
+import type { Game, GameParticipant } from "@prisma/client";
+import type { SessionUser } from "@/hooks/useAuth";
 import {
   Card,
   CardContent,
@@ -13,18 +14,32 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, Calendar, DollarSign, Lock, Unlock } from "lucide-react";
+import {
+  Trash2,
+  Calendar,
+  DollarSign,
+  Lock,
+  Unlock,
+  Users,
+} from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+
+type GameWithParticipants = Game & {
+  participants: (GameParticipant & {
+    user: SessionUser;
+  })[];
+};
 
 export function GamesList() {
   const { data: session } = useAuth();
   const userId = session?.user?.id;
   const queryClient = useQueryClient();
 
-  const { data: games, isLoading } = useQuery<Game[]>({
+  const { data: games, isLoading } = useQuery<GameWithParticipants[]>({
     queryKey: ["games", userId],
     queryFn: async () => {
+      console.log("Fetching games for user:", userId);
       const response = await fetch("/api/games", {
         headers: {
           "x-user-id": userId!,
@@ -33,9 +48,14 @@ export function GamesList() {
       if (!response.ok) {
         throw new Error("Failed to fetch games");
       }
-      return response.json();
+      const data = await response.json();
+      console.log("Fetched games:", data);
+      return data;
     },
     enabled: !!userId,
+    staleTime: 0, // Always fetch fresh data
+    refetchOnMount: true, // Refetch when component mounts
+    refetchOnWindowFocus: true, // Refetch when window gains focus
   });
 
   const deleteGame = useMutation({
@@ -127,15 +147,22 @@ export function GamesList() {
                 <div>
                   <CardTitle>{game.name}</CardTitle>
                   <CardDescription>
-                    {game.locked ? (
-                      <span className="flex items-center gap-1 text-yellow-500">
-                        <Lock className="h-3 w-3" /> Locked
+                    <div className="flex items-center gap-4">
+                      {game.locked ? (
+                        <span className="flex items-center gap-1 text-yellow-500">
+                          <Lock className="h-3 w-3" /> Locked
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-1 text-green-500">
+                          <Unlock className="h-3 w-3" /> Open for betting
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1 text-muted-foreground">
+                        <Users className="h-3 w-3" />
+                        {game.participants.length} participant
+                        {game.participants.length !== 1 ? "s" : ""}
                       </span>
-                    ) : (
-                      <span className="flex items-center gap-1 text-green-500">
-                        <Unlock className="h-3 w-3" /> Open for betting
-                      </span>
-                    )}
+                    </div>
                   </CardDescription>
                 </div>
               </div>
@@ -157,17 +184,19 @@ export function GamesList() {
               </div>
             </CardContent>
           </Link>
-          <CardFooter className="flex justify-end">
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={(e) => handleDelete(e, game.id)}
-              className="opacity-80 hover:opacity-100"
-            >
-              <Trash2 className="h-4 w-4 mr-1" />
-              Delete
-            </Button>
-          </CardFooter>
+          {game.adminId === userId && (
+            <CardFooter className="flex justify-end">
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={(e) => handleDelete(e, game.id)}
+                className="opacity-80 hover:opacity-100"
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                Delete
+              </Button>
+            </CardFooter>
+          )}
         </Card>
       ))}
     </div>

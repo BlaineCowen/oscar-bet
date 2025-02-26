@@ -29,7 +29,6 @@ export default function GamePage({ params }: PageProps) {
   } = useQuery({
     queryKey: ["games", gameId],
     queryFn: async () => {
-      console.log("Fetching game data for ID:", gameId);
       const res = await fetch(`/api/games/${gameId}`);
       if (!res.ok) throw new Error("Failed to fetch game");
       const data = await res.json();

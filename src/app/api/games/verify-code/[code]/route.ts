@@ -1,18 +1,20 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-
-
 // Force Node.js runtime for Prisma and better-auth
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 // GET - Verify a join code and return basic game information
-export async function GET(req: NextRequest, props: { params: Promise<{ code: string }> }) {
+export async function GET(
+  request: NextRequest,
+  props: { params: Promise<{ code: string }> }
+) {
   const params = await props.params;
   try {
     const { code } = params;
+    console.log("Verifying code:", code);
 
     if (!code || code.length !== 6) {
       return NextResponse.json(
@@ -42,13 +44,27 @@ export async function GET(req: NextRequest, props: { params: Promise<{ code: str
         startDate: true,
         endDate: true,
         locked: true,
+        joinCode: true,
+        joinCodeExpiresAt: true,
       },
     });
 
-    if (!game) {
+    console.log("Found game for code:", game);
+
+    if (
+      !game ||
+      !game.joinCode ||
+      !game.joinCodeExpiresAt ||
+      game.joinCodeExpiresAt < new Date()
+    ) {
+      console.log("Invalid or expired code:", {
+        hasGame: !!game,
+        hasJoinCode: !!game?.joinCode,
+        expiresAt: game?.joinCodeExpiresAt,
+      });
       return NextResponse.json(
         { error: "Invalid or expired invite code" },
-        { status: 404 }
+        { status: 400 }
       );
     }
 

@@ -63,7 +63,12 @@ export default function TabView({
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="grid w-full grid-cols-2 mb-8">
-        <TabsTrigger value="betting">Place Bets</TabsTrigger>
+        <TabsTrigger
+          value="betting"
+          disabled={!isParticipant || !currentParticipant}
+        >
+          Place Bets
+        </TabsTrigger>
         <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
       </TabsList>
 
