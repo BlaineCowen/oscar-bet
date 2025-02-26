@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-
+// Force dynamic route
+export const dynamic = "force-dynamic";
 
 // Force Node.js runtime for Prisma and better-auth
 export const runtime = "nodejs";

@@ -6,19 +6,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import AdminModal from "./admin/admin-modal";
 import { useUserId, useUser } from "@/hooks/useAuth";
 import InviteCodeCard from "@/components/games/invite-code-card";
-import { use } from "react";
 import TabView from "@/components/games/tab-view";
 import type { GameParticipant, Bet, Nominee, Category } from "@prisma/client";
 import type { SessionUser } from "@/hooks/useAuth";
 
-export default function GamePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  // Unwrap params Promise
-  const unwrappedParams = use(params);
-  const gameId = unwrappedParams.id;
+type PageProps = {
+  params: { id: string };
+};
+
+export default function GamePage({ params }: PageProps) {
+  const gameId = params.id;
 
   // Use custom hook to get user ID
   const { data: user } = useUser();

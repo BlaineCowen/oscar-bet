@@ -16,13 +16,12 @@ import { Loader2, Trophy, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { toast } from "sonner";
 
-export default function JoinPage({
-  params,
-  searchParams,
-}: {
+type PageProps = {
   params: { code: string };
   searchParams: { gameId: string };
-}) {
+};
+
+export default function JoinPage({ params, searchParams }: PageProps) {
   const router = useRouter();
   const { session, status } = useAuth();
 

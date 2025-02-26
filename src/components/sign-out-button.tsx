@@ -9,11 +9,8 @@ export function SignOutButton() {
   const handleSignOut = async () => {
     try {
       await signOut({
-        fetchOptions: {
-          onSuccess: () => {
-            router.push("/login");
-          },
-        },
+        redirect: true,
+        redirectTo: "/login",
       });
     } catch (error) {
       console.error("Failed to sign out:", error);
