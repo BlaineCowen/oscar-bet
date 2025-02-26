@@ -33,8 +33,12 @@ import {
 } from "@/components/ui/table";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+interface SongNominee extends Nominee {
+  movie?: string;
+}
+
 type CategoryWithNominees = Category & {
-  nominees: Nominee[];
+  nominees: (Nominee | SongNominee)[];
   winner?: Nominee;
 };
 
@@ -451,7 +455,16 @@ export default function AdminModal({
                               id={nominee.name}
                             />
                             <Label htmlFor={nominee.name}>
-                              {nominee.name} ({nominee.odds}x)
+                              {currentCategory.name === "Best Song" ? (
+                                <>
+                                  {nominee.name}{" "}
+                                  <span className="text-muted-foreground">
+                                    ({(nominee as SongNominee).movie})
+                                  </span>
+                                </>
+                              ) : (
+                                `${nominee.name} (${nominee.odds}x)`
+                              )}
                             </Label>
                           </div>
                         ))}

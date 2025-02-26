@@ -38,11 +38,12 @@ interface NomineeWithImage {
   categoryId: string;
   createdAt: Date;
   updatedAt: Date;
+  movie?: string;
 }
 
 // Define the props for the NomineeCard component
 export interface NomineeCardProps {
-  nominee: any;
+  nominee: NomineeWithImage;
   isSelected?: boolean;
   onClick?: () => void;
   disabled?: boolean;
@@ -72,10 +73,15 @@ export function NomineeCard({
     // For nominees in the database that might have nested predictions
     if (
       categoryName?.toLowerCase().includes("actor") ||
-      categoryName?.toLowerCase().includes("actress")
+      categoryName?.toLowerCase().includes("actress") ||
+      categoryName === "Best Song"
     ) {
-      // Look through predictions to find matching entry with actor property
+      // Look through predictions to find matching entry
       const matchingPrediction = predictions.find((category) => {
+        if (categoryName === "Best Song") {
+          return category.category === "Best Song";
+        }
+
         if (
           !category.category.toLowerCase().includes("actor") &&
           !category.category.toLowerCase().includes("actress")
@@ -84,6 +90,9 @@ export function NomineeCard({
         }
 
         const matchingNominee = category.predictions.find((pred) => {
+          if (categoryName === "Best Song") {
+            return "movie" in pred && pred.actor === getNomineeName(nominee);
+          }
           return (
             "actor" in pred && pred.actor.trim() === getNomineeName(nominee)
           );
@@ -93,10 +102,14 @@ export function NomineeCard({
       });
 
       if (matchingPrediction) {
-        const nomineeData = matchingPrediction.predictions.find(
-          (pred) =>
+        const nomineeData = matchingPrediction.predictions.find((pred) => {
+          if (categoryName === "Best Song") {
+            return "movie" in pred && pred.actor === getNomineeName(nominee);
+          }
+          return (
             "actor" in pred && pred.actor.trim() === getNomineeName(nominee)
-        );
+          );
+        });
         return nomineeData && "movie" in nomineeData ? nomineeData.movie : null;
       }
     }
