@@ -8,9 +8,13 @@ export function getNomineeName(nominee: any): string {
   return nominee.actor || nominee.movie || nominee.name;
 }
 
+export function getNomineeMovie(nominee: any): string {
+  return nominee.movie || "";
+}
+
 export function convertOddsToDecimal(odds: string): number {
   const [numerator, denominator] = odds.split("/").map(Number);
-  return 1 + numerator / denominator;
+  return Math.round((1 + numerator / denominator) * 100) / 100;
 }
 
 export async function createNewGame({

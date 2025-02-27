@@ -32,13 +32,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-interface SongNominee extends Nominee {
-  movie?: string;
-}
+import { Spinner } from "@/components/ui/spinner";
 
 type CategoryWithNominees = Category & {
-  nominees: (Nominee | SongNominee)[];
+  nominees: Nominee[];
   winner?: Nominee;
 };
 
@@ -60,36 +57,6 @@ export default function AdminModal({
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-
-  // Function to scroll to the bottom of the modal
-  const scrollToBottom = () => {
-    if (scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector(
-        "[data-radix-scroll-area-viewport]"
-      );
-      if (scrollContainer) {
-        setTimeout(() => {
-          scrollContainer.scrollTo({
-            top: scrollContainer.scrollHeight,
-            behavior: "smooth",
-          });
-        }, 100); // Small delay to ensure content is rendered
-      }
-    }
-  };
-
-  // Auto-scroll when specific UI state changes
-  useEffect(() => {
-    if (selectedCategory && currentCategory) {
-      scrollToBottom();
-    }
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    if (isConfirming) {
-      scrollToBottom();
-    }
-  }, [isConfirming]);
 
   const updateWinner = useMutation({
     mutationFn: async (data: { categoryId: string; nomineeId: string }) => {
@@ -273,7 +240,7 @@ export default function AdminModal({
     const category = categories.find((c) => c.name === selectedCategory);
     if (!category) return;
 
-    const nominee = category.nominees.find((n) => n.name === selectedWinner);
+    const nominee = category.nominees.find((n) => n.id === selectedWinner);
     if (!nominee) return;
 
     updateWinner.mutate({
@@ -340,8 +307,8 @@ export default function AdminModal({
                     >
                       {lockGame.isPending ? (
                         <span className="flex items-center gap-2">
-                          <span className="animate-spin">⏳</span>
-                          Processing...
+                          Processing
+                          <Spinner show={true} size="small" />
                         </span>
                       ) : (
                         "Lock Game"
@@ -357,6 +324,139 @@ export default function AdminModal({
                   </div>
                 </AlertDescription>
               </Alert>
+            )}
+
+            {/* Category Selection */}
+            {!isLocked ? (
+              <div className="flex items-center justify-center p-8 text-muted-foreground border-2 border-dashed rounded-lg">
+                Lock the game first to start selecting winners
+              </div>
+            ) : (
+              <>
+                <div className="space-y-2 p-2">
+                  <Label>Select Winners</Label>
+                  <Select
+                    value={selectedCategory}
+                    onValueChange={(value) => {
+                      setSelectedCategory(value);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories
+                        .filter((category) => !category.winnerId)
+                        .map((category) => (
+                          <SelectItem key={category.name} value={category.name}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Winner Selection */}
+                {selectedCategory && currentCategory && (
+                  <div className="space-y-2">
+                    <Label>Select Winner</Label>
+                    <RadioGroup
+                      value={selectedWinner}
+                      onValueChange={setSelectedWinner}
+                    >
+                      <div className="space-y-2">
+                        {currentCategory.nominees.map((nominee) => (
+                          <div
+                            key={nominee.id}
+                            className="flex items-center space-x-2"
+                          >
+                            <RadioGroupItem
+                              value={nominee.id}
+                              id={nominee.id}
+                            />
+                            <Label htmlFor={nominee.id}>
+                              {currentCategory.name === "Best Song" ? (
+                                <>
+                                  {nominee.name}{" "}
+                                  <span className="text-muted-foreground">
+                                    ({nominee.movie})
+                                  </span>
+                                </>
+                              ) : (
+                                `${nominee.name} (${nominee.odds}x)`
+                              )}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </RadioGroup>
+                  </div>
+                )}
+
+                {/* Confirmation */}
+                {selectedCategory && selectedWinner && !isConfirming && (
+                  <Button
+                    onClick={() => setIsConfirming(true)}
+                    className="w-full"
+                    disabled={updateWinner.isPending}
+                  >
+                    {updateWinner.isPending ? (
+                      <span className="flex items-center gap-2">
+                        Processing
+                        <Spinner show={true} size="small" />
+                      </span>
+                    ) : (
+                      "Set Winner"
+                    )}
+                  </Button>
+                )}
+
+                {isConfirming && (
+                  <Alert>
+                    <AlertTitle>Are you sure?</AlertTitle>
+                    <AlertDescription>
+                      <p className="mb-4">
+                        This will set{" "}
+                        {
+                          currentCategory?.nominees.find(
+                            (n) => n.id === selectedWinner
+                          )?.name
+                        }{" "}
+                        as the winner of {selectedCategory}. Winning bets will
+                        be paid out at the specified odds. This action cannot be
+                        undone.
+                      </p>
+                      <div className="flex space-x-2">
+                        <Button
+                          variant="destructive"
+                          onClick={handleSetWinner}
+                          disabled={
+                            updateWinner.isPending ||
+                            !selectedCategory ||
+                            !selectedWinner
+                          }
+                        >
+                          {updateWinner.isPending ? (
+                            <span className="flex items-center gap-2">
+                              Processing
+                              <Spinner show={true} size="small" />
+                            </span>
+                          ) : (
+                            "Confirm Winner"
+                          )}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsConfirming(false)}
+                          disabled={updateWinner.isPending}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+                )}
+              </>
             )}
 
             {/* Category Status Table */}
@@ -405,133 +505,6 @@ export default function AdminModal({
                 })}
               </TableBody>
             </Table>
-
-            {/* Category Selection */}
-            {!isLocked ? (
-              <div className="flex items-center justify-center p-8 text-muted-foreground border-2 border-dashed rounded-lg">
-                Lock the game first to start selecting winners
-              </div>
-            ) : (
-              <>
-                <div className="space-y-2">
-                  <Label>Select Category</Label>
-                  <Select
-                    value={selectedCategory}
-                    onValueChange={(value) => {
-                      setSelectedCategory(value);
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories
-                        .filter((category) => !category.winnerId)
-                        .map((category) => (
-                          <SelectItem key={category.name} value={category.name}>
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Winner Selection */}
-                {selectedCategory && currentCategory && (
-                  <div className="space-y-2">
-                    <Label>Select Winner</Label>
-                    <RadioGroup
-                      value={selectedWinner}
-                      onValueChange={setSelectedWinner}
-                    >
-                      <div className="space-y-2">
-                        {currentCategory.nominees.map((nominee) => (
-                          <div
-                            key={nominee.name}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem
-                              value={nominee.name}
-                              id={nominee.name}
-                            />
-                            <Label htmlFor={nominee.name}>
-                              {currentCategory.name === "Best Song" ? (
-                                <>
-                                  {nominee.name}{" "}
-                                  <span className="text-muted-foreground">
-                                    ({(nominee as SongNominee).movie})
-                                  </span>
-                                </>
-                              ) : (
-                                `${nominee.name} (${nominee.odds}x)`
-                              )}
-                            </Label>
-                          </div>
-                        ))}
-                      </div>
-                    </RadioGroup>
-                  </div>
-                )}
-
-                {/* Confirmation */}
-                {selectedCategory && selectedWinner && !isConfirming && (
-                  <Button
-                    onClick={() => setIsConfirming(true)}
-                    className="w-full"
-                    disabled={updateWinner.isPending}
-                  >
-                    {updateWinner.isPending ? (
-                      <span className="flex items-center gap-2">
-                        <span className="animate-spin">⏳</span>
-                        Processing...
-                      </span>
-                    ) : (
-                      "Set Winner"
-                    )}
-                  </Button>
-                )}
-
-                {isConfirming && (
-                  <Alert>
-                    <AlertTitle>Are you sure?</AlertTitle>
-                    <AlertDescription>
-                      <p className="mb-4">
-                        This will set {selectedWinner} as the winner of{" "}
-                        {selectedCategory}. Winning bets will be paid out at the
-                        specified odds. This action cannot be undone.
-                      </p>
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="destructive"
-                          onClick={handleSetWinner}
-                          disabled={
-                            updateWinner.isPending ||
-                            !selectedCategory ||
-                            !selectedWinner
-                          }
-                        >
-                          {updateWinner.isPending ? (
-                            <span className="flex items-center gap-2">
-                              <span className="animate-spin">⏳</span>
-                              Processing...
-                            </span>
-                          ) : (
-                            "Confirm Winner"
-                          )}
-                        </Button>
-                        <Button
-                          variant="outline"
-                          onClick={() => setIsConfirming(false)}
-                          disabled={updateWinner.isPending}
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </>
-            )}
           </div>
         </ScrollArea>
       </DialogContent>

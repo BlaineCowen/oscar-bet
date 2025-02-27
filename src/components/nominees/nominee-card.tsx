@@ -38,7 +38,7 @@ interface NomineeWithImage {
   categoryId: string;
   createdAt: Date;
   updatedAt: Date;
-  movie?: string;
+  movie: string | null;
 }
 
 // Define the props for the NomineeCard component
@@ -60,13 +60,13 @@ export function NomineeCard({
   categoryName,
 }: NomineeCardProps) {
   // Get image URL based solely on nominee name and category name
-  const imageUrl = getNomineeImageUrl(categoryName, getNomineeName(nominee));
+  const imageUrl = getNomineeImageUrl(categoryName, nominee.name);
   const hasValidImage = Boolean(imageUrl);
 
   // Extract movie title for actor categories
   const movieTitle = useMemo(() => {
     // For nominees that have movie property directly
-    if ("movie" in nominee && nominee.movie) {
+    if (nominee.movie) {
       return nominee.movie;
     }
 
@@ -136,7 +136,7 @@ export function NomineeCard({
           {hasValidImage ? (
             <Image
               src={imageUrl}
-              alt={getNomineeName(nominee)}
+              alt={nominee.name}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100px, 150px"
@@ -160,11 +160,11 @@ export function NomineeCard({
 
         <div className="flex-1 min-w-0 space-y-1">
           <h3 className="font-medium text-foreground text-md">
-            <span className="line-clamp-1">{getNomineeName(nominee)}</span>
+            <span className="line-clamp-1">{nominee.name}</span>
           </h3>
-          {movieTitle && (
+          {nominee.movie && (
             <p className="text-muted-foreground text-[10px] leading-tight line-clamp-2">
-              {movieTitle}
+              {nominee.movie}
             </p>
           )}
           {showOdds && (
@@ -201,50 +201,17 @@ export function LargeNomineeCard({
   nominee,
   categoryName,
 }: {
-  nominee: any;
+  nominee: NomineeWithImage;
   categoryName: string;
 }) {
-  const imageUrl = getNomineeImageUrl(categoryName, getNomineeName(nominee));
-
-  // Extract movie title for actor categories
-  const movieTitle = useMemo(() => {
-    // For nominees that have movie property directly
-    if ("movie" in nominee && nominee.movie) {
-      return nominee.movie;
-    }
-
-    // For nominees from predictions data
-    if (
-      categoryName?.toLowerCase().includes("actor") ||
-      categoryName?.toLowerCase().includes("actress")
-    ) {
-      const matchingCategory = predictions.find(
-        (cat) =>
-          cat.category.toLowerCase().includes("actor") ||
-          cat.category.toLowerCase().includes("actress")
-      );
-
-      if (matchingCategory) {
-        const matchingNominee = matchingCategory.predictions.find(
-          (pred) =>
-            "actor" in pred && pred.actor.trim() === getNomineeName(nominee)
-        );
-
-        return matchingNominee && "movie" in matchingNominee
-          ? matchingNominee.movie
-          : null;
-      }
-    }
-
-    return null;
-  }, [categoryName, nominee]);
+  const imageUrl = getNomineeImageUrl(categoryName, nominee.name);
 
   return (
     <div className="rounded-lg overflow-hidden border border-border bg-card">
       <div className="relative aspect-[3/4] w-full bg-muted">
         <Image
           src={imageUrl}
-          alt={getNomineeName(nominee)}
+          alt={nominee.name}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -253,11 +220,9 @@ export function LargeNomineeCard({
         />
       </div>
       <div className="p-4">
-        <h3 className="font-medium text-lg text-foreground">
-          {getNomineeName(nominee)}
-        </h3>
-        {movieTitle && (
-          <p className="text-muted-foreground italic">{movieTitle}</p>
+        <h3 className="font-medium text-lg text-foreground">{nominee.name}</h3>
+        {nominee.movie && (
+          <p className="text-muted-foreground italic">{nominee.movie}</p>
         )}
         <div className="mt-2 flex items-center text-muted-foreground">
           <span className="text-sm">Odds: x{nominee.odds}</span>

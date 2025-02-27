@@ -12,6 +12,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 // Auth.js / NextAuth.js models
@@ -135,6 +136,7 @@ model Category {
 model Nominee {
   id         String     @id @default(cuid())
   name       String
+  movie      String?
   odds       Float
   // Note: No longer storing image URLs in the database
   // We now generate them predictably from nominee name + category

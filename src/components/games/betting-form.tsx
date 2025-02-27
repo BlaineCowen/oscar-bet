@@ -539,7 +539,7 @@ export default function BettingForm({
                     disabled={isLocked}
                     name={`nominee-${category.id}`}
                   >
-                    {category.nominees.map((nominee) => (
+                    {category.nominees.map((nominee, index) => (
                       <div key={nominee.id} className="mb-3">
                         <RadioGroupItem
                           id={nominee.id}

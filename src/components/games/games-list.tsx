@@ -15,6 +15,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Trash2,
   Calendar,
   DollarSign,
@@ -24,6 +32,10 @@ import {
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 type GameWithParticipants = Game & {
   participants: (GameParticipant & {
@@ -35,6 +47,8 @@ export function GamesList() {
   const { data: session } = useAuth();
   const userId = session?.user?.id;
   const queryClient = useQueryClient();
+  const [gameBeingDeleted, setGameBeingDeleted] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { data: games, isLoading } = useQuery<GameWithParticipants[]>({
     queryKey: ["games", userId],
@@ -60,6 +74,7 @@ export function GamesList() {
 
   const deleteGame = useMutation({
     mutationFn: async (gameId: string) => {
+      setGameBeingDeleted(gameId);
       const response = await fetch(`/api/games/${gameId}`, {
         method: "DELETE",
         headers: {
@@ -77,8 +92,11 @@ export function GamesList() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["games", userId] });
       toast.success("Game deleted successfully");
+      setGameBeingDeleted(null);
+      setIsDeleteDialogOpen(false);
     },
     onError: (error) => {
+      setGameBeingDeleted(null);
       toast.error(
         `Error: ${
           error instanceof Error ? error.message : "Failed to delete game"
@@ -90,14 +108,17 @@ export function GamesList() {
   const handleDelete = (e: React.MouseEvent, gameId: string) => {
     e.preventDefault(); // Prevent navigation to game page
     e.stopPropagation(); // Prevent event bubbling
+    setGameBeingDeleted(gameId);
+    setIsDeleteDialogOpen(true);
+  };
 
-    if (
-      confirm(
-        "Are you sure you want to delete this game? This action cannot be undone."
-      )
-    ) {
-      deleteGame.mutate(gameId);
-    }
+  const handleConfirmDelete = (gameId: string) => {
+    deleteGame.mutate(gameId);
+  };
+
+  const handleCancelDelete = () => {
+    setGameBeingDeleted(null);
+    setIsDeleteDialogOpen(false);
   };
 
   if (isLoading) {
@@ -134,12 +155,72 @@ export function GamesList() {
     );
   }
 
+  const userGames = games.filter((game) => game.adminId === userId);
+  const isAtLimit = userGames.length >= 10;
+  const isNearLimit = userGames.length >= 8;
+
   return (
     <div className="grid gap-6">
-      {games.map((game) => (
+      {isAtLimit && (
+        <Alert variant="destructive">
+          <AlertTitle>Game Limit Reached</AlertTitle>
+          <AlertDescription>
+            You have reached the maximum limit of 10 games. Please delete some
+            games to create new ones.
+          </AlertDescription>
+        </Alert>
+      )}
+      {!isAtLimit && isNearLimit && (
+        <Alert>
+          <AlertTitle>Almost at Game Limit</AlertTitle>
+          <AlertDescription>
+            You can create {10 - userGames.length} more{" "}
+            {10 - userGames.length === 1 ? "game" : "games"} before reaching the
+            limit of 10 games.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Game</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this game? This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={handleCancelDelete}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() =>
+                gameBeingDeleted && handleConfirmDelete(gameBeingDeleted)
+              }
+              disabled={deleteGame.isPending}
+            >
+              {deleteGame.isPending ? (
+                <span className="flex items-center gap-2">
+                  Deleting
+                  <Spinner show={true} size="small" />
+                </span>
+              ) : (
+                "Delete Game"
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {games?.map((game) => (
         <Card
           key={game.id}
-          className="shadow hover:shadow-md transition-shadow"
+          className={cn(
+            "shadow hover:shadow-md transition-shadow",
+            gameBeingDeleted === game.id && "opacity-50 pointer-events-none"
+          )}
         >
           <Link href={`/games/${game.id}`}>
             <CardHeader>
@@ -191,6 +272,7 @@ export function GamesList() {
                 size="sm"
                 onClick={(e) => handleDelete(e, game.id)}
                 className="opacity-80 hover:opacity-100"
+                disabled={gameBeingDeleted === game.id}
               >
                 <Trash2 className="h-4 w-4 mr-1" />
                 Delete

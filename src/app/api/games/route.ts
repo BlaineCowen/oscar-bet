@@ -1,7 +1,11 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import predictions from "@/lib/oscars_predictions.json";
-import { getNomineeName, convertOddsToDecimal } from "@/lib/game-utils";
+import {
+  getNomineeName,
+  convertOddsToDecimal,
+  getNomineeMovie,
+} from "@/lib/game-utils";
 
 // Force Node.js runtime for Prisma and better-auth
 export const runtime = "nodejs";
@@ -95,6 +99,7 @@ export async function POST(req: NextRequest) {
             nominees: {
               create: category.predictions.map((nominee) => ({
                 name: getNomineeName(nominee),
+                movie: getNomineeMovie(nominee),
                 odds: convertOddsToDecimal(nominee.odds),
               })),
             },
