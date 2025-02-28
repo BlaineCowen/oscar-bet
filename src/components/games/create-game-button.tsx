@@ -39,6 +39,7 @@ export function CreateGameButton() {
   const [isPending, startTransition] = useTransition();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [gameName, setGameName] = useState("Oscars 2024");
+  const [initialBalance, setInitialBalance] = useState("1000");
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
   const userId = user?.id;
@@ -85,7 +86,7 @@ export function CreateGameButton() {
           name: gameName,
           startDate: new Date().toISOString(),
           endDate: new Date(2024, 2, 10).toISOString(), // March 10, 2024
-          initialBalance: 1000,
+          initialBalance: Number(initialBalance),
         }),
       });
 
@@ -141,9 +142,27 @@ export function CreateGameButton() {
               disabled={isLoading}
             />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="balance">Initial Balance</Label>
+            <Input
+              id="balance"
+              type="number"
+              value={initialBalance}
+              onChange={(e) => setInitialBalance(e.target.value)}
+              placeholder="Enter initial balance"
+              disabled={isLoading}
+              min="1"
+            />
+          </div>
           <button
             onClick={createGame}
-            disabled={isLoading || !gameName.trim() || isAtLimit}
+            disabled={
+              isLoading ||
+              !gameName.trim() ||
+              !initialBalance ||
+              Number(initialBalance) < 1 ||
+              isAtLimit
+            }
             className={`w-full bg-gold text-black px-6 flex items-center justify-center py-3 rounded-lg font-bold hover:bg-gold/90 transition-colors disabled:opacity-50
             ${isLoading ? "animate-pulse" : ""}`}
           >

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { NomineeCard } from "@/components/nominees/nominee-card";
+import toast from "react-hot-toast";
 
 type CategoryWithNominees = Category & {
   nominees: Nominee[];
@@ -155,11 +156,10 @@ export default function BettingForm({
       (cat) => !selectedNominees[cat.id]
     );
     if (missingCategories.length > 0) {
-      setError(
-        `Please select nominees for all categories. Missing: ${missingCategories
-          .map((c) => c.name)
-          .join(", ")}`
-      );
+      const errorMsg = `Please select nominees for all categories. Missing: ${missingCategories
+        .map((c) => c.name)
+        .join(", ")}`;
+      toast.error(errorMsg);
       return;
     }
 
@@ -173,11 +173,10 @@ export default function BettingForm({
           ([categoryId]) => categories.find((c) => c.id === categoryId)?.name
         )
         .filter(Boolean);
-      setError(
-        `Please enter bet amounts for all selections. Missing: ${missingCategories.join(
-          ", "
-        )}`
-      );
+      const errorMsg = `Please enter bet amounts for all selections. Missing: ${missingCategories.join(
+        ", "
+      )}`;
+      toast.error(errorMsg);
       return;
     }
 
@@ -189,13 +188,12 @@ export default function BettingForm({
 
     // Compare against initial balance - allow exact match
     if (totalBetAmount > initialBalance) {
-      setError("Total bet amount exceeds your initial balance");
+      toast.error("Total bet amount exceeds your initial balance");
       return;
     }
 
     try {
       setIsSubmitting(true);
-      setError(null);
 
       const bets = Object.entries(selectedNominees).map(
         ([categoryId, nomineeId]) => ({
@@ -304,7 +302,7 @@ export default function BettingForm({
         `Error ${hasExistingBets ? "updating" : "placing"} bets:`,
         error
       );
-      setError(
+      toast.error(
         error instanceof Error
           ? error.message
           : `Failed to ${hasExistingBets ? "update" : "place"} bets`
@@ -408,31 +406,33 @@ export default function BettingForm({
 
   return (
     <form onSubmit={submitBets} className="relative">
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border mb-6">
-        <div className="container px-4 max-w-7xl mx-auto py-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+        <div className="container px-4 max-w-7xl mx-auto py-2">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-              <h2 className="text-xl sm:text-2xl font-bold">Place Your Bets</h2>
+              <h2 className="text-lg sm:text-2xl font-bold">Place Your Bets</h2>
               {hasExistingBets && !disabled && (
-                <span className="text-muted-foreground text-sm">
+                <span className="text-muted-foreground text-xs sm:text-sm">
                   (You can update your bets until the game is locked)
                 </span>
               )}
             </div>
-            <div className="text-lg sm:text-xl w-full sm:w-auto">
+            <div className="text-base sm:text-xl w-full sm:w-auto">
               <div className="flex items-center justify-between sm:justify-end gap-2">
-                <span>Available: ${currentBalance.toFixed(2)}</span>
+                <span className="whitespace-nowrap">
+                  Available: ${currentBalance.toFixed(2)}
+                </span>
                 {currentBalance <= 0 ? (
-                  <span className="text-green-500 text-sm font-medium">
+                  <span className="text-green-500 text-xs sm:text-sm font-medium whitespace-nowrap">
                     All funds allocated
                   </span>
                 ) : currentBalance < initialBalance * 0.1 ? (
-                  <span className="text-yellow-500 text-sm font-medium">
+                  <span className="text-yellow-500 text-xs sm:text-sm font-medium whitespace-nowrap">
                     Low funds
                   </span>
                 ) : null}
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs sm:text-sm text-muted-foreground">
                 Initial Balance: ${initialBalance.toFixed(2)}
               </div>
             </div>
@@ -440,49 +440,42 @@ export default function BettingForm({
         </div>
       </div>
 
-      <div className="container px-4 max-w-7xl mx-auto mb-4 flex gap-4">
-        <div className="flex flex-col gap-2">
+      <div className="container px-4 max-w-7xl mx-auto mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 mt-4">
           <Button
             type="button"
             variant="outline"
-            className="text-sm"
+            className="text-sm sm:col-span-3"
             onClick={makeRandomBets}
             disabled={disabled}
           >
             Bet for me
           </Button>
 
+          {currentBalance > 0 && !disabled && (
+            <Button
+              type="button"
+              variant="outline"
+              className="text-sm sm:col-span-6"
+              onClick={distributeRemainingBalance}
+            >
+              Distribute Remaining ${currentBalance.toFixed(2)}
+            </Button>
+          )}
+
           <Button
             type="button"
             variant="outline"
-            className="text-sm text-destructive hover:text-destructive"
+            className="text-sm text-destructive hover:text-destructive sm:col-span-3"
             onClick={clearAll}
             disabled={disabled}
           >
             Clear All
           </Button>
         </div>
-
-        {currentBalance > 0 && !disabled && (
-          <Button
-            type="button"
-            variant="outline"
-            className="text-sm"
-            onClick={distributeRemainingBalance}
-          >
-            Distribute Remaining ${currentBalance.toFixed(2)}
-          </Button>
-        )}
       </div>
 
       <div className="container px-4 max-w-7xl mx-auto space-y-6">
-        {error && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-
         {successMessage && (
           <Alert className="bg-green-500/10 border-green-500 text-green-500">
             <AlertCircle className="h-4 w-4 text-green-500" />
@@ -624,18 +617,15 @@ export default function BettingForm({
             );
           })}
         </div>
-
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={disabled || isSubmitting}
-        >
-          {isSubmitting
-            ? "Submitting..."
-            : hasExistingBets
-            ? "Update Bets"
-            : "Submit Bets"}
-        </Button>
+        <div className="flex justify-center">
+          <Button type="submit" size="lg" disabled={disabled || isSubmitting}>
+            {isSubmitting
+              ? "Submitting..."
+              : hasExistingBets
+              ? "Update Bets"
+              : "Submit Bets"}
+          </Button>
+        </div>
       </div>
     </form>
   );

@@ -111,7 +111,7 @@ export default function InviteCodeCard({
   if (!isAdmin) return null;
 
   return (
-    <Card className="mb-6">
+    <Card className="mb-6 max-w-md mx-auto flex flex-col gap-4 text-center items-center">
       <CardHeader>
         <CardTitle>Invite Players</CardTitle>
         <CardDescription>

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function JoinCheck() {

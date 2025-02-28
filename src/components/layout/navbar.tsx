@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { SignOutButton } from "../sign-out-button";
-import { Trophy } from "lucide-react";
+import { Trophy, Coffee } from "lucide-react";
 
 export function Navbar() {
   const { data: session } = useSession();
@@ -20,6 +20,19 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <Link
+            href="https://buymeacoffee.com/blainecowen"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 text-amber-600 border-amber-600 hover:bg-amber-600/10"
+            >
+              <Coffee className="h-4 w-4" />
+              <span>Buy me a coffee</span>
+            </Button>
+          </Link>
           {session?.user ? (
             <>
               <Link
