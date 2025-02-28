@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { Metadata } from "next";
 import { Providers } from "@/providers";
 import { Navbar } from "@/components/layout/navbar";
+import { CoffeeSupport } from "@/components/layout/coffee-support";
 import JoinCheck from "@/components/auth/join-check";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -46,6 +47,7 @@ export default function RootLayout({
           <Providers>
             <Navbar />
             <main className="min-h-screen bg-background">{children}</main>
+            <CoffeeSupport />
             <Toaster
               position="top-center"
               toastOptions={{

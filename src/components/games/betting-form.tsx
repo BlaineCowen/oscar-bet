@@ -288,6 +288,25 @@ export default function BettingForm({
 
       setSuccessMessage(successMessageText);
 
+      // Add support message toast with link
+      toast.success(
+        <div className="flex items-center gap-2">
+          Thanks for playing! Your support helps keep this site ad-free.{" "}
+          <a
+            href="https://buymeacoffee.com/blainecowen"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-500 hover:text-amber-400 font-medium"
+          >
+            Buy me a coffee! ☕
+          </a>
+        </div>,
+        {
+          duration: 5000,
+          position: "top-center",
+        }
+      );
+
       // Force refresh of component's current balance calculation
       setTimeout(() => {
         const forceUpdate = calculateCurrentBalance();
@@ -406,19 +425,24 @@ export default function BettingForm({
 
   return (
     <form onSubmit={submitBets} className="relative">
+      <div className="container px-4 max-w-7xl mx-auto py-2">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+            <h2 className="text-lg sm:text-2xl font-bold">Place Your Bets</h2>
+            {hasExistingBets && !disabled && (
+              <span className="text-muted-foreground text-xs sm:text-sm">
+                (You can update your bets until the game is locked)
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
         <div className="container px-4 max-w-7xl mx-auto py-2">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-              <h2 className="text-lg sm:text-2xl font-bold">Place Your Bets</h2>
-              {hasExistingBets && !disabled && (
-                <span className="text-muted-foreground text-xs sm:text-sm">
-                  (You can update your bets until the game is locked)
-                </span>
-              )}
-            </div>
-            <div className="text-base sm:text-xl w-full sm:w-auto">
-              <div className="flex items-center justify-between sm:justify-end gap-2">
+          <div className="text-base sm:text-xl w-full sm:w-auto flex justify-end">
+            <div>
+              <div className="flex items-center justify-end gap-2">
                 <span className="whitespace-nowrap">
                   Available: ${currentBalance.toFixed(2)}
                 </span>
@@ -432,7 +456,7 @@ export default function BettingForm({
                   </span>
                 ) : null}
               </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
+              <div className="text-xs sm:text-sm text-muted-foreground text-right">
                 Initial Balance: ${initialBalance.toFixed(2)}
               </div>
             </div>

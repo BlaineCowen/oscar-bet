@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { SignOutButton } from "../sign-out-button";
-import { Trophy, Coffee } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 export function Navbar() {
   const { data: session } = useSession();
@@ -12,36 +12,23 @@ export function Navbar() {
   return (
     <nav className="border-b border-border/30 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-sm">
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Trophy className="h-6 w-6 text-gold" />
-          <span className="text-xl font-bold bg-gradient-to-r from-gold to-oscar-red bg-clip-text text-transparent">
+        <Link href="/" className="flex items-center gap-2 min-w-0">
+          <Trophy className="h-6 w-6 text-gold shrink-0" />
+          <span className="text-xl font-bold bg-gradient-to-r from-gold to-oscar-red bg-clip-text text-transparent truncate">
             Oscar Betting Pool
           </span>
         </Link>
 
-        <div className="flex items-center gap-4">
-          <Link
-            href="https://buymeacoffee.com/blainecowen"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-              variant="outline"
-              className="flex items-center gap-2 text-amber-600 border-amber-600 hover:bg-amber-600/10"
-            >
-              <Coffee className="h-4 w-4" />
-              <span>Buy me a coffee</span>
-            </Button>
-          </Link>
+        <div className="flex items-center gap-2 sm:gap-4 ml-4">
           {session?.user ? (
             <>
               <Link
                 href="/games"
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className="text-sm font-medium transition-colors hover:text-primary whitespace-nowrap"
               >
                 My Games
               </Link>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center">
                 <SignOutButton />
               </div>
             </>
