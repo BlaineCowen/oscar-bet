@@ -221,7 +221,7 @@ export async function POST(req: NextRequest) {
       return createGameWithOriginalOdds(body, userId);
     } else {
       // Create game using the merged nominees data
-      return createGame(body, userId, predictions as Category[]);
+      return createGame(body, userId, mergedNominees);
     }
   } catch (error) {
     console.error("Failed to create game:", error);

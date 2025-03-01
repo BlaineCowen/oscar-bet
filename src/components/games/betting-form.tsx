@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Category, Nominee, GameParticipant, Bet } from "@prisma/client";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Film } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -77,6 +77,39 @@ export default function BettingForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const hasExistingBets = participant.bets.length > 0;
+
+  const categoryOrder = [
+    "Best Picture",
+    "Best Director",
+    "Best Actress",
+    "Best Actor",
+    "Best Supporting Actress",
+    "Best Supporting Actor",
+    "Best Adapted Screenplay",
+    "Best Original Screenplay",
+    "Best Cinematography",
+    "Best Costume Design",
+    "Best Film Editing",
+    "Best Makeup and Hairstyling",
+    "Best Production Design",
+    "Best Score",
+    "Best Song",
+    "Best Sound",
+    "Best Visual Effects",
+    "Best Animated Feature",
+    "Best Documentary Feature",
+    "Best International Film",
+    "Best Animated Short",
+    "Best Documentary Short",
+    "Best Live Action Short",
+  ];
+
+  // Sort categories based on categoryOrder
+  const sortedCategories = [...categories].sort((a, b) => {
+    const aIndex = categoryOrder.indexOf(a.name);
+    const bIndex = categoryOrder.indexOf(b.name);
+    return aIndex - bIndex;
+  });
 
   // Initial balance is fixed - it's the participant's balance plus their existing bets
   const initialBalance =
@@ -510,7 +543,7 @@ export default function BettingForm({
         )}
 
         <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category) => {
+          {sortedCategories.map((category) => {
             const existingBet = participant.bets.find(
               (bet) => bet.nominee?.category.id === category.id
             );

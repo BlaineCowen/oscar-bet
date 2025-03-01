@@ -58,6 +58,39 @@ export default function AdminModal({
   const queryClient = useQueryClient();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
+  const categoryOrder = [
+    "Best Picture",
+    "Best Director",
+    "Best Actress",
+    "Best Actor",
+    "Best Supporting Actress",
+    "Best Supporting Actor",
+    "Best Adapted Screenplay",
+    "Best Original Screenplay",
+    "Best Cinematography",
+    "Best Costume Design",
+    "Best Film Editing",
+    "Best Makeup and Hairstyling",
+    "Best Production Design",
+    "Best Score",
+    "Best Song",
+    "Best Sound",
+    "Best Visual Effects",
+    "Best Animated Feature",
+    "Best Documentary Feature",
+    "Best International Film",
+    "Best Animated Short",
+    "Best Documentary Short",
+    "Best Live Action Short",
+  ];
+
+  // Sort categories based on categoryOrder
+  const sortedCategories = [...categories].sort((a, b) => {
+    const aIndex = categoryOrder.indexOf(a.name);
+    const bIndex = categoryOrder.indexOf(b.name);
+    return aIndex - bIndex;
+  });
+
   const updateWinner = useMutation({
     mutationFn: async (data: { categoryId: string; nomineeId: string }) => {
       console.log("Setting winner:", data);
@@ -345,7 +378,7 @@ export default function AdminModal({
                       <SelectValue placeholder="Choose a category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories
+                      {sortedCategories
                         .filter((category) => !category.winnerId)
                         .map((category) => (
                           <SelectItem key={category.name} value={category.name}>
@@ -470,7 +503,7 @@ export default function AdminModal({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {categories.map((category) => {
+                {sortedCategories.map((category) => {
                   const winner = category.nominees.find(
                     (n) => n.id === category.winnerId
                   );

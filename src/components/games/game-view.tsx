@@ -40,6 +40,32 @@ export default function GameView({
     null
   );
 
+  const categoryOrder = [
+    "Best Picture",
+    "Best Director",
+    "Best Actress",
+    "Best Actor",
+    "Best Supporting Actress",
+    "Best Supporting Actor",
+    "Best Adapted Screenplay",
+    "Best Original Screenplay",
+    "Best Cinematography",
+    "Best Costume Design",
+    "Best Film Editing",
+    "Best Makeup and Hairstyling",
+    "Best Production Design",
+    "Best Score",
+    "Best Song",
+    "Best Sound",
+    "Best Visual Effects",
+    "Best Animated Feature",
+    "Best Documentary Feature",
+    "Best International Film",
+    "Best Animated Short",
+    "Best Documentary Short",
+    "Best Live Action Short",
+  ];
+
   // Sort participants by balance in descending order
   const sortedParticipants = [...participants].sort(
     (a, b) => b.balance - a.balance
@@ -92,48 +118,66 @@ export default function GameView({
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {participant.bets.map((bet) => {
-                        const hasWinner =
-                          bet.nominee.category.winnerId !== null;
-                        const isWinner =
-                          hasWinner &&
-                          bet.nominee.category.winnerId === bet.nomineeId;
-                        const winAmount = isWinner
-                          ? bet.amount * bet.nominee.odds
-                          : 0;
-                        const lossAmount =
-                          !isWinner && hasWinner ? bet.amount : 0;
+                      {participant.bets
+                        .sort((a, b) => {
+                          const aIndex = categoryOrder.indexOf(
+                            a.nominee.category.name
+                          );
+                          const bIndex = categoryOrder.indexOf(
+                            b.nominee.category.name
+                          );
+                          return aIndex - bIndex;
+                        })
+                        .map((bet) => {
+                          const hasWinner =
+                            bet.nominee.category.winnerId !== null;
+                          const isWinner =
+                            hasWinner &&
+                            bet.nominee.category.winnerId === bet.nomineeId;
+                          const winAmount = isWinner
+                            ? bet.amount * bet.nominee.odds
+                            : 0;
+                          const lossAmount =
+                            !isWinner && hasWinner ? bet.amount : 0;
 
-                        return (
-                          <TableRow key={bet.id}>
-                            <TableCell>{bet.nominee.category.name}</TableCell>
-                            <TableCell>{bet.nominee.name}</TableCell>
-                            <TableCell>${bet.amount.toFixed(2)}</TableCell>
-                            <TableCell>
-                              {bet.nominee.odds.toFixed(2)}x
-                            </TableCell>
-                            <TableCell>
-                              {hasWinner ? (
-                                isWinner ? (
-                                  <span className="text-green-500 font-medium flex items-center gap-1">
-                                    <Check className="h-4 w-4" />
-                                    Won ${winAmount.toFixed(2)}
-                                  </span>
+                          return (
+                            <TableRow
+                              key={bet.id}
+                              className={cn({
+                                "text-green-500 font-medium":
+                                  hasWinner && isWinner,
+                                "text-red-500 font-medium":
+                                  hasWinner && !isWinner,
+                              })}
+                            >
+                              <TableCell>{bet.nominee.category.name}</TableCell>
+                              <TableCell>{bet.nominee.name}</TableCell>
+                              <TableCell>${bet.amount.toFixed(2)}</TableCell>
+                              <TableCell>
+                                {bet.nominee.odds.toFixed(2)}x
+                              </TableCell>
+                              <TableCell>
+                                {hasWinner ? (
+                                  isWinner ? (
+                                    <span className="flex items-center gap-1">
+                                      <Check className="h-4 w-4" />
+                                      Won ${winAmount.toFixed(2)}
+                                    </span>
+                                  ) : (
+                                    <span className="flex items-center gap-1">
+                                      <X className="h-4 w-4" />
+                                      Lost ${lossAmount.toFixed(2)}
+                                    </span>
+                                  )
                                 ) : (
-                                  <span className="text-red-500 font-medium flex items-center gap-1">
-                                    <X className="h-4 w-4" />
-                                    Lost ${lossAmount.toFixed(2)}
+                                  <span className="text-muted-foreground">
+                                    Pending
                                   </span>
-                                )
-                              ) : (
-                                <span className="text-muted-foreground">
-                                  Pending
-                                </span>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
                     </TableBody>
                   </Table>
                 </CollapsibleContent>
