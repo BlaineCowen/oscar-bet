@@ -15,6 +15,12 @@ export default async function AdminPage({ params }: PageProps) {
           nominees: true,
         },
       },
+      participants: {
+        include: {
+          user: true,
+          bets: true,
+        },
+      },
     },
   });
 
@@ -22,5 +28,11 @@ export default async function AdminPage({ params }: PageProps) {
     notFound();
   }
 
-  return <AdminModal gameId={game.id} categories={game.categories} />;
+  return (
+    <AdminModal
+      gameId={game.id}
+      categories={game.categories}
+      participants={game.participants}
+    />
+  );
 }

@@ -46,7 +46,7 @@ interface AdminModalProps {
   isLocked?: boolean;
   participants: Array<{
     id: string;
-    user: { name: string };
+    user: { name: string | null };
     bets: any[];
   }>;
 }
@@ -358,7 +358,7 @@ export default function AdminModal({
                       </p>
                       <ul className="list-disc list-inside">
                         {usersWithoutBets.map((p) => (
-                          <li key={p.id}>{p.user.name}</li>
+                          <li key={p.id}>{p.user.name || "Unnamed User"}</li>
                         ))}
                       </ul>
                       <p className="mt-2 text-sm">
