@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Lock, Unlock } from "lucide-react";
+import { Lock, Unlock, AlertCircle } from "lucide-react";
 import type { Category, Nominee } from "@prisma/client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/table";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@/components/ui/spinner";
+import toast from "react-hot-toast";
 
 type CategoryWithNominees = Category & {
   nominees: Nominee[];
@@ -43,12 +44,18 @@ interface AdminModalProps {
   gameId: string;
   categories: CategoryWithNominees[];
   isLocked?: boolean;
+  participants: Array<{
+    id: string;
+    user: { name: string };
+    bets: any[];
+  }>;
 }
 
 export default function AdminModal({
   gameId,
   categories,
   isLocked = false,
+  participants,
 }: AdminModalProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedWinner, setSelectedWinner] = useState<string>("");
@@ -283,10 +290,22 @@ export default function AdminModal({
   };
 
   const handleLockGame = () => {
+    // Check for users without bets
+    const usersWithoutBets = participants.filter((p) => p.bets.length === 0);
+
+    if (usersWithoutBets.length > 0) {
+      setIsConfirmingGameLock(true);
+      return;
+    }
+
     lockGame.mutate();
   };
 
   const currentCategory = categories.find((c) => c.name === selectedCategory);
+
+  // Get users without bets for the confirmation message
+  const usersWithoutBets = participants.filter((p) => p.bets.length === 0);
+  const hasUnlockedUsers = usersWithoutBets.length > 0;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -332,28 +351,71 @@ export default function AdminModal({
                     This will prevent all players from updating their bets. This
                     action cannot be undone.
                   </p>
+                  {hasUnlockedUsers && (
+                    <div className="mb-4 p-3 bg-destructive/20 rounded-md">
+                      <p className="font-medium mb-2">
+                        The following users have not submitted bets:
+                      </p>
+                      <ul className="list-disc list-inside">
+                        {usersWithoutBets.map((p) => (
+                          <li key={p.id}>{p.user.name}</li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 text-sm">
+                        These users will be removed from the leaderboard.
+                      </p>
+                    </div>
+                  )}
                   <div className="flex space-x-2">
-                    <Button
-                      variant="destructive"
-                      onClick={handleLockGame}
-                      disabled={lockGame.isPending}
-                    >
-                      {lockGame.isPending ? (
-                        <span className="flex items-center gap-2">
-                          Processing
-                          <Spinner show={true} size="small" />
-                        </span>
-                      ) : (
-                        "Lock Game"
-                      )}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsConfirmingGameLock(false)}
-                      disabled={lockGame.isPending}
-                    >
-                      Cancel
-                    </Button>
+                    {hasUnlockedUsers ? (
+                      <>
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsConfirmingGameLock(false)}
+                          disabled={lockGame.isPending}
+                        >
+                          Wait for all users
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          onClick={() => lockGame.mutate()}
+                          disabled={lockGame.isPending}
+                        >
+                          {lockGame.isPending ? (
+                            <span className="flex items-center gap-2">
+                              Processing
+                              <Spinner show={true} size="small" />
+                            </span>
+                          ) : (
+                            "Lock Game Anyway"
+                          )}
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          variant="destructive"
+                          onClick={() => lockGame.mutate()}
+                          disabled={lockGame.isPending}
+                        >
+                          {lockGame.isPending ? (
+                            <span className="flex items-center gap-2">
+                              Processing
+                              <Spinner show={true} size="small" />
+                            </span>
+                          ) : (
+                            "Lock Game"
+                          )}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsConfirmingGameLock(false)}
+                          disabled={lockGame.isPending}
+                        >
+                          Cancel
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </AlertDescription>
               </Alert>

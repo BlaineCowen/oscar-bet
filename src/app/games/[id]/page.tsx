@@ -104,6 +104,7 @@ export default function GamePage({ params }: PageProps) {
             gameId={game.id}
             categories={game.categories || []}
             isLocked={game.locked || false}
+            participants={game.participants || []}
           />
         )}
       </div>

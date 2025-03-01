@@ -50,9 +50,10 @@ export default function TabView({
     (participant) => participant.user.id === currentUserId
   );
 
-  // Convert participants to ParticipantWithUser type
+  // Convert participants to ParticipantWithUser type and set balance to 0 for those without bets
   const typedParticipants: ParticipantWithUser[] = participants.map((p) => ({
     ...p,
+    balance: p.bets.length === 0 ? 0 : p.balance,
     user: {
       id: p.user.id ?? "",
       name: p.user.name ?? null,
