@@ -3,7 +3,9 @@ import oscarPredictions from "./oscars_predictions.json";
 import { getNomineeName } from "./game-utils";
 
 function convertOddsToDecimal(odds: string): number {
+  if (!odds) return 2.0; // Default odds if none provided
   const [numerator, denominator] = odds.split("/").map(Number);
+  if (!numerator || !denominator) return 2.0; // Default odds if invalid format
   return 1 + numerator / denominator;
 }
 

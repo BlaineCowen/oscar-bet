@@ -5,6 +5,7 @@ interface ScrapedNominee {
   category: string;
   name: string;
   odds: string;
+  movie?: string;
 }
 
 export async function getUpdatedNominees(): Promise<ScrapedNominee[]> {
@@ -40,9 +41,14 @@ export async function getUpdatedNominees(): Promise<ScrapedNominee[]> {
           .querySelectorAll(".predictions-list li")
           .forEach((item: Element) => {
             const name = item
-              .querySelector(".predictions-name")
+              .querySelector(".predictions-name p:first-child")
               ?.textContent?.trim()
               .replace(/\s+/g, " ");
+            const movie =
+              item
+                .querySelector(".related_production")
+                ?.textContent?.trim()
+                .replace(/\s+/g, " ") || "";
             const oddsElements = item.querySelectorAll(
               ".predictions-odds.predictions-experts.gray"
             );
@@ -57,13 +63,12 @@ export async function getUpdatedNominees(): Promise<ScrapedNominee[]> {
             ].includes(categoryTitle);
 
             if (name && odds) {
-              if (isActorCategory && name.includes(" ")) {
-                const [actor, ...movieParts] = name.split(" ");
-                const movie = movieParts.join(" ");
+              if (isActorCategory) {
                 scrapedNominees.push({
                   category: categoryTitle,
-                  name: actor,
+                  name: name,
                   odds,
+                  movie,
                 });
               } else {
                 scrapedNominees.push({

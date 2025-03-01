@@ -46,6 +46,11 @@ export async function GET(
         locked: true,
         joinCode: true,
         joinCodeExpiresAt: true,
+        _count: {
+          select: {
+            participants: true,
+          },
+        },
       },
     });
 
@@ -68,7 +73,17 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(game);
+    // Check if game is full
+    if (game._count.participants >= 100) {
+      return NextResponse.json(
+        { error: "Game has reached maximum capacity of 100 players" },
+        { status: 400 }
+      );
+    }
+
+    // Remove _count from response
+    const { _count, ...gameWithoutCount } = game;
+    return NextResponse.json(gameWithoutCount);
   } catch (error) {
     console.error("Error verifying code:", error);
     return NextResponse.json(

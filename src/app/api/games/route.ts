@@ -186,7 +186,7 @@ export async function POST(req: NextRequest) {
 
               return {
                 ...nominee,
-                odds: convertOddsToDecimal(scrapedOdds).toString(),
+                odds: scrapedOdds,
               };
             } catch (error) {
               console.error(
@@ -209,8 +209,20 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    // Create game using the merged nominees data
-    return createGame(body, userId, mergedNominees);
+    // create a functino that checks to make sure all the odds are valid
+    const validOdds = mergedNominees.every((category) => {
+      return category.predictions.every((nominee) => {
+        return Number(convertOddsToDecimal(nominee.odds)) > 0;
+      });
+    });
+
+    if (!validOdds) {
+      console.log("Invalid odds, using original odds");
+      return createGameWithOriginalOdds(body, userId);
+    } else {
+      // Create game using the merged nominees data
+      return createGame(body, userId, predictions as Category[]);
+    }
   } catch (error) {
     console.error("Failed to create game:", error);
     return NextResponse.json(

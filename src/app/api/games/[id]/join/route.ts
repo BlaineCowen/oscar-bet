@@ -104,6 +104,18 @@ export async function PUT(
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
     }
 
+    // Check participant limit
+    const participantCount = await prisma.gameParticipant.count({
+      where: { gameId: id },
+    });
+
+    if (participantCount >= 100) {
+      return NextResponse.json(
+        { error: "Game has reached maximum capacity of 100 players" },
+        { status: 400 }
+      );
+    }
+
     if (game.participants.length > 0) {
       console.log("User already joined game");
       return NextResponse.json(
