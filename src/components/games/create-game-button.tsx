@@ -38,7 +38,7 @@ export function CreateGameButton() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [gameName, setGameName] = useState("Oscars 2024");
+  const [gameName, setGameName] = useState("Oscars 2025");
   const [initialBalance, setInitialBalance] = useState("1000");
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();

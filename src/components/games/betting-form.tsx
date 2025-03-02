@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { NomineeCard } from "@/components/nominees/nominee-card";
 import toast from "react-hot-toast";
+import { cn } from "@/lib/utils";
 
 type CategoryWithNominees = Category & {
   nominees: Nominee[];
@@ -155,9 +156,6 @@ export default function BettingForm({
     const numAmount = Number(amount);
     if (isNaN(numAmount) || numAmount < 0) return;
 
-    const maxForThisCategory = getMaxAmountForCategory(categoryId);
-    if (numAmount > maxForThisCategory) return;
-
     setBetAmounts((prev) => {
       const newAmounts = {
         ...prev,
@@ -183,6 +181,12 @@ export default function BettingForm({
   const submitBets = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccessMessage(null);
+
+    // Check if balance is negative
+    if (currentBalance < 0) {
+      toast.error("Total bet amount exceeds your balance");
+      return;
+    }
 
     // Check if all categories have nominees selected
     const missingCategories = categories.filter(
@@ -210,18 +214,6 @@ export default function BettingForm({
         ", "
       )}`;
       toast.error(errorMsg);
-      return;
-    }
-
-    // Calculate total bet amount
-    const totalBetAmount = Object.values(betAmounts).reduce(
-      (sum, amount) => sum + amount,
-      0
-    );
-
-    // Compare against initial balance - allow exact match
-    if (totalBetAmount > initialBalance) {
-      toast.error("Total bet amount exceeds your initial balance");
       return;
     }
 
@@ -308,7 +300,9 @@ export default function BettingForm({
       ) {
         participant.balance = result.participant.balance;
       } else {
-        participant.balance = initialBalance - totalBetAmount;
+        participant.balance =
+          initialBalance -
+          Object.values(betAmounts).reduce((sum, amount) => sum + amount, 0);
       }
 
       const successMessageText = hasExistingBets
@@ -634,16 +628,17 @@ export default function BettingForm({
                       <Input
                         id={`bet-${category.id}`}
                         type="number"
-                        min="0.01"
-                        step="0.10"
-                        max={getMaxAmountForCategory(category.id)}
+                        min={0.01}
+                        step={0.01}
                         placeholder="Enter bet amount"
                         value={betAmounts[category.id] || ""}
                         onChange={(e) =>
                           handleAmountChange(category.id, e.target.value)
                         }
                         onKeyDown={handleKeyDown}
-                        className="bg-input"
+                        className={cn("bg-input", {
+                          "border-red-500": currentBalance < 0,
+                        })}
                         disabled={isLocked}
                       />
                       <div className="flex justify-between text-sm">
