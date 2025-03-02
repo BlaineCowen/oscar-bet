@@ -151,8 +151,9 @@ export function CreateGameButton() {
               onChange={(e) => setInitialBalance(e.target.value)}
               placeholder="Enter initial balance"
               disabled={isLoading}
-              min="50"
+              min="10"
             />
+            <span className="text-sm text-muted-foreground">Min: $10</span>
           </div>
           <button
             onClick={createGame}
@@ -160,7 +161,7 @@ export function CreateGameButton() {
               isLoading ||
               !gameName.trim() ||
               !initialBalance ||
-              Number(initialBalance) < 50 ||
+              Number(initialBalance) < 10 ||
               isAtLimit
             }
             className={`w-full bg-gold text-black px-6 flex items-center justify-center py-3 rounded-lg font-bold hover:bg-gold/90 transition-colors disabled:opacity-50

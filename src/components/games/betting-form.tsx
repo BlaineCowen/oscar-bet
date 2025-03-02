@@ -634,7 +634,8 @@ export default function BettingForm({
                       <Input
                         id={`bet-${category.id}`}
                         type="number"
-                        min="1"
+                        min="0.01"
+                        step="0.10"
                         max={getMaxAmountForCategory(category.id)}
                         placeholder="Enter bet amount"
                         value={betAmounts[category.id] || ""}
@@ -646,7 +647,7 @@ export default function BettingForm({
                         disabled={isLocked}
                       />
                       <div className="flex justify-between text-sm">
-                        <span>Min: $1</span>
+                        <span>Min: $0.01</span>
                         <span>
                           {betAmounts[category.id]
                             ? `To win: $${(

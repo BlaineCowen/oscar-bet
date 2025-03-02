@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Protect private routes
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://oscaraction.com/sitemap.xml 
