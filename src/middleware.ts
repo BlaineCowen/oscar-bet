@@ -15,6 +15,12 @@ export async function middleware(request: NextRequest) {
     "/api/games/verify-code",
   ];
 
+  // Allow all auth-related paths
+  if (path.startsWith("/api/auth")) {
+    return NextResponse.next();
+  }
+
+  // Allow public paths and static assets
   if (
     publicPaths.some((p) => path.startsWith(p)) ||
     path.match(/\.(jpg|jpeg|png|gif|ico|svg)$/) ||
@@ -24,16 +30,29 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+  try {
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
 
-  if (!token) {
+    console.log(
+      "Auth check for path:",
+      path,
+      "token:",
+      token ? "exists" : "none"
+    );
+
+    if (!token) {
+      console.log("No token found, redirecting to login");
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    console.error("Auth error:", error);
     return NextResponse.redirect(new URL("/login", request.url));
   }
-
-  return NextResponse.next();
 }
 
 // See "Matching Paths" below to learn more
