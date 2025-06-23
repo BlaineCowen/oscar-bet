@@ -1,19 +1,28 @@
 import { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import type { Game } from "@prisma/client";
+
+type GameSitemapEntry = Pick<Game, "id" | "updatedAt">;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Get all public games
-  const games = await prisma.game.findMany({
-    where: {
-      locked: false,
-    },
-    select: {
-      id: true,
-      updatedAt: true,
-    },
-  });
-
   const baseUrl = "https://oscaraction.com";
+  let games: GameSitemapEntry[] = [];
+
+  try {
+    // Get all public games
+    games = await prisma.game.findMany({
+      where: {
+        locked: false,
+      },
+      select: {
+        id: true,
+        updatedAt: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch games for sitemap:", error);
+    // Continue with empty games array
+  }
 
   return [
     {
