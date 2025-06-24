@@ -1,57 +1,36 @@
-import Credentials from "next-auth/providers/credentials";
-import type { NextAuthConfig } from "next-auth";
-import type { NextRequest } from "next/server";
+import type { AuthConfig } from "@auth/core";
+import Google from "next-auth/providers/google";
+import type { JWT } from "next-auth/jwt";
+import type { Session } from "next-auth";
 
 /**
  * Base Auth.js config without database adapter
  * Used for Edge compatibility
  */
-export const authConfig: NextAuthConfig = {
-  session: { strategy: "jwt" },
+export const authConfig: AuthConfig = {
+  providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }) as any,
+  ],
   pages: {
     signIn: "/login",
     error: "/error",
   },
   callbacks: {
-    authorized({ auth, request: req }: { auth: any; request: NextRequest }) {
-      const isLoggedIn = !!auth?.user;
-      const isApiAuthRoute = req.nextUrl.pathname.startsWith("/api/auth");
-      const isPublicRoute =
-        ["/", "/login", "/register", "/about", "/contact"].includes(
-          req.nextUrl.pathname
-        ) || req.nextUrl.pathname.startsWith("/api/auth");
-
-      if (isPublicRoute || isApiAuthRoute) {
-        return true;
-      }
-
-      return isLoggedIn;
-    },
-    jwt({ token, user }) {
+    jwt({ token, user }: any) {
       if (user?.id) {
         token.id = user.id;
       }
       return token;
     },
-    session({ session, token }) {
-      if (session.user && token.id) {
+    session({ session, token }: any) {
+      if (session.user) {
         session.user.id = token.id;
       }
       return session;
     },
   },
-  providers: [
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize() {
-        // This will be implemented in the main auth.ts file
-        // This is just a placeholder since auth.config.ts needs it
-        return null;
-      },
-    }),
-  ],
-} satisfies NextAuthConfig;
+  session: { strategy: "jwt" },
+};

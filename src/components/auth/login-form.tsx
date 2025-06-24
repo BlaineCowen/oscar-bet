@@ -42,7 +42,15 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <button
         type="button"
-        onClick={() => signIn("google", { callbackUrl: "/games" })}
+        onClick={() => {
+          toast.loading("Signing in with Google...");
+          signIn("google", {
+            callbackUrl: "/games",
+          }).catch((error) => {
+            console.error("Google sign-in error:", error);
+            toast.error("Failed to sign in with Google");
+          });
+        }}
         className="w-full flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-black hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
       >
         <svg className="h-5 w-5" viewBox="0 0 24 24">

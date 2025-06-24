@@ -12,23 +12,20 @@ datasource db {
   directUrl = env("DIRECT_URL")    // This should be your direct Neon connection URL
 }
 
-// Auth.js / NextAuth.js models
 model User {
-  id             String          @id @default(cuid())
+  id             String            @id @default(cuid())
   name           String?
-  email          String          @unique
+  email          String            @unique
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
   accounts       Account[]
-  sessions       Session[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  
-  // Your application relationships
-  adminGames     Game[]          @relation("GameAdmin")
-  participantIn  GameParticipant[]
   bets           Bet[]
+  participantIn  GameParticipant[]
+  adminGames     Game[]            @relation("GameAdmin")
+  sessions       Session[]
 
   @@map("users")
 }
@@ -39,17 +36,16 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?  @db.Text
+  id_token          String?
   session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -78,23 +74,22 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-// Your application models
 model Game {
-  id               String           @id @default(cuid())
-  name             String
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  startDate        DateTime
-  endDate          DateTime
-  locked           Boolean        @default(false)
-  initialBalance   Int
-  adminId          String
-  admin            User            @relation("GameAdmin", fields: [adminId], references: [id])
-  participants     GameParticipant[]
-  bets            Bet[]
-  categories       Category[]
-  joinCode         String?
+  id                String            @id @default(cuid())
+  name              String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  startDate         DateTime
+  endDate           DateTime
+  locked            Boolean           @default(false)
+  initialBalance    Int
+  adminId           String
+  joinCode          String?
   joinCodeExpiresAt DateTime?
+  bets              Bet[]
+  categories        Category[]
+  participants      GameParticipant[]
+  admin             User              @relation("GameAdmin", fields: [adminId], references: [id])
 
   @@index([adminId])
   @@map("games")
@@ -103,46 +98,44 @@ model Game {
 model GameParticipant {
   id        String   @id @default(cuid())
   balance   Float
-  game      Game     @relation(fields: [gameId], references: [id])
   gameId    String
-  user      User     @relation(fields: [userId], references: [id])
   userId    String
-  bets      Bet[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  bets      Bet[]
+  game      Game     @relation(fields: [gameId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@unique([gameId, userId])
   @@map("game_participants")
 }
 
 model Category {
-  id          String    @id @default(cuid())
-  name        String
-  gameId      String
-  game        Game      @relation(fields: [gameId], references: [id])
-  nominees    Nominee[]
-  winnerId    String?   // ID of the winning nominee
-  winner      Nominee?  @relation("CategoryWinner", fields: [winnerId], references: [id])
-  isLocked    Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String    @id @default(cuid())
+  name      String
+  gameId    String
+  winnerId  String?
+  isLocked  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  game      Game      @relation(fields: [gameId], references: [id])
+  winner    Nominee?  @relation("CategoryWinner", fields: [winnerId], references: [id])
+  nominees  Nominee[]
 
   @@map("categories")
 }
 
 model Nominee {
-  id         String     @id @default(cuid())
-  name       String
-  movie      String?
-  odds       Float
-  // Note: No longer storing image URLs in the database
-  // We now generate them predictably from nominee name + category
-  category   Category   @relation(fields: [categoryId], references: [id])
-  categoryId String
-  bets       Bet[]
+  id            String     @id @default(cuid())
+  name          String
+  movie         String?
+  odds          Float
+  categoryId    String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  bets          Bet[]
   wonCategories Category[] @relation("CategoryWinner")
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  category      Category   @relation(fields: [categoryId], references: [id])
 
   @@map("nominees")
 }
@@ -150,18 +143,18 @@ model Nominee {
 model Bet {
   id                String          @id @default(cuid())
   amount            Float
-  user              User            @relation(fields: [userId], references: [id])
   userId            String
-  nominee           Nominee         @relation(fields: [nomineeId], references: [id])
   nomineeId         String
-  game              Game            @relation(fields: [gameId], references: [id])
   gameId            String
-  gameParticipant   GameParticipant @relation(fields: [gameParticipantId], references: [id])
   gameParticipantId String
   paidOut           Boolean         @default(false)
-  payoutAmount      Float?          // Amount won/lost when bet is settled
+  payoutAmount      Float?
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
+  game              Game            @relation(fields: [gameId], references: [id])
+  gameParticipant   GameParticipant @relation(fields: [gameParticipantId], references: [id])
+  nominee           Nominee         @relation(fields: [nomineeId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
 
   @@map("bets")
 }

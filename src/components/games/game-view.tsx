@@ -8,7 +8,7 @@ import type {
   Nominee,
   Category,
 } from "@prisma/client";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import {
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/table";
 import { Check, Crown, X } from "lucide-react";
 import type { ParticipantWithUser } from "@/types/prisma";
+import { Input } from "@/components/ui/input";
 
 interface GameViewProps {
   participants: ParticipantWithUser[];
@@ -39,6 +40,38 @@ export default function GameView({
   const [expandedParticipant, setExpandedParticipant] = useState<string | null>(
     null
   );
+  const [editingName, setEditingName] = useState<string | null>(null);
+  const [newName, setNewName] = useState("");
+
+  const handleNameEdit = async (participantId: string, currentName: string) => {
+    setEditingName(participantId);
+    setNewName(currentName);
+  };
+
+  const handleNameSave = async (participantId: string) => {
+    if (!participantId || !newName.trim()) return;
+    try {
+      const response = await fetch(`/api/participants/${participantId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newName }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update name");
+
+      // Update state directly
+      const updatedParticipants = participants.map((p) =>
+        p.id === participantId
+          ? { ...p, user: { ...p.user, name: newName } }
+          : p
+      );
+      participants.splice(0, participants.length, ...updatedParticipants);
+      setEditingName(null);
+    } catch (error) {
+      console.error("Error updating name:", error);
+      setEditingName(null);
+    }
+  };
 
   const categoryOrder = [
     "Best Picture",
@@ -89,7 +122,47 @@ export default function GameView({
               <div className="flex justify-between items-center">
                 <div className="space-y-1">
                   <h3 className="text-lg font-semibold flex items-center gap-2">
-                    {participant.user.name}
+                    {editingName === participant.id ? (
+                      <div className="flex items-center gap-2">
+                        <Input
+                          value={newName}
+                          onChange={(e) => setNewName(e.target.value)}
+                          className="w-[200px]"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleNameSave(participant.id)}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setEditingName(null)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <>
+                        {participant.user.name}
+                        {participant.user.id === currentUserId && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              handleNameEdit(
+                                participant.id,
+                                participant.user.name ?? ""
+                              )
+                            }
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </>
+                    )}
                     {index === 0 && (
                       <Crown className="h-4 w-4 text-yellow-500" />
                     )}

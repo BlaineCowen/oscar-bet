@@ -1,7 +1,9 @@
-import { handlers } from "@/auth";
+import { auth } from "@/auth";
 
-// Export Auth.js API handlers for Next.js
-export const { GET, POST } = handlers;
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-// Edge compatibility
-export const runtime = "edge";
+const handler = auth;
+
+export const GET = handler;
+export const POST = handler;

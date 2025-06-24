@@ -1,6 +1,7 @@
 import "next-auth";
-import { DefaultSession } from "next-auth";
-import { JWT, DefaultJWT } from "next-auth/jwt";
+import type { DefaultSession, DefaultUser } from "next-auth";
+import type { JWT, DefaultJWT } from "next-auth/jwt";
+import type { User as PrismaUser } from "@prisma/client";
 
 declare module "next-auth" {
   /**
@@ -12,15 +13,12 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 
-  /**
-   * Extend the built-in user types
-   */
-  interface User {
+  interface User extends DefaultUser {
     id: string;
     email: string;
     name?: string | null;
     image?: string | null;
-    hashedPassword?: string;
+    hashedPassword?: string | null;
   }
 }
 

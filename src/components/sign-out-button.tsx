@@ -10,7 +10,7 @@ export function SignOutButton() {
     try {
       await signOut({
         redirect: true,
-        redirectTo: "/login",
+        callbackUrl: "/login",
       });
     } catch (error) {
       console.error("Failed to sign out:", error);
