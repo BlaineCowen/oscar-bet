@@ -26,7 +26,7 @@ A sleek, modern web application for running Oscar betting pools with friends and
 
 - [Vercel Account](https://vercel.com/signup)
 - [GitHub Account](https://github.com/join)
-- PostgreSQL Database (Vercel Postgres, Supabase, Neon, etc.)
+- PostgreSQL Database (Vercel Postgres, Neon, etc.)
 
 ### Steps for Deployment
 

@@ -10,6 +10,7 @@ function getPrismaClient() {
   return client;
 }
 
+// In development, we want to reuse the same instance across hot reloads
 export const prisma = globalThis.cachedPrisma || getPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
