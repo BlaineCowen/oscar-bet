@@ -2,11 +2,12 @@
  * GET /api/me?gameId=xxx
  * Returns the current participant for a game, identified by:
  * 1. `pt` cookie (guest)
- * 2. `x-user-id` header (admin / logged-in user)
+ * 2. Auth.js v5 session (logged-in user via `auth()`)
+ * 3. `x-user-id` header set by middleware (fallback)
  */
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getToken } from "next-auth/jwt";
+import { auth } from "@/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,11 +38,13 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // 2. Logged-in user — always try this even if pt cookie exists but didn't match
-  const authToken = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  if (authToken?.id) {
+  // 2. Auth.js v5 session (works in Node.js API routes, unlike getToken from next-auth/jwt v4)
+  const session = await auth();
+  const userId = session?.user?.id ?? req.headers.get("x-user-id");
+
+  if (userId) {
     const participant = await prisma.gameParticipant.findFirst({
-      where: { userId: authToken.id as string, gameId },
+      where: { userId, gameId },
       include: includeOpts,
     });
     if (participant) {

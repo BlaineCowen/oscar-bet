@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GameView from "@/components/games/game-view";
 import BettingForm from "@/components/games/betting-form";
@@ -24,6 +24,7 @@ interface TabViewProps {
   currentUserId: string;
   gameId: string;
   locked: boolean;
+  isAdmin?: boolean;
   currentParticipant?: GameParticipant & {
     bets: (Bet & {
       nominee: Nominee & {
@@ -39,16 +40,22 @@ export default function TabView({
   currentUserId,
   gameId,
   locked,
+  isAdmin,
   currentParticipant,
 }: TabViewProps) {
-  const [activeTab, setActiveTab] = useState(
-    currentParticipant ? "betting" : "leaderboard"
-  );
+  const [activeTab, setActiveTab] = useState("leaderboard");
+
+  // Switch to betting tab once participant data loads
+  useEffect(() => {
+    if (currentParticipant || isAdmin) {
+      setActiveTab("betting");
+    }
+  }, [currentParticipant, isAdmin]);
 
   // Check if the current user is a participant in the game
-  const isParticipant = participants.some(
-    (participant) => participant.user.id === currentUserId
-  );
+  const isParticipant =
+    isAdmin ||
+    participants.some((participant) => participant.user.id === currentUserId);
 
   // Convert participants to ParticipantWithUser type and set balance to 0 for those without bets
   const typedParticipants: ParticipantWithUser[] = participants.map((p) => ({
@@ -66,7 +73,7 @@ export default function TabView({
       <TabsList className="grid w-full grid-cols-2 mb-8">
         <TabsTrigger
           value="betting"
-          disabled={!isParticipant || !currentParticipant}
+          disabled={!isParticipant && !isAdmin}
         >
           Place Bets
         </TabsTrigger>
@@ -81,7 +88,7 @@ export default function TabView({
       </TabsContent>
 
       <TabsContent value="betting" className="mt-0">
-        {currentParticipant && (
+        {currentParticipant ? (
           <BettingForm
             categories={categories}
             participant={currentParticipant}
@@ -89,7 +96,11 @@ export default function TabView({
             userId={currentUserId}
             disabled={locked}
           />
-        )}
+        ) : isAdmin ? (
+          <div className="text-center py-10 text-muted-foreground">
+            Loading your participant data...
+          </div>
+        ) : null}
       </TabsContent>
     </Tabs>
   );

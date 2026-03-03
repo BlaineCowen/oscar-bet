@@ -162,6 +162,7 @@ export default function GamePage({ params }: PageProps) {
         }
         gameId={game.id}
         locked={game.locked || false}
+        isAdmin={!!isAdmin}
         currentParticipant={normalizedCurrentParticipant}
       />
     </div>
