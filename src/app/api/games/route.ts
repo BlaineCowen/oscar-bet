@@ -13,7 +13,7 @@ async function getCachedCategories(): Promise<KalshiCategory[]> {
   });
 
   if (cached) {
-    const data = cached.data as KalshiCategory[];
+    const data = cached.data as unknown as KalshiCategory[];
     if (Array.isArray(data) && data.length > 0) {
       console.log(
         `Using KalshiCache (${data.length} categories, updated ${cached.updatedAt.toISOString()})`

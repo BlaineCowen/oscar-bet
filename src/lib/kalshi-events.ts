@@ -83,7 +83,7 @@ export const KALSHI_EVENTS: Record<string, string> = {
  */
 export const STATIC_CATEGORIES: Array<{
   category: string;
-  nominees: Array<{ name: string; kalshiTicker: null; odds: number; imageUrl: null }>;
+  nominees: Array<{ name: string; kalshiTicker: string; odds: number; imageUrl: null }>;
 }> = [];
 
 // Actor categories where the nominee IS a person (not a film title)

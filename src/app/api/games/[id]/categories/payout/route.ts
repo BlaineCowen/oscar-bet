@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
+import { effectiveOdds } from "@/lib/kalshi";
 
 
 
@@ -64,7 +65,6 @@ export async function POST(
           );
 
           // Use oddsAtTime (locked at bet placement) so live changes don't affect payouts
-          const { effectiveOdds } = await import("@/lib/kalshi");
           const multiplier = effectiveOdds(
             winningBet?.oddsAtTime ?? winningNominee.odds
           );

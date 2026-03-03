@@ -32,7 +32,7 @@ export default async function AdminPage({ params }: PageProps) {
     <AdminModal
       gameId={game.id}
       categories={game.categories}
-      participants={game.participants}
+      participants={game.participants as any}
     />
   );
 }

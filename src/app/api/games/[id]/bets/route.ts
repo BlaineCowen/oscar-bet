@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import { effectiveOdds } from "@/lib/kalshi";
 
 
 
@@ -63,7 +64,6 @@ export async function POST(
     }
 
     // Look up current odds for each nominee so we can lock them in (never store < 1.01 or 0)
-    const { effectiveOdds } = await import("@/lib/kalshi");
     const nomineeIds = [...new Set(bets.map((b) => b.nomineeId))];
     const nominees = await prisma.nominee.findMany({
       where: { id: { in: nomineeIds } },
