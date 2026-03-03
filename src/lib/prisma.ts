@@ -1,17 +1,14 @@
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from "@prisma/client";
 
 declare global {
-  var cachedPrisma: ReturnType<typeof getPrismaClient>;
+  var cachedPrisma: PrismaClient | undefined;
 }
 
-function getPrismaClient() {
-  const client = new PrismaClient().$extends(withAccelerate());
-  return client;
-}
-
-// In development, we want to reuse the same instance across hot reloads
-export const prisma = globalThis.cachedPrisma || getPrismaClient();
+export const prisma =
+  globalThis.cachedPrisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
 
 if (process.env.NODE_ENV !== "production") {
   globalThis.cachedPrisma = prisma;
