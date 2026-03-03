@@ -83,6 +83,7 @@ export default function BettingForm({
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
   const hasExistingBets = participant.bets.length > 0;
 
   const sortedCategories = [...categories].sort((a, b) => {
@@ -120,6 +121,7 @@ export default function BettingForm({
       [categoryId]: nomineeId,
     };
     setSelectedNominees(newNominees);
+    setIsDirty(true);
     localStorage.setItem(
       `bets-${gameId}-nominees`,
       JSON.stringify(newNominees)
@@ -138,6 +140,7 @@ export default function BettingForm({
     const maxForThisCategory = getMaxAmountForCategory(categoryId);
     if (numAmount > maxForThisCategory) return;
 
+    setIsDirty(true);
     setBetAmounts((prev) => {
       const newAmounts = {
         ...prev,
@@ -291,6 +294,7 @@ export default function BettingForm({
         participant.balance = initialBalance - totalBetAmount;
       }
 
+      setIsDirty(false);
       const successMessageText = hasExistingBets
         ? `Bets successfully updated! Your new balance is $${participant.balance.toFixed(
             2
@@ -452,28 +456,51 @@ export default function BettingForm({
       </div>
 
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-        <div className="container px-4 max-w-7xl mx-auto py-2">
-          <div className="text-base sm:text-xl w-full sm:w-auto flex justify-end">
-            <div>
-              <div className="flex items-center justify-end gap-2">
-                <span className="whitespace-nowrap">
-                  Available: ${currentBalance.toFixed(2)}
+        <div className="container px-4 max-w-7xl mx-auto py-2 flex items-center justify-between gap-4">
+          {/* Balance info */}
+          <div className="text-base sm:text-xl">
+            <div className="flex items-center gap-2">
+              <span className="whitespace-nowrap">
+                Available: ${currentBalance.toFixed(2)}
+              </span>
+              {currentBalance <= 0 ? (
+                <span className="text-green-500 text-xs sm:text-sm font-medium whitespace-nowrap">
+                  All funds allocated
                 </span>
-                {currentBalance <= 0 ? (
-                  <span className="text-green-500 text-xs sm:text-sm font-medium whitespace-nowrap">
-                    All funds allocated
-                  </span>
-                ) : currentBalance < initialBalance * 0.1 ? (
-                  <span className="text-yellow-500 text-xs sm:text-sm font-medium whitespace-nowrap">
-                    Low funds
-                  </span>
-                ) : null}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground text-right">
-                Initial Balance: ${initialBalance.toFixed(2)}
-              </div>
+              ) : currentBalance < initialBalance * 0.1 ? (
+                <span className="text-yellow-500 text-xs sm:text-sm font-medium whitespace-nowrap">
+                  Low funds
+                </span>
+              ) : null}
+            </div>
+            <div className="text-xs sm:text-sm text-muted-foreground">
+              Initial Balance: ${initialBalance.toFixed(2)}
             </div>
           </div>
+
+          {/* Submit button + unsaved indicator */}
+          {!disabled && (
+            <div className="flex flex-col items-end gap-0.5 shrink-0">
+              <Button
+                type="submit"
+                size="sm"
+                disabled={isSubmitting}
+                className="relative"
+              >
+                {isSubmitting
+                  ? "Submitting…"
+                  : hasExistingBets
+                  ? "Update Bets"
+                  : "Submit Bets"}
+                {isDirty && !isSubmitting && (
+                  <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-amber-400" />
+                )}
+              </Button>
+              <span className="text-[10px] text-muted-foreground">
+                {isDirty ? "Unsaved changes" : hasExistingBets ? "Bets saved" : "Not submitted yet"}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -662,15 +689,6 @@ export default function BettingForm({
               </Card>
             );
           })}
-        </div>
-        <div className="flex justify-center">
-          <Button type="submit" size="lg" disabled={disabled || isSubmitting}>
-            {isSubmitting
-              ? "Submitting..."
-              : hasExistingBets
-              ? "Update Bets"
-              : "Submit Bets"}
-          </Button>
         </div>
       </div>
     </form>

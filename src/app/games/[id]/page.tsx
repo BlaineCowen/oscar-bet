@@ -8,6 +8,7 @@ import AdminModal from "./admin/admin-modal";
 import { useUser } from "@/hooks/useAuth";
 import InviteCodeCard from "@/components/games/invite-code-card";
 import TabView from "@/components/games/tab-view";
+import DisplayNameEditor from "@/components/games/display-name-editor";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -128,9 +129,8 @@ export default function GamePage({ params }: PageProps) {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
           </span>
           <span>
-            <strong>Odds are live</strong> — they update from Kalshi markets
-            every hour. Your bet locks in the odds shown at the moment you place
-            it. The admin will freeze odds just before the show starts.
+            <strong>Odds are live</strong>: Updated every 30 minutes. Admin will
+            lock odds once the awards show begins.
           </span>
         </div>
       )}
@@ -151,6 +151,20 @@ export default function GamePage({ params }: PageProps) {
           <p className="text-sm text-muted-foreground">
             Ask the admin for an invite link to join.
           </p>
+        </div>
+      )}
+
+      {currentParticipant && (
+        <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+          <span>Playing as</span>
+          <DisplayNameEditor
+            gameId={game.id}
+            initialName={
+              normalizedCurrentParticipant?.user?.name ??
+              currentParticipant.name ??
+              "Player"
+            }
+          />
         </div>
       )}
 

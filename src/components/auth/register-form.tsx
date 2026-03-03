@@ -38,6 +38,8 @@ export function RegisterForm() {
         throw new Error(await res.text());
       }
 
+      const { linkedGameId } = await res.json();
+
       // Sign in the user immediately after successful registration
       const signInResult = await signIn("credentials", {
         email,
@@ -50,7 +52,8 @@ export function RegisterForm() {
         return;
       }
 
-      router.push("/games");
+      // If registration linked a guest game participant, go straight to that game
+      router.push(linkedGameId ? `/games/${linkedGameId}` : "/games");
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong");
     } finally {
