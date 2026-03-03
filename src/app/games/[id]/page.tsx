@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,11 +10,11 @@ import InviteCodeCard from "@/components/games/invite-code-card";
 import TabView from "@/components/games/tab-view";
 
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default function GamePage({ params }: PageProps) {
-  const gameId = params.id;
+  const { id: gameId } = use(params);
   const { data: authUser } = useUser();
 
   const { data: game, isLoading: gameLoading } = useQuery({
