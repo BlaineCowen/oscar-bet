@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GameView from "@/components/games/game-view";
 import BettingForm from "@/components/games/betting-form";
@@ -44,10 +44,12 @@ export default function TabView({
   currentParticipant,
 }: TabViewProps) {
   const [activeTab, setActiveTab] = useState("leaderboard");
+  const hasSetInitialTab = useRef(false);
 
-  // Switch to betting tab once participant data loads
+  // Switch to betting tab once participant data first loads — only once
   useEffect(() => {
-    if (currentParticipant || isAdmin) {
+    if (!hasSetInitialTab.current && (currentParticipant || isAdmin)) {
+      hasSetInitialTab.current = true;
       setActiveTab("betting");
     }
   }, [currentParticipant, isAdmin]);
