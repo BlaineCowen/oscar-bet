@@ -43,6 +43,7 @@ export async function GET(
               },
             },
           },
+          orderBy: { createdAt: "asc" },
         },
         admin: {
           select: {

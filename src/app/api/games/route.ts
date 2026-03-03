@@ -1,38 +1,40 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import predictions from "@/lib/oscars_predictions.json";
-import {
-  getNomineeName,
-  convertOddsToDecimal,
-  getNomineeMovie,
-} from "@/lib/game-utils";
-import { getUpdatedNominees } from "@/lib/scrapeOdds";
+import { fetchAllOscarCategories } from "@/lib/kalshi";
+import type { KalshiCategory } from "@/lib/kalshi";
 
-// Force Node.js runtime for Prisma and better-auth
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Define types for the JSON data structure
-interface BaseNominee {
-  position: string;
-  image: string;
-  odds: string;
-}
+async function getCachedCategories(): Promise<KalshiCategory[]> {
+  // Try the DB cache first (populated by cron)
+  const cached = await prisma.kalshiCache.findUnique({
+    where: { id: "singleton" },
+  });
 
-interface NameNominee extends BaseNominee {
-  name: string;
-}
+  if (cached) {
+    const data = cached.data as KalshiCategory[];
+    if (Array.isArray(data) && data.length > 0) {
+      console.log(
+        `Using KalshiCache (${data.length} categories, updated ${cached.updatedAt.toISOString()})`
+      );
+      return data;
+    }
+  }
 
-interface ActorMovieNominee extends BaseNominee {
-  actor: string;
-  movie: string;
-}
+  // Cache is empty → fall back to live fetch and populate cache
+  console.log("KalshiCache empty, fetching live from Kalshi...");
+  const categories = await fetchAllOscarCategories();
 
-type Nominee = NameNominee | ActorMovieNominee;
+  if (categories.length > 0) {
+    await prisma.kalshiCache.upsert({
+      where: { id: "singleton" },
+      update: { data: categories as any },
+      create: { id: "singleton", data: categories as any },
+    });
+  }
 
-interface Category {
-  category: string;
-  predictions: Nominee[];
+  return categories;
 }
 
 export async function GET(req: NextRequest) {
@@ -46,43 +48,19 @@ export async function GET(req: NextRequest) {
       where: {
         OR: [
           { adminId: userId },
-          {
-            participants: {
-              some: {
-                userId,
-              },
-            },
-          },
+          { participants: { some: { userId } } },
         ],
       },
       include: {
-        admin: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        admin: { select: { id: true, name: true, email: true } },
         participants: {
           include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-              },
-            },
+            user: { select: { id: true, name: true, email: true } },
           },
         },
-        categories: {
-          include: {
-            nominees: true,
-          },
-        },
+        categories: { include: { nominees: true } },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(games);
@@ -103,143 +81,15 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+    const categories = await getCachedCategories();
 
-    // Get fresh odds with fallback to original predictions
-    let scrapedNominees = [];
-    try {
-      scrapedNominees = await getUpdatedNominees();
-      if (!scrapedNominees || scrapedNominees.length === 0) {
-        console.log("No nominees scraped, using original odds");
-        return createGameWithOriginalOdds(body, userId);
-      }
-    } catch (error) {
-      console.error("Failed to scrape odds, using original odds:", error);
-      return createGameWithOriginalOdds(body, userId);
+    if (categories.length === 0) {
+      return NextResponse.json(
+        { error: "No Oscar categories available. Try again in a moment." },
+        { status: 502 }
+      );
     }
 
-    // Create a map for quick lookup of scraped odds
-    const oddsMap = new Map(
-      scrapedNominees.map((nominee) => [
-        `${nominee.category.trim()}:${nominee.name.trim()}`,
-        nominee.odds,
-      ])
-    );
-
-    // Merge scraped odds with original data
-    const mergedNominees = (predictions as Category[]).map((category) => {
-      try {
-        // First check if we can match all nominees in this category
-        const allNomineesMatchable = category.predictions.every((nominee) => {
-          try {
-            let nomineeName = "";
-            if ("name" in nominee) {
-              nomineeName = nominee.name;
-            } else if ("actor" in nominee && "movie" in nominee) {
-              nomineeName = nominee.actor;
-            }
-
-            const key = `${category.category
-              .replace(/\s*\(more info\)/i, "")
-              .trim()}:${nomineeName.trim()}`;
-
-            return oddsMap.has(key);
-          } catch (error) {
-            console.error(
-              `Error matching nominee in ${category.category}:`,
-              error
-            );
-            return false;
-          }
-        });
-
-        // If we can't match all nominees, return category with original odds
-        if (!allNomineesMatchable) {
-          console.log(
-            `Category ${category.category} has unmatched nominees, keeping original odds`
-          );
-          return category;
-        }
-
-        // If all nominees match, update odds for the category
-        return {
-          ...category,
-          predictions: category.predictions.map((nominee) => {
-            try {
-              let nomineeName = "";
-              if ("name" in nominee) {
-                nomineeName = nominee.name;
-              } else if ("actor" in nominee && "movie" in nominee) {
-                nomineeName = nominee.actor;
-              }
-
-              const key = `${category.category
-                .replace(/\s*\(more info\)/i, "")
-                .trim()}:${nomineeName.trim()}`;
-              const scrapedOdds = oddsMap.get(key);
-
-              if (!scrapedOdds) {
-                console.log(
-                  `No odds found for ${nomineeName}, using original odds`
-                );
-                return nominee;
-              }
-
-              return {
-                ...nominee,
-                odds: scrapedOdds,
-              };
-            } catch (error) {
-              console.error(
-                `Error updating odds for nominee ${
-                  "name" in nominee
-                    ? nominee.name
-                    : "actor" in nominee
-                    ? nominee.actor
-                    : "unknown"
-                }:`,
-                error
-              );
-              return nominee;
-            }
-          }),
-        };
-      } catch (error) {
-        console.error(`Error processing category ${category.category}:`, error);
-        return category;
-      }
-    });
-
-    // create a functino that checks to make sure all the odds are valid
-    const validOdds = mergedNominees.every((category) => {
-      return category.predictions.every((nominee) => {
-        return Number(convertOddsToDecimal(nominee.odds)) > 0;
-      });
-    });
-
-    if (!validOdds) {
-      console.log("Invalid odds, using original odds");
-      return createGameWithOriginalOdds(body, userId);
-    } else {
-      // Create game using the merged nominees data
-      return createGame(body, userId, mergedNominees);
-    }
-  } catch (error) {
-    console.error("Failed to create game:", error);
-    return NextResponse.json(
-      { error: "Failed to create game" },
-      { status: 500 }
-    );
-  }
-}
-
-// Helper function to create game with original odds
-async function createGameWithOriginalOdds(body: any, userId: string) {
-  return createGame(body, userId, predictions as Category[]);
-}
-
-// Helper function to create game
-async function createGame(body: any, userId: string, nominees: Category[]) {
-  try {
     const game = await prisma.game.create({
       data: {
         name: body.name,
@@ -248,48 +98,30 @@ async function createGame(body: any, userId: string, nominees: Category[]) {
         initialBalance: Number(body.initialBalance),
         adminId: userId,
         participants: {
-          create: {
-            userId,
-            balance: Number(body.initialBalance),
-          },
+          create: { userId, balance: Number(body.initialBalance) },
         },
         categories: {
-          create: nominees.map((category) => ({
-            name: category.category.replace("  (more info)", ""),
+          create: categories.map((cat) => ({
+            name: cat.category,
             nominees: {
-              create: category.predictions.map((nominee) => ({
-                name: getNomineeName(nominee),
-                movie: getNomineeMovie(nominee),
-                odds: Number(convertOddsToDecimal(nominee.odds)),
+              create: cat.nominees.map((nominee) => ({
+                name: nominee.name,
+                odds: nominee.odds,
+                kalshiTicker: nominee.kalshiTicker,
+                imageUrl: nominee.imageUrl,
               })),
             },
           })),
         },
       },
       include: {
-        admin: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        admin: { select: { id: true, name: true, email: true } },
         participants: {
           include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-              },
-            },
+            user: { select: { id: true, name: true, email: true } },
           },
         },
-        categories: {
-          include: {
-            nominees: true,
-          },
-        },
+        categories: { include: { nominees: true } },
       },
     });
 

@@ -1,166 +1,114 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-type PageProps = {
-  params: { code: string };
-  searchParams: { gameId?: string };
-};
+interface GameInfo {
+  id: string;
+  name: string;
+  admin: { name: string | null };
+}
 
-export default function JoinPage({ params, searchParams }: PageProps) {
+export default function JoinPage() {
+  const params = useParams();
+  const code = params.code as string;
   const router = useRouter();
-  const { session, status } = useAuth();
-  const [isVerifying, setIsVerifying] = useState(true);
-  const [gameDetails, setGameDetails] = useState<any>(null);
+
+  const [game, setGame] = useState<GameInfo | null>(null);
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(true);
 
   useEffect(() => {
-    const { code } = params;
-    console.log("Join page mounted. Code:", code);
+    if (!code) return;
+    fetch(`/api/games/verify-code/${code}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.error) setError(data.error);
+        else setGame(data);
+      })
+      .catch(() => setError("Failed to verify code"))
+      .finally(() => setVerifying(false));
+  }, [code]);
 
-    if (!code) {
-      console.error("No code provided");
-      toast.error("Invalid join link");
-      router.push("/");
+  async function handleJoin(e: React.FormEvent) {
+    e.preventDefault();
+    if (!game || !name.trim()) return;
+    setLoading(true);
+    setError("");
+
+    const res = await fetch(`/api/games/${game.id}/join`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, name: name.trim() }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || "Failed to join game");
+      setLoading(false);
       return;
     }
 
-    // First verify the code is valid
-    console.log("Verifying code...");
-    fetch(`/api/games/verify-code/${code}`)
-      .then(async (res) => {
-        const data = await res.json();
-        console.log("Verify code response:", data);
-        if (res.ok) {
-          setGameDetails(data);
-          // If we don't have gameId in searchParams, use the one from verification
-          if (!searchParams.gameId) {
-            console.log("Using gameId from verification:", data.id);
-            searchParams.gameId = data.id;
-          }
-        } else {
-          console.error("Invalid code:", data.error);
-          toast.error(data.error || "Invalid join link");
-          router.push("/");
-        }
-      })
-      .catch((error) => {
-        console.error("Error verifying code:", error);
-        toast.error("Failed to verify join link");
-        router.push("/");
-      })
-      .finally(() => {
-        setIsVerifying(false);
-      });
-  }, [params, router]);
+    router.push(`/games/${game.id}`);
+  }
 
-  useEffect(() => {
-    if (status === "loading" || isVerifying || !gameDetails) return;
-
-    const { code } = params;
-    const gameId = searchParams.gameId || gameDetails.id;
-
-    console.log("Attempting to join game. Status:", {
-      code,
-      gameId,
-      userId: session?.user?.id,
-      isVerifying,
-      hasGameDetails: !!gameDetails,
-    });
-
-    if (session?.user?.id) {
-      // User is authenticated, try to join the game
-      console.log("User is authenticated, joining game...");
-      fetch(`/api/games/${gameId}/join`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-user-id": session.user.id,
-        },
-        body: JSON.stringify({ code }),
-      })
-        .then(async (res) => {
-          const data = await res.json();
-          console.log("Join game response:", data);
-          if (res.ok) {
-            toast.success("Successfully joined the game!");
-            router.push(`/games/${gameId}`);
-          } else {
-            if (data.error === "You have already joined this game") {
-              router.push(`/games/${gameId}`);
-            } else {
-              console.error("Join error:", data.error);
-              toast.error(data.error || "Failed to join game");
-              router.push("/games");
-            }
-          }
-        })
-        .catch((error) => {
-          console.error("Error joining game:", error);
-          router.push("/games");
-        });
-    } else {
-      // Store join info and redirect to register
-      console.log(
-        "User not authenticated, storing join info and redirecting to register"
-      );
-      localStorage.setItem("joinAfterAuth", JSON.stringify({ code, gameId }));
-      router.push("/register");
-    }
-  }, [params, searchParams, router, session, status, isVerifying, gameDetails]);
-
-  if (isVerifying) {
+  if (verifying) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="text-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto" />
-          <h1 className="text-2xl font-bold">Verifying join link...</h1>
-          <p className="text-gray-600">
-            Please wait while we verify your invitation.
-          </p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Verifying invite code…</p>
       </div>
     );
   }
 
-  if (!session && gameDetails) {
+  if (error && !game) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="text-center space-y-6 max-w-md mx-auto p-6">
-          <h1 className="text-2xl font-bold">Join {gameDetails.name}</h1>
-          <p className="text-gray-600">
-            You've been invited to join this Oscar predictions game. Please sign
-            in or create an account to continue.
-          </p>
-          <div className="space-y-4">
-            <Link href="/login" className="block">
-              <Button className="w-full">Sign In</Button>
-            </Link>
-            <Link href="/register" className="block">
-              <Button variant="outline" className="w-full">
-                Create Account
-              </Button>
-            </Link>
-          </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Invalid Invite</CardTitle>
+            <CardDescription className="text-destructive">{error}</CardDescription>
+          </CardHeader>
+        </Card>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="text-center">
-        <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-        <h1 className="text-2xl font-bold">Joining game...</h1>
-        <p className="text-gray-600">
-          Please wait while we process your request.
-        </p>
-      </div>
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Join {game?.name}</CardTitle>
+          <CardDescription>
+            Hosted by {game?.admin?.name ?? "Admin"} · Enter your name to start playing
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleJoin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Your name</Label>
+              <Input
+                id="name"
+                placeholder="e.g. Blaine"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={40}
+                autoFocus
+                required
+              />
+            </div>
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" className="w-full" disabled={loading || !name.trim()}>
+              {loading ? "Joining…" : "Join Game"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

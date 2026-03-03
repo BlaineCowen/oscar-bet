@@ -2,22 +2,39 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
+// Paths that never need any auth
+const PUBLIC_PATHS = [
+  "/",
+  "/login",
+  "/register",
+  "/auth",
+  "/api/auth",
+  "/api/games/verify-code",
+  "/api/cron",
+  // Guest game routes
+  "/join",
+  "/rejoin",
+  "/api/join",
+  "/api/rejoin",
+];
+
+// Game pages and their APIs are open to guests (participant cookie is checked inside the route)
+function isGuestAllowed(path: string) {
+  return (
+    path.match(/^\/games\/[^/]+/) || // /games/[id]/...
+    path.match(/^\/api\/games\/[^/]+\/bets/) || // /api/games/[id]/bets
+    path.match(/^\/api\/games\/[^/]+\/categories/) || // payout etc
+    path.match(/^\/api\/games\/[^/]+$/) // GET /api/games/[id]
+  );
+}
+
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
-  // Public paths that don't require authentication
-  const publicPaths = [
-    "/",
-    "/login",
-    "/register",
-    "/auth",
-    "/api/auth",
-    "/api/games/verify-code",
-  ];
-
   if (
-    publicPaths.some((p) => path.startsWith(p)) ||
-    path.match(/\.(jpg|jpeg|png|gif|ico|svg)$/) ||
+    PUBLIC_PATHS.some((p) => path.startsWith(p)) ||
+    isGuestAllowed(path) ||
+    path.match(/\.(jpg|jpeg|png|gif|ico|svg|webp)$/) ||
     path.includes("_next") ||
     path.includes("favicon.ico")
   ) {
@@ -33,18 +50,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-user-id", token.id as string);
+
+  return NextResponse.next({
+    request: { headers: requestHeaders },
+  });
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!_next/static|_next/image|favicon.ico).*)",
-  ],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

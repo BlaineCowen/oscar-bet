@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Lock, Unlock, AlertCircle } from "lucide-react";
+import { Lock, Unlock, AlertCircle, Copy, Link2 } from "lucide-react";
 import type { Category, Nominee } from "@prisma/client";
+import { CATEGORY_ORDER, getCategoryIndex } from "@/lib/kalshi-events";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,6 +47,8 @@ interface AdminModalProps {
   isLocked?: boolean;
   participants: Array<{
     id: string;
+    name?: string | null;
+    token?: string | null;
     user: { name: string | null };
     bets: any[];
   }>;
@@ -65,37 +68,10 @@ export default function AdminModal({
   const queryClient = useQueryClient();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  const categoryOrder = [
-    "Best Picture",
-    "Best Director",
-    "Best Actress",
-    "Best Actor",
-    "Best Supporting Actress",
-    "Best Supporting Actor",
-    "Best Adapted Screenplay",
-    "Best Original Screenplay",
-    "Best Cinematography",
-    "Best Costume Design",
-    "Best Film Editing",
-    "Best Makeup and Hairstyling",
-    "Best Production Design",
-    "Best Score",
-    "Best Song",
-    "Best Sound",
-    "Best Visual Effects",
-    "Best Animated Feature",
-    "Best Documentary Feature",
-    "Best International Film",
-    "Best Animated Short",
-    "Best Documentary Short",
-    "Best Live Action Short",
-  ];
-
-  // Sort categories based on categoryOrder
   const sortedCategories = [...categories].sort((a, b) => {
-    const aIndex = categoryOrder.indexOf(a.name);
-    const bIndex = categoryOrder.indexOf(b.name);
-    return aIndex - bIndex;
+    const aIndex = CATEGORY_ORDER.indexOf(a.name);
+    const bIndex = CATEGORY_ORDER.indexOf(b.name);
+    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
   });
 
   const updateWinner = useMutation({
@@ -444,7 +420,7 @@ export default function AdminModal({
                         .filter((category) => !category.winnerId)
                         .map((category) => (
                           <SelectItem key={category.name} value={category.name}>
-                            {category.name}
+                            {getCategoryIndex(category.name)}. {category.name}
                           </SelectItem>
                         ))}
                     </SelectContent>
@@ -554,6 +530,54 @@ export default function AdminModal({
               </>
             )}
 
+            {/* Participants & Rejoin Links */}
+            <div>
+              <h3 className="text-sm font-semibold mb-2 text-muted-foreground uppercase tracking-wide">
+                Players ({participants.length})
+              </h3>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Bets</TableHead>
+                    <TableHead>Rejoin Link</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {participants.map((p) => {
+                    const displayName = p.name ?? p.user?.name ?? "Anonymous";
+                    const rejoinUrl = p.token
+                      ? `${typeof window !== "undefined" ? window.location.origin : ""}/rejoin/${p.token}`
+                      : null;
+                    return (
+                      <TableRow key={p.id}>
+                        <TableCell className="font-medium">{displayName}</TableCell>
+                        <TableCell>{p.bets.length}</TableCell>
+                        <TableCell>
+                          {rejoinUrl ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 px-2 text-xs gap-1"
+                              onClick={() => {
+                                navigator.clipboard.writeText(rejoinUrl);
+                                toast.success(`Rejoin link copied for ${displayName}`);
+                              }}
+                            >
+                              <Copy className="h-3 w-3" />
+                              Copy
+                            </Button>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">Admin</span>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+
             {/* Category Status Table */}
             <Table>
               <TableHeader>
@@ -571,7 +595,7 @@ export default function AdminModal({
                   );
                   return (
                     <TableRow key={category.name}>
-                      <TableCell>{category.name}</TableCell>
+                      <TableCell>{getCategoryIndex(category.name)}. {category.name}</TableCell>
                       <TableCell>
                         {category.winnerId ? (
                           <div className="flex items-center gap-2 text-green-500">

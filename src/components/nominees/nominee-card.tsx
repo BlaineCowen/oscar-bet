@@ -3,6 +3,7 @@
 import type { ImageProps } from "next/image";
 import Image from "next/image";
 import { cn, getNomineeImageUrl } from "@/lib/utils";
+import { effectiveOdds } from "@/lib/kalshi";
 import { useEffect, useState, useMemo } from "react";
 import predictions from "@/lib/oscars_predictions.json";
 import { getNomineeName } from "@/lib/game-utils";
@@ -30,7 +31,6 @@ interface Category {
   predictions: PredictionItem[];
 }
 
-// Define a local interface that no longer needs to include the image property
 interface NomineeWithImage {
   id: string;
   name: string;
@@ -39,6 +39,7 @@ interface NomineeWithImage {
   createdAt: Date;
   updatedAt: Date;
   movie: string | null;
+  imageUrl?: string | null;
 }
 
 // Define the props for the NomineeCard component
@@ -59,8 +60,9 @@ export function NomineeCard({
   showOdds = false,
   categoryName,
 }: NomineeCardProps) {
-  // Get image URL based solely on nominee name and category name
-  const imageUrl = getNomineeImageUrl(categoryName, nominee.name);
+  // Prefer the Kalshi image URL stored on the nominee; fall back to blob lookup
+  const imageUrl =
+    nominee.imageUrl || getNomineeImageUrl(categoryName, nominee.name);
   const hasValidImage = Boolean(imageUrl);
 
   // Extract movie title for actor categories
@@ -169,7 +171,7 @@ export function NomineeCard({
           )}
           {showOdds && (
             <p className="text-sm text-muted-foreground">
-              Odds: x{Math.round(nominee.odds * 100) / 100}
+              Odds: x{effectiveOdds(nominee.odds).toFixed(2)}
             </p>
           )}
         </div>
@@ -204,7 +206,8 @@ export function LargeNomineeCard({
   nominee: NomineeWithImage;
   categoryName: string;
 }) {
-  const imageUrl = getNomineeImageUrl(categoryName, nominee.name);
+  const imageUrl =
+    nominee.imageUrl || getNomineeImageUrl(categoryName, nominee.name);
 
   return (
     <div className="rounded-lg overflow-hidden border border-border bg-card">
@@ -225,7 +228,7 @@ export function LargeNomineeCard({
           <p className="text-muted-foreground italic">{nominee.movie}</p>
         )}
         <div className="mt-2 flex items-center text-muted-foreground">
-          <span className="text-sm">Odds: x{nominee.odds}</span>
+          <span className="text-sm">Odds: x{effectiveOdds(nominee.odds).toFixed(2)}</span>
         </div>
       </div>
     </div>

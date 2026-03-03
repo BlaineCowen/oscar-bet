@@ -1,0 +1,14 @@
+# .github/workflows/sync-odds.yml
+name: Sync Kalshi Odds
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # every 30 min; GitHub Actions minimum is 5 min but ~30 is realistic
+  workflow_dispatch:  # lets you trigger manually from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -X POST https://oscaraction.com/api/cron/sync-odds \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"

@@ -25,9 +25,7 @@ export async function POST(
         participants: {
           include: {
             bets: {
-              include: {
-                nominee: true,
-              },
+              include: { nominee: true },
             },
           },
         },
@@ -65,8 +63,13 @@ export async function POST(
             (bet) => bet.nominee.name === winner
           );
 
+          // Use oddsAtTime (locked at bet placement) so live changes don't affect payouts
+          const { effectiveOdds } = await import("@/lib/kalshi");
+          const multiplier = effectiveOdds(
+            winningBet?.oddsAtTime ?? winningNominee.odds
+          );
           const payout = winningBet
-            ? Math.round(winningBet.amount * winningNominee.odds)
+            ? Math.round(winningBet.amount * multiplier)
             : 0;
 
           return tx.gameParticipant.update({

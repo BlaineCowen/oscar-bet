@@ -25,35 +25,32 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const userId = req.headers.get("x-user-id");
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const { id: gameId } = await context.params;
     const body = await req.json();
     const { bets } = betsSchema.parse(body);
 
-    // Get the game and participant in a single query
-    const game = await prisma.game.findUnique({
-      where: { id: gameId },
-      include: {
-        participants: {
-          where: { userId },
-        },
-      },
-    });
+    // Identify participant: try guest cookie first, then fall back to auth userId
+    const pt = req.cookies.get("pt")?.value;
+    const userId = req.headers.get("x-user-id");
 
-    if (!game) {
-      return NextResponse.json({ error: "Game not found" }, { status: 404 });
-    }
+    let participant =
+      (pt
+        ? await prisma.gameParticipant.findFirst({ where: { token: pt, gameId } })
+        : null) ??
+      (userId
+        ? await prisma.gameParticipant.findFirst({ where: { userId, gameId } })
+        : null);
 
-    const participant = game.participants[0];
     if (!participant) {
       return NextResponse.json(
         { error: "You are not a participant in this game" },
         { status: 403 }
       );
+    }
+
+    const game = await prisma.game.findUnique({ where: { id: gameId } });
+    if (!game) {
+      return NextResponse.json({ error: "Game not found" }, { status: 404 });
     }
 
     // Calculate total bet amount
@@ -65,15 +62,27 @@ export async function POST(
       );
     }
 
+    // Look up current odds for each nominee so we can lock them in (never store < 1.01 or 0)
+    const { effectiveOdds } = await import("@/lib/kalshi");
+    const nomineeIds = [...new Set(bets.map((b) => b.nomineeId))];
+    const nominees = await prisma.nominee.findMany({
+      where: { id: { in: nomineeIds } },
+      select: { id: true, odds: true },
+    });
+    const oddsById = new Map(
+      nominees.map((n) => [n.id, effectiveOdds(n.odds)])
+    );
+
     // Create all bets and update participant balance in a transaction
     const result = await prisma.$transaction(async (tx) => {
-      // Create all bets
+      // Create all bets with odds locked in at placement time
       await tx.bet.createMany({
         data: bets.map((bet) => ({
           amount: bet.amount,
+          oddsAtTime: oddsById.get(bet.nomineeId) ?? null,
           nomineeId: bet.nomineeId,
           gameId,
-          userId,
+          userId: participant.userId ?? undefined,
           gameParticipantId: participant.id,
         })),
       });

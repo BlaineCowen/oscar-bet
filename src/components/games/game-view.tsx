@@ -26,6 +26,12 @@ import {
 } from "@/components/ui/table";
 import { Check, Crown, X } from "lucide-react";
 import type { ParticipantWithUser } from "@/types/prisma";
+import { CATEGORY_ORDER, getCategoryIndex } from "@/lib/kalshi-events";
+import { effectiveOdds } from "@/lib/kalshi";
+
+function formatDollars(n: number): string {
+  return "$" + Math.round(n).toLocaleString();
+}
 
 interface GameViewProps {
   participants: ParticipantWithUser[];
@@ -40,35 +46,21 @@ export default function GameView({
     null
   );
 
-  const categoryOrder = [
-    "Best Picture",
-    "Best Director",
-    "Best Actress",
-    "Best Actor",
-    "Best Supporting Actress",
-    "Best Supporting Actor",
-    "Best Adapted Screenplay",
-    "Best Original Screenplay",
-    "Best Cinematography",
-    "Best Costume Design",
-    "Best Film Editing",
-    "Best Makeup and Hairstyling",
-    "Best Production Design",
-    "Best Score",
-    "Best Song",
-    "Best Sound",
-    "Best Visual Effects",
-    "Best Animated Feature",
-    "Best Documentary Feature",
-    "Best International Film",
-    "Best Animated Short",
-    "Best Documentary Short",
-    "Best Live Action Short",
-  ];
+  const categoryOrder = CATEGORY_ORDER;
 
-  // Sort participants by balance in descending order
+  function calcPotential(participant: ParticipantWithUser) {
+    const pendingReturn = participant.bets.reduce((sum, bet) => {
+      const hasWinner = bet.nominee.category.winnerId !== null;
+      if (hasWinner) return sum; // already resolved, in balance
+      const odds = effectiveOdds(bet.oddsAtTime ?? bet.nominee.odds);
+      return sum + bet.amount * odds; // full return if they win
+    }, 0);
+    return participant.balance + pendingReturn;
+  }
+
+  // Sort by potential total (balance + pending winnings) descending
   const sortedParticipants = [...participants].sort(
-    (a, b) => b.balance - a.balance
+    (a, b) => calcPotential(b) - calcPotential(a)
   );
 
   return (
@@ -78,7 +70,12 @@ export default function GameView({
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {sortedParticipants.map((participant, index) => (
+          {sortedParticipants.map((participant, index) => {
+            const potential = calcPotential(participant);
+            const hasPending = participant.bets.some(
+              (b) => b.nominee.category.winnerId === null
+            );
+            return (
             <div
               key={participant.id}
               className={cn("space-y-2", {
@@ -89,14 +86,24 @@ export default function GameView({
               <div className="flex justify-between items-center">
                 <div className="space-y-1">
                   <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <span className="text-muted-foreground text-sm font-normal w-6">
+                      #{index + 1}
+                    </span>
                     {participant.user.name}
                     {index === 0 && (
                       <Crown className="h-4 w-4 text-yellow-500" />
                     )}
                   </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Balance: ${participant.balance}
-                  </p>
+                  <div className="flex items-center gap-3 text-sm">
+                    <span className="text-muted-foreground">
+                      Balance: <span className="text-foreground font-medium">{formatDollars(participant.balance)}</span>
+                    </span>
+                    {hasPending && (
+                      <span className="text-emerald-400">
+                        Potential: <span className="font-medium">{formatDollars(potential)}</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -134,8 +141,11 @@ export default function GameView({
                           const isWinner =
                             hasWinner &&
                             bet.nominee.category.winnerId === bet.nomineeId;
+                          const odds = effectiveOdds(
+                            bet.oddsAtTime ?? bet.nominee.odds
+                          );
                           const winAmount = isWinner
-                            ? bet.amount * bet.nominee.odds
+                            ? bet.amount * (odds - 1)
                             : 0;
                           const lossAmount =
                             !isWinner && hasWinner ? bet.amount : 0;
@@ -150,28 +160,31 @@ export default function GameView({
                                   hasWinner && !isWinner,
                               })}
                             >
-                              <TableCell>{bet.nominee.category.name}</TableCell>
+                              <TableCell>{getCategoryIndex(bet.nominee.category.name)}. {bet.nominee.category.name}</TableCell>
                               <TableCell>{bet.nominee.name}</TableCell>
-                              <TableCell>${bet.amount.toFixed(2)}</TableCell>
+                              <TableCell>{formatDollars(bet.amount)}</TableCell>
                               <TableCell>
-                                {bet.nominee.odds.toFixed(2)}x
+                                {effectiveOdds(
+                                  bet.oddsAtTime ?? bet.nominee.odds
+                                ).toFixed(2)}
+                                x
                               </TableCell>
                               <TableCell>
                                 {hasWinner ? (
                                   isWinner ? (
                                     <span className="flex items-center gap-1">
                                       <Check className="h-4 w-4" />
-                                      Won ${winAmount.toFixed(2)}
+                                      Won {formatDollars(winAmount)}
                                     </span>
                                   ) : (
                                     <span className="flex items-center gap-1">
                                       <X className="h-4 w-4" />
-                                      Lost ${lossAmount.toFixed(2)}
+                                      Lost {formatDollars(lossAmount)}
                                     </span>
                                   )
                                 ) : (
-                                  <span className="text-muted-foreground">
-                                    Pending
+                                  <span className="text-emerald-400">
+                                    →&nbsp;{formatDollars(bet.amount * odds)}
                                   </span>
                                 )}
                               </TableCell>
@@ -183,7 +196,7 @@ export default function GameView({
                 </CollapsibleContent>
               </Collapsible>
             </div>
-          ))}
+          );})}
         </div>
       </CardContent>
     </Card>

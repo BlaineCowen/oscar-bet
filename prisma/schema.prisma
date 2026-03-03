@@ -105,8 +105,11 @@ model GameParticipant {
   balance   Float
   game      Game     @relation(fields: [gameId], references: [id])
   gameId    String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  // Guest players: identified by name + secure token stored in browser cookie
+  name      String?  // display name for guests (overrides user.name)
+  token     String?  @unique // secret cookie value for re-identification
   bets      Bet[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -131,18 +134,18 @@ model Category {
 }
 
 model Nominee {
-  id         String     @id @default(cuid())
-  name       String
-  movie      String?
-  odds       Float
-  // Note: No longer storing image URLs in the database
-  // We now generate them predictably from nominee name + category
-  category   Category   @relation(fields: [categoryId], references: [id])
-  categoryId String
-  bets       Bet[]
+  id            String     @id @default(cuid())
+  name          String
+  movie         String?
+  odds          Float
+  kalshiTicker  String?
+  imageUrl      String?
+  category      Category   @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  bets          Bet[]
   wonCategories Category[] @relation("CategoryWinner")
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   @@map("nominees")
 }
@@ -150,8 +153,9 @@ model Nominee {
 model Bet {
   id                String          @id @default(cuid())
   amount            Float
-  user              User            @relation(fields: [userId], references: [id])
-  userId            String
+  oddsAtTime        Float?          // Odds multiplier locked in at bet placement time
+  user              User?           @relation(fields: [userId], references: [id])
+  userId            String?
   nominee           Nominee         @relation(fields: [nomineeId], references: [id])
   nomineeId         String
   game              Game            @relation(fields: [gameId], references: [id])
@@ -159,9 +163,19 @@ model Bet {
   gameParticipant   GameParticipant @relation(fields: [gameParticipantId], references: [id])
   gameParticipantId String
   paidOut           Boolean         @default(false)
-  payoutAmount      Float?          // Amount won/lost when bet is settled
+  payoutAmount      Float?
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
 
   @@map("bets")
+}
+
+// Single-row cache of all Oscar categories fetched from Kalshi.
+// Refreshed by the cron job so game creation never hits Kalshi live.
+model KalshiCache {
+  id        String   @id @default("singleton")
+  data      Json     // KalshiCategory[]
+  updatedAt DateTime @updatedAt
+
+  @@map("kalshi_cache")
 }

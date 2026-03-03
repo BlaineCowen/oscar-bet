@@ -1,5 +1,11 @@
 {
   "buildCommand": "prisma generate && next build",
+  "crons": [
+    {
+      "path": "/api/cron/sync-odds",
+      "schedule": "*/5 * * * *"
+    }
+  ],
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["sfo1"],

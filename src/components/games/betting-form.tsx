@@ -2,15 +2,22 @@
 
 import { useState } from "react";
 import type { Category, Nominee, GameParticipant, Bet } from "@prisma/client";
+import { CATEGORY_ORDER, getCategoryIndex } from "@/lib/kalshi-events";
+import { effectiveOdds } from "@/lib/kalshi";
 import { AlertCircle, Film } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { NomineeCard } from "@/components/nominees/nominee-card";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
 
 type CategoryWithNominees = Category & {
   nominees: Nominee[];
@@ -78,37 +85,10 @@ export default function BettingForm({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const hasExistingBets = participant.bets.length > 0;
 
-  const categoryOrder = [
-    "Best Picture",
-    "Best Director",
-    "Best Actress",
-    "Best Actor",
-    "Best Supporting Actress",
-    "Best Supporting Actor",
-    "Best Adapted Screenplay",
-    "Best Original Screenplay",
-    "Best Cinematography",
-    "Best Costume Design",
-    "Best Film Editing",
-    "Best Makeup and Hairstyling",
-    "Best Production Design",
-    "Best Score",
-    "Best Song",
-    "Best Sound",
-    "Best Visual Effects",
-    "Best Animated Feature",
-    "Best Documentary Feature",
-    "Best International Film",
-    "Best Animated Short",
-    "Best Documentary Short",
-    "Best Live Action Short",
-  ];
-
-  // Sort categories based on categoryOrder
   const sortedCategories = [...categories].sort((a, b) => {
-    const aIndex = categoryOrder.indexOf(a.name);
-    const bIndex = categoryOrder.indexOf(b.name);
-    return aIndex - bIndex;
+    const aIndex = CATEGORY_ORDER.indexOf(a.name);
+    const bIndex = CATEGORY_ORDER.indexOf(b.name);
+    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
   });
 
   // Initial balance is fixed - it's the participant's balance plus their existing bets
@@ -563,7 +543,7 @@ export default function BettingForm({
               >
                 <CardHeader>
                   <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg">{category.name}</CardTitle>
+                    <CardTitle className="text-lg">{getCategoryIndex(category.name)}. {category.name}</CardTitle>
                     {(isLocked || isCategoryLocked) && (
                       <span className="text-sm text-muted-foreground">
                         Locked
@@ -577,90 +557,99 @@ export default function BettingForm({
                     </p>
                   )}
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-2">
                   <RadioGroup
                     onValueChange={(value) => {
-                      console.log(
-                        `RadioGroup change: ${value} for ${category.name}`
-                      );
                       handleNomineeSelect(category.id, value);
                     }}
                     value={selectedNominees[category.id]}
                     disabled={isLocked}
                     name={`nominee-${category.id}`}
                   >
-                    {category.nominees.map((nominee, index) => (
-                      <div key={nominee.id} className="mb-3">
-                        <RadioGroupItem
-                          id={nominee.id}
-                          value={nominee.id}
-                          className="peer sr-only"
-                          disabled={isLocked}
-                        />
-                        <Label htmlFor={nominee.id} className="sr-only">
-                          {nominee.name}
-                        </Label>
-                        <NomineeCard
-                          nominee={nominee}
-                          isSelected={
-                            selectedNominees[category.id] === nominee.id
-                          }
-                          disabled={isLocked}
-                          showOdds={true}
-                          categoryName={category.name}
-                          onClick={() => {
-                            // Only proceed if not disabled
-                            if (isLocked) return;
-
-                            // Directly call the select function instead of manipulating the DOM
-                            handleNomineeSelect(category.id, nominee.id);
-
-                            // Also update the DOM element to keep UI in sync
-                            const selectedInput = document.getElementById(
-                              nominee.id
-                            ) as HTMLInputElement;
-                            if (selectedInput) {
-                              selectedInput.checked = true;
-                            }
-                          }}
-                        />
-                      </div>
-                    ))}
+                    {[...category.nominees]
+                      .sort((a, b) => effectiveOdds(a.odds) - effectiveOdds(b.odds))
+                      .map((nominee) => {
+                        const isSelected = selectedNominees[category.id] === nominee.id;
+                        const selectedOdds = effectiveOdds(nominee.odds);
+                        return (
+                          <Collapsible
+                            key={nominee.id}
+                            open={isSelected && !isLocked}
+                          >
+                            <div className="mb-2">
+                              <RadioGroupItem
+                                id={nominee.id}
+                                value={nominee.id}
+                                className="peer sr-only"
+                                disabled={isLocked}
+                              />
+                              <Label htmlFor={nominee.id} className="sr-only">
+                                {nominee.name}
+                              </Label>
+                              <NomineeCard
+                                nominee={nominee}
+                                isSelected={isSelected}
+                                disabled={isLocked}
+                                showOdds={true}
+                                categoryName={category.name}
+                                onClick={() => {
+                                  if (isLocked) return;
+                                  handleNomineeSelect(category.id, nominee.id);
+                                  const selectedInput = document.getElementById(
+                                    nominee.id
+                                  ) as HTMLInputElement;
+                                  if (selectedInput) selectedInput.checked = true;
+                                }}
+                              />
+                            </div>
+                            <CollapsibleContent className="overflow-hidden">
+                              <AnimatePresence mode="wait">
+                                {isSelected && !isLocked && (
+                                  <motion.div
+                                    key="bet-input"
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div className="ml-2 pl-4 border-l-2 border-primary/30 space-y-2 py-2 mb-3">
+                                      <Label htmlFor={`bet-${category.id}`} className="text-sm font-medium">
+                                        Bet amount
+                                      </Label>
+                                      <Input
+                                        id={`bet-${category.id}`}
+                                        type="number"
+                                        min="1"
+                                        max={getMaxAmountForCategory(category.id)}
+                                        placeholder="Enter amount"
+                                        value={betAmounts[category.id] || ""}
+                                        onChange={(e) =>
+                                          handleAmountChange(category.id, e.target.value)
+                                        }
+                                        onKeyDown={handleKeyDown}
+                                        className="bg-input max-w-[140px]"
+                                        disabled={isLocked}
+                                      />
+                                      <div className="flex justify-between text-sm text-muted-foreground">
+                                        <span>Min $1</span>
+                                        <span>
+                                          {betAmounts[category.id]
+                                            ? `To win: $${Math.round(
+                                                (betAmounts[category.id] || 0) * selectedOdds
+                                              ).toLocaleString()}`
+                                            : "Enter amount"}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        );
+                      })}
                   </RadioGroup>
-
-                  {selectedNominees[category.id] && !isLocked && (
-                    <div className="space-y-2">
-                      <Label htmlFor={`bet-${category.id}`}>Bet Amount</Label>
-                      <Input
-                        id={`bet-${category.id}`}
-                        type="number"
-                        min="1"
-                        max={getMaxAmountForCategory(category.id)}
-                        placeholder="Enter bet amount"
-                        value={betAmounts[category.id] || ""}
-                        onChange={(e) =>
-                          handleAmountChange(category.id, e.target.value)
-                        }
-                        onKeyDown={handleKeyDown}
-                        className="bg-input"
-                        disabled={isLocked}
-                      />
-                      <div className="flex justify-between text-sm">
-                        <span>Min: $1</span>
-                        <span>
-                          {betAmounts[category.id]
-                            ? `To win: $${(
-                                (betAmounts[category.id] || 0) *
-                                ((category.nominees.find(
-                                  (n) => n.id === selectedNominees[category.id]
-                                )?.odds ?? 0) -
-                                  1)
-                              ).toFixed(2)}`
-                            : `Enter an amount`}
-                        </span>
-                      </div>
-                    </div>
-                  )}
 
                   {categoryWinner && (
                     <div className="mt-4 p-3 bg-green-500/10 border border-green-500 rounded-md">

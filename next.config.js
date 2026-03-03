@@ -8,13 +8,18 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ["www.goldderby.com"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "*.public.blob.vercel-storage.com",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "kalshi-public-docs.s3.us-east-1.amazonaws.com",
+        port: "",
+        pathname: "/market-images/**",
       },
     ],
   },
