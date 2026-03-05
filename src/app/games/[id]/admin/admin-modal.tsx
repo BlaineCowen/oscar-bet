@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Lock, Unlock, AlertCircle, Copy, Link2 } from "lucide-react";
+import { Lock, Unlock, AlertCircle, Copy, RotateCcw } from "lucide-react";
 import type { Category, Nominee } from "@prisma/client";
 import { CATEGORY_ORDER, getCategoryIndex } from "@/lib/kalshi-events";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -173,6 +173,30 @@ export default function AdminModal({
     },
   });
 
+  const resetWinner = useMutation({
+    mutationFn: async (data: { categoryId: string }) => {
+      const res = await fetch(
+        `/api/games/${gameId}/categories/${data.categoryId}/winner`,
+        { method: "DELETE" }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to reset winner");
+      }
+      return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["games", gameId], data);
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["games"] }),
+        queryClient.refetchQueries({ queryKey: ["games", gameId] }),
+      ]);
+      toast.success("Winner reset — payouts reversed across all affected games");
+    },
+    onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to reset winner"),
+    scope: { id: `reset-winner-${gameId}` },
+  });
+
   const lockGame = useMutation({
     mutationFn: async () => {
       console.log("Locking game:", gameId);
@@ -250,7 +274,7 @@ export default function AdminModal({
     },
   });
 
-  const handleSetWinner = () => {
+  const handleSetWinner = async () => {
     if (!selectedCategory || !selectedWinner) return;
 
     const category = categories.find((c) => c.name === selectedCategory);
@@ -259,10 +283,25 @@ export default function AdminModal({
     const nominee = category.nominees.find((n) => n.id === selectedWinner);
     if (!nominee) return;
 
-    updateWinner.mutate({
-      categoryId: category.id,
-      nomineeId: nominee.id,
-    });
+    // If category already has a winner, reset first then set the new one
+    if (category.winnerId && category.winnerId !== nominee.id) {
+      try {
+        const res = await fetch(
+          `/api/games/${gameId}/categories/${category.id}/winner`,
+          { method: "DELETE" }
+        );
+        if (!res.ok) {
+          const err = await res.json();
+          toast.error(err.error || "Failed to reset previous winner");
+          return;
+        }
+      } catch {
+        toast.error("Failed to reset previous winner");
+        return;
+      }
+    }
+
+    updateWinner.mutate({ categoryId: category.id, nomineeId: nominee.id });
   };
 
   const handleLockGame = () => {
@@ -410,19 +449,20 @@ export default function AdminModal({
                     value={selectedCategory}
                     onValueChange={(value) => {
                       setSelectedCategory(value);
+                      setSelectedWinner("");
+                      setIsConfirming(false);
                     }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {sortedCategories
-                        .filter((category) => !category.winnerId)
-                        .map((category) => (
-                          <SelectItem key={category.name} value={category.name}>
-                            {getCategoryIndex(category.name)}. {category.name}
-                          </SelectItem>
-                        ))}
+                      {sortedCategories.map((category) => (
+                        <SelectItem key={category.name} value={category.name}>
+                          {getCategoryIndex(category.name)}. {category.name}
+                          {category.winnerId ? " ✓" : ""}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -487,15 +527,21 @@ export default function AdminModal({
                     <AlertTitle>Are you sure?</AlertTitle>
                     <AlertDescription>
                       <p className="mb-4">
-                        This will set{" "}
-                        {
-                          currentCategory?.nominees.find(
-                            (n) => n.id === selectedWinner
-                          )?.name
-                        }{" "}
-                        as the winner of {selectedCategory}. Winning bets will
-                        be paid out at the specified odds. This action cannot be
-                        undone.
+                        {currentCategory?.winnerId ? (
+                          <>
+                            This will <strong>reverse the existing payouts</strong> for{" "}
+                            {selectedCategory} and pay out{" "}
+                            {currentCategory.nominees.find((n) => n.id === selectedWinner)?.name}{" "}
+                            as the new winner. All affected games will be updated.
+                          </>
+                        ) : (
+                          <>
+                            This will set{" "}
+                            {currentCategory?.nominees.find((n) => n.id === selectedWinner)?.name}{" "}
+                            as the winner of {selectedCategory}. Winning bets will be paid out at
+                            the specified odds.
+                          </>
+                        )}
                       </p>
                       <div className="flex space-x-2">
                         <Button
@@ -583,9 +629,8 @@ export default function AdminModal({
               <TableHeader>
                 <TableRow>
                   <TableHead>Category</TableHead>
-                  <TableHead>Status</TableHead>
                   <TableHead>Winner</TableHead>
-                  <TableHead>Odds</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -595,30 +640,36 @@ export default function AdminModal({
                   );
                   return (
                     <TableRow key={category.name}>
-                      <TableCell>{getCategoryIndex(category.name)}. {category.name}</TableCell>
+                      <TableCell className="text-sm">
+                        {getCategoryIndex(category.name)}. {category.name}
+                      </TableCell>
                       <TableCell>
-                        {category.winnerId ? (
-                          <div className="flex items-center gap-2 text-green-500">
-                            <Lock className="h-4 w-4" />
-                            <span>Winner Selected</span>
-                          </div>
+                        {winner ? (
+                          <span className="text-green-500 font-medium text-sm">
+                            {winner.name}
+                          </span>
                         ) : (
-                          <div className="flex items-center gap-2">
-                            <Unlock className="h-4 w-4" />
-                            <span className="text-muted-foreground">
-                              Pending Winner
-                            </span>
-                          </div>
+                          <span className="text-muted-foreground text-sm">Pending</span>
                         )}
                       </TableCell>
-                      <TableCell
-                        className={
-                          category.winnerId ? "text-green-500 font-medium" : ""
-                        }
-                      >
-                        {winner?.name || "-"}
+                      <TableCell className="text-right">
+                        {winner && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-xs gap-1 text-destructive hover:text-destructive"
+                            disabled={resetWinner.isPending}
+                            onClick={() => {
+                              if (confirm(`Reset winner for "${category.name}"? This will reverse all payouts for this category across all affected games.`)) {
+                                resetWinner.mutate({ categoryId: category.id });
+                              }
+                            }}
+                          >
+                            <RotateCcw className="h-3 w-3" />
+                            Reset
+                          </Button>
+                        )}
                       </TableCell>
-                      <TableCell>{winner ? `${winner.odds}x` : "-"}</TableCell>
                     </TableRow>
                   );
                 })}
